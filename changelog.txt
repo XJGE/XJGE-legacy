@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2020-02-13
+### Added
+- Troubleshooting section to README.
+- Test entity object.
+- Test level.
+- getViewportActive() method in the App class.
+- addDisCon() convenience method in the Window class.
+- new "beep" command to command terminal.
+
+### Changed
+- Controller disconnection messages will instead pop up in viewport 0 if the viewport associated with that controller is inactive.
+
+### Removed
+- Automatic termination. The engine will instead enter the test level.
+- Lingering @todo statements.
+
 ## [1.0.0] - 2020-02-12
 ### Added
 - Simple 3D camera made controllable through the keyboard.
@@ -22,4 +38,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Game state traversal.
 - Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
 
-[1.0.0]: https://github.com/theskidster/XJGE.git
+[1.0.4]: 
+[1.0.0]: https://github.com/theskidster/XJGE/commit/67b3a12dab536e1db056f03fba46988b25752591

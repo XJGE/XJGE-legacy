@@ -44,7 +44,6 @@ public class Audio implements AudioService {
     
     @Override
     public void findSourceStates() {
-        //@todo Could instead use a static initializer and convert init() into a constructor.
         if(musicSource != null) {
             for(Source source : sources) {
                 sourceSamples.put(source.handle, alGetSourcei(source.handle, AL_SAMPLE_OFFSET));

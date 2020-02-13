@@ -5,10 +5,18 @@ XJGE makes no assumptions about the type of game (or application) its being used
 
 Instead of boxing you in with its own gameplay elements XJGE provides a structure in which these systems may be attached. Thus, heavyweight game-specific features like collision detection are not present in version 1.0.0 but may be added in the future if more implementation agnostic approaches to such systems can be engineered.
 
-XJGE is (currently) closed source and protected under an exclusive licence.
+XJGE is (currently) closed source and protected under an exclusive license.
 
 ## Getting Started
-TODO provide a wiki
+XJGE requires java 12.0.1 or later and currently supports the following platforms:
+- Linux x64
+- Windows x64
+- Windows x86
+
+## Troubleshooting
+The most common issues encountered can be resolved by:
+- Including the lib folder in the same directory as .jar distributions.
+- Updating Java, GLFW, and/or OpenGL.
 
 ## 1.0.0 Features
 - Simple 3D camera made controllable through the keyboard.

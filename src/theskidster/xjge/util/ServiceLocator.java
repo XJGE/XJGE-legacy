@@ -14,9 +14,7 @@ public final class ServiceLocator {
     
     private static AudioService audio;
     
-    public static AudioService getAudio() {
-        return audio;
-    }
+    public static AudioService getAudio() { return audio; }
     
     public static void setAudio(AudioService value) {
         audio = value;

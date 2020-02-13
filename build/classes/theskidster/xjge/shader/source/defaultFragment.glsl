@@ -35,7 +35,7 @@ void main() {
             ioResult = texture(uTexture, ioTexCoords) * vec4(ioColor, 0);
             break;
 
-        case 2: case 3: //Used for rectangles and reference.
+        case 2: case 3: //Used for rectangles and testing.
             ioResult = vec4(ioColor, 0);
             break;
     }

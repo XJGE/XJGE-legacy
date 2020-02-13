@@ -178,21 +178,36 @@ final class Window {
                             "Controller: \"" + App.getInputDeviceName(jid) +
                             "\" disconnected at position " + jid + ".");
                     
-                    switch(jid) {
-                        case GLFW_JOYSTICK_1: App.setInputDeviceEnabled(ALL_EXCEPT_1, false); break;
-                        case GLFW_JOYSTICK_2: App.setInputDeviceEnabled(ALL_EXCEPT_2, false); break;
-                        case GLFW_JOYSTICK_3: App.setInputDeviceEnabled(ALL_EXCEPT_3, false); break;
-                        case GLFW_JOYSTICK_4: App.setInputDeviceEnabled(ALL_EXCEPT_4, false); break;
+                    if(jid < 4) {
+                        DisCon discon = new DisCon(jid);
+                        
+                        switch(jid) {
+                            case GLFW_JOYSTICK_1:
+                                App.setInputDeviceEnabled(ALL_EXCEPT_1, false);
+                                App.addUIComponent(GLFW_JOYSTICK_1, "discon " + jid, discon);
+                                break;
+
+                            case GLFW_JOYSTICK_2:
+                                App.setInputDeviceEnabled(ALL_EXCEPT_2, false);
+                                addDisCon(GLFW_JOYSTICK_2, discon);
+                                break;
+
+                            case GLFW_JOYSTICK_3:
+                                App.setInputDeviceEnabled(ALL_EXCEPT_3, false);
+                                addDisCon(GLFW_JOYSTICK_3, discon);
+                                break;
+
+                            case GLFW_JOYSTICK_4:
+                                App.setInputDeviceEnabled(ALL_EXCEPT_4, false);
+                                addDisCon(GLFW_JOYSTICK_4, discon);
+                                break;
+                        }
+
+                        ServiceLocator.getAudio().pauseMusic();
+                        ServiceLocator.getAudio().setSourceState(ALL_SOURCES, AL_PAUSED);
+                        
+                        Game.addEvent(jid, (Boolean) App.getViewportActive(jid));
                     }
-                    
-                    DisCon discon = new DisCon(jid);
-                    App.addUIComponent(jid, "discon", discon);
-                    //@todo Add the component to viewport 0 as well?
-
-                    ServiceLocator.getAudio().pauseMusic();
-                    ServiceLocator.getAudio().setSourceState(ALL_SOURCES, AL_PAUSED);
-
-                    Game.addEvent(jid, null);
                     break;
             }
         });
@@ -231,6 +246,20 @@ final class Window {
         
         if(App.getVSync()) glfwSwapInterval(1);
         else               glfwSwapInterval(0);
+    }
+    
+    /**
+     * Convenience method. If the viewport with which the controller is associated is active, then viewport 0 will be used to display the message instead.
+     * 
+     * @param jid    the id number of the controller
+     * @param discon the object used to display a message on the viewport
+     */
+    private void addDisCon(int jid, DisCon discon) {
+        if(!App.getViewportActive(jid)) {
+            App.addUIComponent(GLFW_JOYSTICK_1, "discon " + jid, discon);
+        } else {
+            App.addUIComponent(jid, "discon " + jid, discon);
+        }
     }
     
 }

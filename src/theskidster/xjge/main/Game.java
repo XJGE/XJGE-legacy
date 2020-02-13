@@ -11,6 +11,7 @@ import static theskidster.xjge.audio.Audio.ALL_SOURCES;
 import theskidster.xjge.entities.Entity;
 import static theskidster.xjge.hardware.InputDevice.*;
 import theskidster.xjge.level.Level;
+import theskidster.xjge.level.LevelTest;
 import theskidster.xjge.util.LogLevel;
 import theskidster.xjge.util.Logger;
 import theskidster.xjge.util.ServiceLocator;
@@ -42,8 +43,7 @@ public final class Game {
      * Creates a new game instance and sets the initial level state. Called once immediately following the applications startup sequence. 
      */
     public Game() {
-        App.terminate();
-        //TODO set level with setLevel(LevelX());
+        setLevel(new LevelTest()); //TODO set custom level
     }
     
     /**
@@ -129,7 +129,11 @@ public final class Game {
                 switch(event.getPriority()) {
                     case Event.JOYSTICK_1_DIS: case Event.JOYSTICK_2_DIS:
                     case Event.JOYSTICK_3_DIS: case Event.JOYSTICK_4_DIS:
-                        App.removeUIComponent(event.getPriority(), "discon");
+                        if((Boolean) event.getData()) {
+                            App.removeUIComponent(event.getPriority(), "discon " + event.getPriority());
+                        } else {
+                            App.removeUIComponent(Event.JOYSTICK_1_DIS, "discon " + event.getPriority());
+                        }
                         ServiceLocator.getAudio().resumeMusic();
                         ServiceLocator.getAudio().setSourceState(ALL_SOURCES, AL_PLAYING);
                         break;

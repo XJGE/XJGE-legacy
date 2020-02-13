@@ -37,8 +37,6 @@ public final class Logger {
                 e.printStackTrace();
             }
             
-            //@todo could be provided as a service instead.
-            
             initialized = true;
         } else {
             log(LogLevel.WARNING, "Initialization failed, logger is already initialized.");

@@ -15,6 +15,7 @@ import theskidster.xjge.ui.Component;
 import theskidster.xjge.ui.RectangleBatch;
 import theskidster.xjge.ui.Text;
 import theskidster.xjge.util.Color;
+import theskidster.xjge.util.ServiceLocator;
 import theskidster.xjge.util.Timer;
 
 /**
@@ -85,6 +86,7 @@ public class Terminal extends Component implements PropertyChangeListener {
         }
         
         //ENGINE
+        commands.put("beep",                 new CmdBeep());
         commands.put("cls",                  new CmdCLS());
         commands.put("help",                 new CmdHelp());
         commands.put("setAudioDevice",       new CmdSetAudioDevice());
@@ -442,6 +444,23 @@ public class Terminal extends Component implements PropertyChangeListener {
         }
         
         executed = true;
+    }
+    
+     private class CmdBeep extends TerminalCommand {
+        public CmdBeep() {
+            super("Plays a sound. Useful for testing audio devices.", 
+                    
+                  "Simply type beep to use. This command contains no addtional " +
+                  "arguments.", 
+                  
+                  "beep");
+        }
+
+        @Override
+        public void execute(List<String> args) {
+            ServiceLocator.getAudio().playSound("beep", false);
+        }
+        
     }
     
     private class CmdCLS extends TerminalCommand {

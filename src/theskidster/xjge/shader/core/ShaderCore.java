@@ -35,7 +35,6 @@ public final class ShaderCore {
     public static void init(Map<String, ShaderProgram> programs) {
         if(!initialized) {
             shaderPrograms.putAll(programs);
-            //@todo could be provided as a service instead.
             
             initialized = true;
         } else {

@@ -76,7 +76,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true;
     public static final String DOMAIN         = "xjge";
-    public static final String VERSION        = "1.0.0";
+    public static final String VERSION        = "1.0.4";
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -110,7 +110,7 @@ public final class App {
         
         audioDevice   = audioDevices.get(0);
         displayDevice = displayDevices.get(0);
-        window        = new Window("Extensible Java Game Engine (" + VERSION + ")");
+        window        = new Window("Extensible Java Game Engine (" + VERSION + ")"); //TODO change window title.
         
         alInit();
         glInit();
@@ -371,6 +371,7 @@ public final class App {
     public static String getInputDeviceName(int id)       { return inputDevices.get(id).name; }
     public static Puppet getInputDevicePuppet(int id)     { return inputDevices.get(id).puppets.peek(); }
     public static int getNumInputDevices()                { return inputDevices.size(); }
+    public static boolean getViewportActive(int id)       { return viewports[id].active; }
     
     /**
      * Sets the application to use fullscreen or windowed mode.
