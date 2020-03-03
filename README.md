@@ -7,6 +7,8 @@ Instead of boxing you in with its own gameplay elements XJGE provides a structur
 
 XJGE is (currently) closed source and protected under an exclusive license.
 
+[TOC]
+
 ## Getting Started
 XJGE requires java 12.0.1 or later and currently supports the following platforms:
 - Linux x64
@@ -17,6 +19,9 @@ XJGE requires java 12.0.1 or later and currently supports the following platform
 The most common issues encountered can be resolved by:
 - Including the lib folder in the same directory as .jar distributions.
 - Updating Java, GLFW, and/or OpenGL.
+
+## Branching & Cloning
+This repository is reserved exclusively to track the development of the engine only. Any game projects using this engine should first clone this repo, then push any subsequent commits to their own seperate repository.
 
 ## 1.0.0 Features
 - Simple 3D camera made controllable through the keyboard.
@@ -35,4 +40,3 @@ The most common issues encountered can be resolved by:
 - Graphics layer that allows complete control over the OpenGL graphics pipeline.
 - Game state traversal.
 - Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
-
