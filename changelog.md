@@ -53,6 +53,6 @@ All notable changes to this project will be documented in this file. The format 
 - Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
 
 
-
+[1.0.5]: https://github.com/theskidster/XJGE/commit/0f82e35a60f807098d05be3c5e02283ff424e0f3
 [1.0.4]: https://github.com/theskidster/XJGE/commit/4bb6e591d3b40f52da837ec27a66d92f4c6e1dbf
 [1.0.0]: https://github.com/theskidster/XJGE/commit/67b3a12dab536e1db056f03fba46988b25752591
