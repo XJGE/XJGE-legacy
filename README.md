@@ -21,7 +21,7 @@ The most common issues encountered can be resolved by:
 - Updating Java, GLFW, and/or OpenGL.
 
 ## Branching & Cloning
-This repository is reserved exclusively to track the development of the engine only. Any game projects using this engine should first clone this repo, then push any subsequent commits to their own seperate repository.
+This repository is reserved exclusively to track the development of the engine only. Any game projects using this engine should first clone this repo, change the origin of the clone, then push any subsequent commits to their own seperate repository.
 
 ## 1.0.0 Features
 - Simple 3D camera made controllable through the keyboard.
