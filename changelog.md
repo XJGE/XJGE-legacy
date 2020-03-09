@@ -3,17 +3,24 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [Unreleased]
+## [Unreleased 1.0.9]
+
+### Added
+
+* Icon class that enables icon images to be drawn to the UI through use of a sprite sheet.
+* Accompanying documentation to new classes/methods.
+* Validation to input device getter methods in App.
 
 ### Changed
 
 * Fixed broken documentation links.
-* Fixed the bug where using either the terminal of free cam wouldn't disable the keyboard.
-* Significant changes made to the output of the showInputInfo command including the use of new icons.
+* Fixed the bug where using either the terminal or free-cam wouldn't disable the keyboard.
+* Significant changes made to the output of the showInputInfo command.
+* Found and fixed a bug that left input devices disabled even after a disconnection event was resolved.
 
 ### Removed
 
-* Model matrix from Viewport.java
+* Model matrix from Viewport.java.
 
 
 

@@ -10,8 +10,6 @@ import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
-import dev.theskidster.xjge.util.Event;
-import static dev.theskidster.xjge.util.Event.PAUSE;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ServiceLocator;

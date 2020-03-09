@@ -479,7 +479,7 @@ public final class App {
             
             try {
                 device.enableStates.pop();
-                device.enabled = device.enableStates.pop();
+                device.enabled = device.enableStates.peek();
             } catch(EmptyStackException e) {
                 device.enabled = true;
             }
@@ -507,7 +507,7 @@ public final class App {
                 
                 try {
                     device.enableStates.pop();
-                    device.enabled = device.enableStates.pop();
+                    device.enabled = device.enableStates.peek();
                 } catch(EmptyStackException e) {
                     device.enabled = true;
                 }
@@ -982,9 +982,12 @@ public final class App {
                     try {
                         if(deviceID != KEYBOARD) {
                             device.enableStates.pop();
-                            device.enabled = device.enableStates.pop();
+                            device.enabled = device.enableStates.peek();
                         } else {
-                            if(!(terminalEnabled || freecamEnabled)) device.enabled = device.enableStates.pop();
+                            if(!(terminalEnabled || freecamEnabled)) {
+                                device.enableStates.pop();
+                                device.enabled = device.enableStates.peek();
+                            }
                         }
                     } catch(EmptyStackException e) {
                         device.enabled = true;
