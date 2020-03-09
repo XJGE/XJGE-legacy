@@ -44,7 +44,7 @@ public abstract class Command {
      * @param device the input device that executed the command
      * @param value  the value of the input state returned from the input device. This is helpful for instances where the interactive component is fluid in its 
      *               action (see {@link pressed(InputDevice, String, float) pressed()}).
-     * @see theskidster.xjge.hardware.InputDevice#poll()
+     * @see dev.theskidster.xjge.hardware.InputDevice#poll()
      */
     public abstract void execute(InputDevice device, float value);
     

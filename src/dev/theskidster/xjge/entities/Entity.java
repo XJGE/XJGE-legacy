@@ -26,29 +26,29 @@ public abstract class Entity {
     }
     
     /**
-     * Used to organize entity game logic. Must be called exclusively through {@link theskidster.xjge.level.Level#update() Level.update()};
+     * Used to organize entity game logic. Must be called exclusively through {@link dev.theskidster.xjge.level.Level#update() Level.update()};
      */
     public abstract void update();
     
     /**
-     * Used to organize calls to the graphics API made by this entity through its {@link theskidster.xjge.graphics.Graphics Graphics} component if it has one. Must 
-     * be called exclusively through {@link theskidster.xjge.level.Level#render() Level.render()};
+     * Used to organize calls to the graphics API made by this entity through its {@link dev.theskidster.xjge.graphics.Graphics Graphics} component if it has one. 
+     * Must be called exclusively through {@link dev.theskidster.xjge.level.Level#render() Level.render()};
      */
     public abstract void render();
     
     /**
      * Used to free resources used by this entity once it is no longer needed. Calls like 
-     * {@link theskidster.xjge.graphics.Graphics#freeBuffers() Graphics.freeBuffers()} and 
-     * {@link theskidster.xjge.graphics.Texture#freeTexture() Texture.freeTexture()} should be made here.
+     * {@link dev.theskidster.xjge.graphics.Graphics#freeBuffers() Graphics.freeBuffers()} and 
+     * {@link dev.theskidster.xjge.graphics.Texture#freeTexture() Texture.freeTexture()} should be made here.
      */
     protected abstract void destroy();
     
     /**
      * Finds if this entity has made a request for <a>{@link remove removal}</a>. If it has, the entity is  <a>{@link destroy destroyed}</a>
-     * and subsequently removed from the current levels <a>{@link theskidster.xjge.level.Level#entityList entity list}</a>.
+     * and subsequently removed from the current levels <a>{@link dev.theskidster.xjge.level.Level#entityList entity list}</a>.
      * 
      * @return true if the entity has requested removal
-     * @see theskidster.xjge.level.Level#resolveRemoveRequest() 
+     * @see dev.theskidster.xjge.level.Level#resolveRemoveRequest() 
      */
     public boolean getRemoveRequest() {
         if(removeRequest) destroy();

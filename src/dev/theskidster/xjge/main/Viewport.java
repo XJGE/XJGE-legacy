@@ -91,7 +91,7 @@ class Viewport {
             g.vertices = stack.mallocFloat(20);
             g.indices  = stack.mallocInt(6);
             
-            //        Position                         TexCoords
+            //(vec3 position), (vec2 texCoords)
             g.vertices.put(0)    .put(height) .put(0)  .put(1).put(1);
             g.vertices.put(width).put(height) .put(0)  .put(0).put(1);
             g.vertices.put(width).put(0)      .put(0)  .put(0).put(0);
@@ -143,7 +143,6 @@ class Viewport {
                 glBindTexture(GL_TEXTURE_2D, texHandle);
                 glBindVertexArray(g.vao);
                 
-                ShaderCore.setMat4("uModel", false, g.model);
                 ShaderCore.setInt("uType", 0);
                 
                 glDrawElements(GL_TRIANGLES, g.indices.limit(), GL_UNSIGNED_INT, 0);
@@ -188,7 +187,7 @@ class Viewport {
      * 
      * @param name      the name that will be used to identify and remove the component later
      * @param component the component object to use
-     * @see theskidster.xjge.ui
+     * @see dev.theskidster.xjge.ui
      */
     void addUIComponent(String name, Component component) {
         ui.put(name, component);

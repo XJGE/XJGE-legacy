@@ -30,7 +30,7 @@ public class Instance {
      * @param texture    the texture to be used as a sprite sheet
      * @param cell       the dimensions of the cells the texture will be split by
      * @param fromCenter determines whether the instance will be offset by its center or bottom left corner relative to its position
-     * @see theskidster.xjge.ui.BitmapFont
+     * @see dev.theskidster.xjge.ui.BitmapFont
      */
     public Instance(Texture texture, Cell cell, boolean fromCenter) {
         this.texture = texture;
@@ -52,13 +52,13 @@ public class Instance {
                 float width  = cell.width / 2;
                 float height = cell.height / 2;
                 
-                //        Position                          TexCoords
+                //(vec3 position), (vec2 texCoords)
                 g.vertices.put(-width) .put(height).put(0)  .put(0)               .put(0);
                 g.vertices .put(width) .put(height).put(0)  .put(sprite.cellWidth).put(0);
                 g.vertices .put(width).put(-height).put(0)  .put(sprite.cellWidth).put(sprite.cellHeight);
                 g.vertices.put(-width).put(-height).put(0)  .put(0)               .put(sprite.cellHeight);
             } else {
-                //        Position                                  TexCoords
+                //(vec3 position), (vec2 texCoords)
                 g.vertices.put(0)         .put(cell.height).put(0)  .put(0)               .put(0);
                 g.vertices.put(cell.width).put(cell.height).put(0)  .put(sprite.cellWidth).put(0);
                 g.vertices.put(cell.width).put(0)          .put(0)  .put(sprite.cellWidth).put(sprite.cellHeight);

@@ -6,7 +6,7 @@ package dev.theskidster.xjge.util;
  */
 
 /**
- * Used to determine the method in which the screen will be divided among each {@link theskidster.xjge.main.Viewport Viewport}.
+ * Used to determine the method in which the screen will be divided among each {@link dev.theskidster.xjge.main.Viewport Viewport}.
  */
 public enum ScreenSplitType {
     

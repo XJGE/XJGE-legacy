@@ -19,8 +19,8 @@ public class SpriteSheet {
     /**
      * Used in conjunction with a cells location on a sprite sheet to offset texture coordinates inside a shader.
      * 
-     * @see theskidster.xjge.ui.BitmapFont#posOffsets
-     * @see theskidster.xjge.ui.BitmapFont#init(Texture, Cell) 
+     * @see dev.theskidster.xjge.ui.BitmapFont#posOffsets
+     * @see dev.theskidster.xjge.ui.BitmapFont#init(Texture, Cell) 
      */
     public final float cellWidth, cellHeight;
     

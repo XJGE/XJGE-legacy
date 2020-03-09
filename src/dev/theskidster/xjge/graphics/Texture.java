@@ -83,7 +83,7 @@ public final class Texture {
     /**
      * Frees the OpenGL texture image associated with this object. Should be used when a texture is no longer needed.
      * 
-     * @see org.lwjgl.opengl.GL11#glDeleteTextures(int)
+     * @see dev.org.lwjgl.opengl.GL11#glDeleteTextures(int)
      */
     public void freeTexture() {
         glDeleteTextures(handle);

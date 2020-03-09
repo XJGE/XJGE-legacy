@@ -14,6 +14,7 @@ uniform mat4 uModel;
 uniform mat4 uView;
 uniform mat4 uProjection;
 uniform int uType;
+uniform vec2 uTexCoords;
 
 out vec2 ioTexCoords;
 out vec3 ioColor;
@@ -39,6 +40,11 @@ void main() {
         case 3: //Provided for reference and testing.
             ioColor     = aColor;
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
+            break;
+
+        case 4: //Used for icons.
+            ioTexCoords = aTexCoords + uTexCoords;
+            gl_Position = uProjection * uModel * vec4(aPosition, 1);
             break;
     }
 }

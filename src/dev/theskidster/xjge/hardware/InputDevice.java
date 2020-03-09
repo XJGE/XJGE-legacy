@@ -17,7 +17,7 @@ import dev.theskidster.xjge.util.Logger;
  * 
  * @see Controller
  * @see Keyboard
- * @see theskidster.xjge.puppets
+ * @see dev.theskidster.xjge.puppets
  */
 public abstract class InputDevice {
     
@@ -92,6 +92,7 @@ public abstract class InputDevice {
      */
     public void setEnabled(boolean value) {
         enableStates.add(value);
+        enabled = enableStates.peek();
     }
     
     /**

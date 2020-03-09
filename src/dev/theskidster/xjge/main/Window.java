@@ -10,6 +10,8 @@ import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
+import dev.theskidster.xjge.util.Event;
+import static dev.theskidster.xjge.util.Event.PAUSE;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ServiceLocator;
@@ -32,6 +34,7 @@ final class Window {
     public float scale;
     
     private boolean firstMouse = true;
+    public boolean connected[] = new boolean[4];
     
     public String title;
     public Vector2i resolution;
@@ -167,6 +170,7 @@ final class Window {
             switch(event) {
                 case GLFW_CONNECTED:
                     App.findInputDevices();
+                    if(jid < GLFW_JOYSTICK_5) connected[jid] = true;
                     Logger.log(LogLevel.INFO, 
                             "Controller: \"" + App.getInputDeviceName(jid) + 
                             "\" connected at position " + jid + ".");
@@ -178,8 +182,9 @@ final class Window {
                             "Controller: \"" + App.getInputDeviceName(jid) +
                             "\" disconnected at position " + jid + ".");
                     
-                    if(jid < 4) {
-                        DisCon discon = new DisCon(jid);
+                    if(jid < GLFW_JOYSTICK_5) {
+                        DisCon discon  = new DisCon(jid);
+                        connected[jid] = false;
                         
                         switch(jid) {
                             case GLFW_JOYSTICK_1:

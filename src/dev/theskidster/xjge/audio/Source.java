@@ -113,7 +113,8 @@ class Source {
     /**
      * Sets the current {@link Sound} object that the source will use. Calling this method on a newly initialized source object will set its source type from
      * {@link org.lwjgl.openal.AL11#AL_UNDETERMINED AL_UNDETERMINED} to {@link org.lwjgl.openal.AL11#AL_STATIC AL_STATIC}. Which will prevent it from allowing 
-     * additional sounds to be queued through {@link queueSound(Sound) queueSound()} and cause an {@link theskidster.xjge.util.ErrorUtil#checkALError() AL Error}.
+     * additional sounds to be queued through {@link queueSound(Sound) queueSound()} and cause an 
+     * {@link dev.theskidster.xjge.util.ErrorUtil#checkALError() AL Error}.
      * 
      * @param sound the sound to bind to this source
      */
@@ -124,9 +125,9 @@ class Source {
     
     /**
      * Queues a sound to play on this source after prior sounds in the queue have finished. This method will cause an 
-     * {@link theskidster.xjge.util.ErrorUtil#checkALError() AL Error} if a source type is not of {@link org.lwjgl.openal.AL11#AL_STREAMING AL_STREAMING}. OpenAL 
-     * requires a source to make an initial call to {@link org.lwjgl.openal.AL11#alSourceQueueBuffers(int, int) alSourceQueueBuffers()} prior to other operations to 
-     * set its type, as its type cannot be set explicitly later. The reserved music source by default uses this type.
+     * {@link dev.theskidster.xjge.util.ErrorUtil#checkALError() AL Error} if a source type is not of {@link org.lwjgl.openal.AL11#AL_STREAMING AL_STREAMING}. 
+     * OpenAL requires a source to make an initial call to {@link org.lwjgl.openal.AL11#alSourceQueueBuffers(int, int) alSourceQueueBuffers()} prior to other 
+     * operations to set its type, as its type cannot be set explicitly later. The reserved music source by default uses this type.
      * 
      * @param sound the sound to queue
      */

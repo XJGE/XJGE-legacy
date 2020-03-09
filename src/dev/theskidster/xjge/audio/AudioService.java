@@ -6,13 +6,13 @@ package dev.theskidster.xjge.audio;
  */
 
 /**
- * Provides the {@link theskidster.xjge.util.ServiceLocator ServiceLocator} class access to the audio engine without exposing implementation details.
+ * Provides the {@link dev.theskidster.xjge.util.ServiceLocator ServiceLocator} class access to the audio engine without exposing implementation details.
  */
 public interface AudioService {
     
     /**
      * Saves the state of each source in the last 
-     * {@link theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to be 
+     * {@link dev.theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to be 
      * transferred over to this context once {@link init()} is called.
      */
     void findSourceStates();
@@ -21,7 +21,7 @@ public interface AudioService {
      * Loads {@link Sound Sounds} and {@link Song Songs} then initializes the  
      * {@link Source Sound Sources} to be used by the audio engine. If sources existed 
      * previously their state is transferred to ensure a (relatively) smooth transition 
-     * between {@link theskidster.xjge.hardware.AudioDevice Audio Devices}.
+     * between {@link dev.theskidster.xjge.hardware.AudioDevice Audio Devices}.
      */
     void init();
     
@@ -62,7 +62,7 @@ public interface AudioService {
     
     /**
      * Plays music from the beginning. If the song provided contains an intro, {@link checkIntroFinished()} must be called from the current levels 
-     * {@link theskidster.xjge.level.Level#update() update()} method.
+     * {@link dev.theskidster.xjge.level.Level#update() update()} method.
      * 
      * @param song the song to start playing
      */
@@ -86,7 +86,7 @@ public interface AudioService {
     
     /**
      * Checks whether or not the musics intro has finished to begin the body section which will loop until stopped. Intended to be called from the current levels 
-     * {@link theskidster.xjge.level.Level#update() update()} method, but only if the current song contains an intro.
+     * {@link dev.theskidster.xjge.level.Level#update() update()} method, but only if the current song contains an intro.
      */
     void checkIntroFinished();
     

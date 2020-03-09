@@ -28,7 +28,7 @@ public class Timer {
      * 
      * @param time  the total number of steps the timer must complete before it is finished
      * @param speed the number of update ticks to wait before stepping forward. A single tick typically takes a millisecond.
-     * @see theskidster.xjge.main.Game#tick(int)
+     * @see dev.theskidster.xjge.main.Game#tick(int)
      */
     public Timer(int time, int speed) {
         this.time   = time;
@@ -44,7 +44,7 @@ public class Timer {
      * @param speed    the number of update ticks to wait before stepping forward. A single tick typically takes a millisecond.
      * @param observer the object waiting for this timer to finish
      * @see Observable
-     * @see theskidster.xjge.main.Game#tick(int)
+     * @see dev.theskidster.xjge.main.Game#tick(int)
      */
     public Timer(int time, int speed, PropertyChangeListener observer) {
         this.time   = time;
@@ -63,7 +63,7 @@ public class Timer {
      * @param speed     the number of update ticks to wait before stepping forward. A single tick typically takes a millisecond.
      * @param observers the objects waiting for this timer to finish
      * @see Observable
-     * @see theskidster.xjge.main.Game#tick(int)
+     * @see dev.theskidster.xjge.main.Game#tick(int)
      */
     public Timer(int time, int speed, List<PropertyChangeListener> observers) {
         this.time   = time;
@@ -90,8 +90,8 @@ public class Timer {
     public void reset() { time = initialTime; }
     
     /**
-     * Updates the timer, it is expected that objects using a timer component will supply an {@link theskidster.xjge.level.Level#update() update()} method through 
-     * which this can be called.
+     * Updates the timer, it is expected that objects using a timer component will supply an {@link dev.theskidster.xjge.level.Level#update() update()} method 
+     * through which this can be called.
      */
     public void update() {
         if(start) {

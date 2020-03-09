@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [Unreleased]
+
+### Changed
+
+* Fixed broken documentation links.
+* Fixed the bug where using either the terminal of free cam wouldn't disable the keyboard.
+* Significant changes made to the output of the showInputInfo command including the use of new icons.
+
+### Removed
+
+* Model matrix from Viewport.java
+
+
+
 ## [1.0.5] - 2020-03-03
 
 ### Added
@@ -54,5 +68,6 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+[1.0.5]: https://github.com/theskidster/XJGE/commit/0f82e35a60f807098d05be3c5e02283ff424e0f3
 [1.0.4]: https://github.com/theskidster/XJGE/commit/4bb6e591d3b40f52da837ec27a66d92f4c6e1dbf
 [1.0.0]: https://github.com/theskidster/XJGE/commit/67b3a12dab536e1db056f03fba46988b25752591

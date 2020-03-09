@@ -165,7 +165,7 @@ public final class Game {
     }
     
     /**
-     * Adds an entity to the current levels {@link theskidster.xjge.level.Level#entityList entityList}.
+     * Adds an entity to the current levels {@link dev.theskidster.xjge.level.Level#entityList entityList}.
      * 
      * @param e the entity we want to add
      */

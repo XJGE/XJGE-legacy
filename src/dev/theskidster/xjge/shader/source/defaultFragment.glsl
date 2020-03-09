@@ -38,5 +38,10 @@ void main() {
         case 2: case 3: //Used for rectangles and testing.
             ioResult = vec4(ioColor, 0);
             break;
+
+        case 4: //Used for icons.
+            makeTransparent(texture(uTexture, ioTexCoords).a);
+            ioResult = texture(uTexture, ioTexCoords);
+            break;
     }
 }

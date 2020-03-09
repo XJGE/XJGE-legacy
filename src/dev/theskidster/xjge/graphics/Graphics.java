@@ -14,15 +14,15 @@ import static org.lwjgl.opengl.GL30.*;
  * Component object that supplies implementing objects with the following:
  * <ul>
  * <li>A vertex buffer object - As a default buffer through which the implementing class may supply its vertex data to the 
- *                              <a>{@link theskidster.xjge.shader.core graphics pipeline}</a>.</li>
+ *                              <a>{@link dev.theskidster.xjge.shader.core graphics pipeline}</a>.</li>
  * <li>A index buffer object - To discourage data redundancy by specifying which vertices to reuse for the objects model mesh.</li>
  * <li>A vertex array object - For providing convenient access to the default vertex buffer in addition to any the implementation may define.</li>
  * </ul>
  * <p>
  * Implementing objects should define their vertex data and vertex attribute layouts in their constructors using LWJGLs memory utilities such as 
- * {@link org.lwjgl.system.MemoryUtil MemoryUtil} or {@link org.lwjgl.system.MemoryStack MemoryStack} (the later of which only if the vertex data doesn't exceed the 
- * JVMs stack size). LWJGLs {@link org.lwjgl.assimp.Assimp Assimp} binding is also available in conjunction to the previously mentioned classes to load vertex data in 
- * the form of a 3D model.
+ * {@link org.lwjgl.system.MemoryUtil MemoryUtil} or {@link org.lwjgl.system.MemoryStack MemoryStack} (the later of which only if the vertex data doesn't exceed 
+ * the JVMs stack size). LWJGLs {@link org.lwjgl.assimp.Assimp Assimp} binding is also available in conjunction to the previously mentioned classes to load 
+ * vertex data in the form of a 3D model.
  * </p>
  */
 public class Graphics {

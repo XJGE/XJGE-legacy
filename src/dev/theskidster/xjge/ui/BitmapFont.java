@@ -30,7 +30,7 @@ import dev.theskidster.xjge.util.Logger;
 /**
  * Objects of this type represent custom fonts that can be used by a {@link Text} object to draw strings.
  */
-public class BitmapFont {
+class BitmapFont {
     
     private final int vboPosOffset = glGenBuffers();
     private final int vboTexOffset = glGenBuffers();
@@ -46,7 +46,7 @@ public class BitmapFont {
     /**
      * Creates a new bitmap font with the engines default monospaced font.
      */
-    public BitmapFont() {
+    BitmapFont() {
         monospaced = true;
         init(new Texture("spr_dosmono.png"), new Cell(8, 14));
     }
@@ -57,7 +57,7 @@ public class BitmapFont {
      * 
      * @param filename the name of the file to load. Expects the file extension to be included.
      */
-    public BitmapFont(String filename) {
+    BitmapFont(String filename) {
         Texture texture = null;
         Cell cell       = null;
         
@@ -235,7 +235,7 @@ public class BitmapFont {
      * @param glyphs  the collection of glyphs that comprise the string being drawn
      * @param changed if true, the glyphs will be updated to reflect the changes in the string of text
      */
-    public void draw(Map<Integer, Glyph> glyphs, boolean changed) {
+    void draw(Map<Integer, Glyph> glyphs, boolean changed) {
         ShaderCore.use("default");
         
         glBindTexture(GL_TEXTURE_2D, data.texture.handle);

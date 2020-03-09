@@ -106,11 +106,12 @@ public final class App {
         
         findAudioDevices();
         findDisplayDevices();
-        findInputDevices();
         
         audioDevice   = audioDevices.get(0);
         displayDevice = displayDevices.get(0);
         window        = new Window("Extensible Java Game Engine (" + VERSION + ")"); //TODO change window title.
+        
+        findInputDevices();
         
         alInit();
         glInit();
@@ -131,7 +132,7 @@ public final class App {
     /**
      * Establishes the audio engine and sets the current OpenAL context to the default audio device found in {@link start()}.
      * 
-     * @see theskidster.xjge.audio
+     * @see dev.theskidster.xjge.audio
      */
     private void alInit() {
         ServiceLocator.setAudio(new Audio());
@@ -145,7 +146,7 @@ public final class App {
      * {@link dev.theskidster.xjge.util.Camera Camera} objects will fail. Remember to clear the shaderSources collection between program 
      * definitions.
      * 
-     * @see theskidster.xjge.shader.core
+     * @see dev.theskidster.xjge.shader.core
      */
     private void glInit() {
         glfwMakeContextCurrent(window.handle);
@@ -184,6 +185,7 @@ public final class App {
             program.addUniform(BufferType.MAT4, "uView");
             program.addUniform(BufferType.MAT4, "uProjection");
             program.addUniform(BufferType.INT,  "uType");
+            program.addUniform(BufferType.VEC2, "uTexCoords");
         }
         
         ShaderCore.init(shaderPrograms);
@@ -255,13 +257,14 @@ public final class App {
             } else {
                 if(glfwJoystickPresent(i)) {
                     inputDevices.put(i, new Controller(i));
+                    if(i < GLFW_JOYSTICK_5) window.connected[i] = true;
                 }
             }
         }
     }
     
     /**
-     * <a>{@link theskidster.xjge.hardware.InputDevice#poll() Polls}</a> the input of each connected input device.
+     * <a>{@link dev.theskidster.xjge.hardware.InputDevice#poll() Polls}</a> the input of each connected input device.
      */
     static void pollInput() {
         inputDevices.forEach((deviceID, device) -> {
@@ -285,7 +288,7 @@ public final class App {
      * Updates each viewports UI components and current {@link dev.theskidster.xjge.util.Camera Camera} object.
      * 
      * @see Viewport
-     * @see theskidster.xjge.ui
+     * @see dev.theskidster.xjge.ui
      * @see dev.theskidster.xjge.ui.Component
      */
     static void updateViewports() {
@@ -366,11 +369,12 @@ public final class App {
     public static Vector2i getWindowPos()        { return window.position; }
     public static ScreenSplitType getSplitType() { return split; }
     public static Color getClearColor()          { return clearColor; }
-    public static float getInputDeviceSensitivity(int id) { return inputDevices.get(id).sensitivity; } 
-    public static boolean getInputDeviceEnabled(int id)   { return inputDevices.get(id).enabled; }
-    public static String getInputDeviceName(int id)       { return inputDevices.get(id).name; }
-    public static Puppet getInputDevicePuppet(int id)     { return inputDevices.get(id).puppets.peek(); }
-    public static int getNumInputDevices()                { return inputDevices.size(); }
+    public static int getNumInputDevices()       { return inputDevices.size(); }
+    public static boolean getInputDevicePresent(int id)   { return (id != KEYBOARD) ? inputDevices.containsKey(id) && window.connected[id] : true; }
+    public static float getInputDeviceSensitivity(int id) { return (getInputDevicePresent(id)) ? inputDevices.get(id).sensitivity : 0; }
+    public static boolean getInputDeviceEnabled(int id)   { return (getInputDevicePresent(id)) ? inputDevices.get(id).enabled : false; }
+    public static String getInputDeviceName(int id)       { return (getInputDevicePresent(id)) ? inputDevices.get(id).name : "N/A"; }
+    public static Puppet getInputDevicePuppet(int id)     { return (getInputDevicePresent(id)) ? inputDevices.get(id).puppets.peek() : null; }
     public static boolean getViewportActive(int id)       { return viewports[id].active; }
     
     /**
@@ -463,15 +467,22 @@ public final class App {
      * @param value if true, the command terminal will be opened. Supplying false will close it.
      */
     public static void setTerminalEnabled(boolean value) {
-        terminalEnabled = value;
+        terminalEnabled    = value;
+        InputDevice device = inputDevices.get(KEYBOARD);
         
         if(terminalEnabled) {
             Puppets.TERMINAL.setSplitPosition();
             addUIComponent(0, "terminal", Puppets.TERMINAL);
-            inputDevices.get(KEYBOARD).setEnabled(false);
+            device.setEnabled(false);
         } else {
             removeUIComponent(0, "terminal");
-            inputDevices.get(KEYBOARD).setEnabled(true);
+            
+            try {
+                device.enableStates.pop();
+                device.enabled = device.enableStates.pop();
+            } catch(EmptyStackException e) {
+                device.enabled = true;
+            }
         }
     }
     
@@ -481,17 +492,25 @@ public final class App {
      * @param value if true, viewport 0 will use a free roaming camera. Supplying false will return the viewport to its previously bound camera object.
      */
     public static void setFreecamEnabled(boolean value) {
+        InputDevice device = inputDevices.get(KEYBOARD);
+        
         if(!terminalEnabled) {
             freecamEnabled = value;
                 
             if(freecamEnabled) {
                 glfwSetInputMode(window.handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                 setViewportCamera(0, Puppets.FREECAM);
-                inputDevices.get(KEYBOARD).setEnabled(false);
+                device.setEnabled(false);
             } else {
                 glfwSetInputMode(window.handle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
                 setViewportCameraPrev(0);
-                inputDevices.get(KEYBOARD).setEnabled(true);
+                
+                try {
+                    device.enableStates.pop();
+                    device.enabled = device.enableStates.pop();
+                } catch(EmptyStackException e) {
+                    device.enabled = true;
+                }
             }
         } else {
             Logger.log(LogLevel.INFO, 
@@ -678,9 +697,9 @@ public final class App {
     /**
      * Sets the type of <a>{@link dev.theskidster.xjge.util.ScreenSplitType Split}</a> to be used by the viewports during split screen.
      * 
-     * @param value the type of split to use. One of {@link theskidster.xjge.util.ScreenSplitType#NO_SPLIT NO_SPLIT}, 
-     *              {@link theskidster.xjge.util.ScreenSplitType#VERTICAL VERTICAL}, {@link theskidster.xjge.util.ScreenSplitType#HORIZONTAL HORIZONTAL},
-     *              {@link theskidster.xjge.util.ScreenSplitType#TRIPLE TRIPLE}, or {@link theskidster.xjge.util.ScreenSplitType#QUADRUPLE QUADRUPLE}.
+     * @param value the type of split to use. One of {@link dev.theskidster.xjge.util.ScreenSplitType#NO_SPLIT NO_SPLIT}, 
+     *              {@link dev.theskidster.xjge.util.ScreenSplitType#VERTICAL VERTICAL}, {@link dev.theskidster.xjge.util.ScreenSplitType#HORIZONTAL HORIZONTAL},
+     *              {@link dev.theskidster.xjge.util.ScreenSplitType#TRIPLE TRIPLE}, or {@link dev.theskidster.xjge.util.ScreenSplitType#QUADRUPLE QUADRUPLE}.
      */
     public static void setSplitType(ScreenSplitType value) {
         split = value;
@@ -844,9 +863,9 @@ public final class App {
      * Used to update the vectors of a viewport camera.
      * 
      * @param id  the unique number used to identify the viewport in other parts of the engine
-     * @param pos the corresponding {@link theskidster.xjge.util.Camera#position Camera.position} vector
-     * @param dir the corresponding {@link theskidster.xjge.util.Camera#direction Camera.direction} vector
-     * @param up  the corresponding {@link theskidster.xjge.util.Camera#up Camera.up} vector
+     * @param pos the corresponding {@link dev.theskidster.xjge.util.Camera#position Camera.position} vector
+     * @param dir the corresponding {@link dev.theskidster.xjge.util.Camera#direction Camera.direction} vector
+     * @param up  the corresponding {@link dev.theskidster.xjge.util.Camera#up Camera.up} vector
      * @see dev.theskidster.xjge.util.Camera
      */
     public static void setViewportCameraVectors(int id, Vector3f pos, Vector3f dir, Vector3f up) {
@@ -932,8 +951,8 @@ public final class App {
      * should not be supplied anywhere outside of {@link Game#pauseEvents()}.
      * 
      * @param id      the unique id of the input device (specified with {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK}). Or a value to perform this 
-     *                operation on multiple devices such as  {@link theskidster.xjge.hardware.InputDevice#ALL_EXCEPT_1 ALL_EXCEPT_X} 
-     *                and {@link theskidster.xjge.hardware.InputDevice#ALL_DEVICES ALL_DEVICES}.
+     *                operation on multiple devices such as  {@link dev.theskidster.xjge.hardware.InputDevice#ALL_EXCEPT_1 ALL_EXCEPT_X} 
+     *                and {@link dev.theskidster.xjge.hardware.InputDevice#ALL_DEVICES ALL_DEVICES}.
      * @param enabled if true, the input device(s) will be enabled. Supplying false will disable the specified device(s).
      * @see dev.theskidster.xjge.hardware.InputDevice
      */
@@ -948,10 +967,10 @@ public final class App {
             case ALL_EXCEPT_1: case ALL_EXCEPT_2:
             case ALL_EXCEPT_3: case ALL_EXCEPT_4:
                 inputDevices.forEach((deviceID, device) -> {
-                    if(deviceID == id) {
+                    if(deviceID == Math.abs(id + 1)) {
                         device.setEnabled(!enabled);
                     } else {
-                        device.setEnabled(enabled);
+                        if(deviceID != KEYBOARD) device.setEnabled(enabled);
                     }
                 });
                 break;
@@ -961,7 +980,12 @@ public final class App {
             case PREV_STATE:
                 inputDevices.forEach((deviceID, device) -> {
                     try {
-                        device.enabled = device.enableStates.pop();
+                        if(deviceID != KEYBOARD) {
+                            device.enableStates.pop();
+                            device.enabled = device.enableStates.pop();
+                        } else {
+                            if(!(terminalEnabled || freecamEnabled)) device.enabled = device.enableStates.pop();
+                        }
                     } catch(EmptyStackException e) {
                         device.enabled = true;
                     }
@@ -996,7 +1020,7 @@ public final class App {
      * 
      * @param id the unique number used to identify the input device in other parts of the engine. Either a 
      *           {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK} value or KEYBOARD for the keyboard. ALL_DEVICES is not accepted here.
-     * @see theskidster.xjge.hardware.InputDevice#setPrevPuppet()
+     * @see dev.theskidster.xjge.hardware.InputDevice#setPrevPuppet()
      */
     public static void setInputDevicePuppetPrev(int id) {
         if(inputDevices.containsKey(id)) {
@@ -1009,8 +1033,8 @@ public final class App {
     }
     
     /**
-     * Sets the current audio device of the application. Doing so will change the {@link theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to 
-     * that device.
+     * Sets the current audio device of the application. Doing so will change the 
+     * {@link dev.theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to that device.
      * 
      * @param operation the method of traversal either explicitly as the ID number of the device or "prev"/"next" to move to the previous or next device in the list
      */

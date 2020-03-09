@@ -13,7 +13,7 @@ import dev.theskidster.xjge.shader.core.ShaderCore;
  * Represents a camera which is free to roam about the level. Set as the initial camera of all viewports, typically used for debugging purposes. If debugging is 
  * permitted, F2 can be used to enable the camera on viewport 0.
  * 
- * @see theskidster.xjge.main.App#setFreecamEnabled(boolean)
+ * @see dev.theskidster.xjge.main.App#setFreecamEnabled(boolean)
  */
 public class Freecam extends Camera {
 

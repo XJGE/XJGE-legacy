@@ -81,7 +81,7 @@ public final class Sound {
     
     /**
      * Frees the sound buffer associated with this object. Sounds will be freed automatically between configuration changes to the applications current 
-     * {@link theskidster.xjge.hardware.AudioDevice Audio Device} that requires a new OpenAL context to be created.
+     * {@link dev.theskidster.xjge.hardware.AudioDevice Audio Device} that requires a new OpenAL context to be created.
      */
     public void freeSound() {
         alDeleteBuffers(handle);

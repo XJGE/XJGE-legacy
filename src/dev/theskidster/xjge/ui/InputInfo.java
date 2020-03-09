@@ -1,7 +1,8 @@
 package dev.theskidster.xjge.ui;
 
+import dev.theskidster.xjge.graphics.Cell;
+import static dev.theskidster.xjge.hardware.InputDevice.KEYBOARD;
 import org.joml.Vector3i;
-import static org.lwjgl.glfw.GLFW.glfwJoystickPresent;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.Color;
 
@@ -14,31 +15,62 @@ import dev.theskidster.xjge.util.Color;
  * Provides information regarding connected input devices.
  */
 public class InputInfo extends Component {
-
+    
+    private int maxLength;
+    
     private Vector3i textPos = new Vector3i();
-    private Text[] text      = new Text[4];
+    private Text[] text      = new Text[9];
+    private Icon[] icons     = new Icon[5];
     
     public InputInfo() {
         super(new Vector3i(), 0, 0);
         
-        setSplitPosition();
-        
         for(int i = 0; i < text.length; i++) {
             text[i] = new Text();
+        }
+        
+        for(int i = 0; i < icons.length; i++) {
+            icons[i] = new Icon("spr_icons_input.png", new Cell(18, 12));
+        }
+        
+        icons[4].setSprite(3, 0);
+        
+        setSplitPosition();
+    }
+
+    @Override
+    public void update() {
+        for(int i = 0; i < 4; i++) {
+            if(App.getInputDevicePresent(i)) {
+                if(App.getInputDeviceEnabled(i)) icons[i].setSprite(2, 0);
+                else                             icons[i].setSprite(1, 0);
+            } else {
+                icons[i].setSprite(0, 0);
+            }
         }
     }
 
     @Override
-    public void update() {}
-
-    @Override
     public void render() {
-        for(int i = 0; i < 4; i++) {
-            boolean present = glfwJoystickPresent(i);
-            
-            text[i].draw("Input Device " + i + ": " + ((present) ? "connected." : "disconnected."),
-                    textPos.set(position.x, position.y - (14 * i), 0), 
-                    ((present) ? Color.GREEN : Color.RED));
+        for(Icon icon : icons) icon.render();
+        
+        text[0].draw(
+                ((App.getInputDeviceEnabled(KEYBOARD) ? "Enabled" : "Disabled")), 
+                textPos.set(position.x + 29, position.y - 4, position.z), 
+                Color.WHITE);
+        
+        for(int i = 1; i < 5; i++) {
+            text[i].draw(
+                    (i - 1) + "",
+                    textPos.set(position.x + 16, position.y - (16 * i) - 10, 0),
+                    Color.WHITE);
+        }
+        
+        for(int i = 5; i < text.length; i++) {
+            text[i].draw(
+                    getFormattedDeviceName(i - 5),
+                    textPos.set(position.x + 29, position.y - (16 * (i - 4)) - 6, 0),
+                    Color.WHITE);
         }
     }
 
@@ -49,11 +81,29 @@ public class InputInfo extends Component {
         switch(App.getSplitType()) {
             case NO_SPLIT: case VERTICAL:
                 position.y = App.getResolution().y - 18;
+                maxLength  = 56;
+                updateIconPositions(20);
                 break;
                 
             case HORIZONTAL: case TRIPLE: case QUADRUPLE:
                 position.y = (App.getResolution().y / 2) - 18;
+                maxLength = 26;
+                updateIconPositions(20);
                 break;
+        }
+    }
+    
+    private String getFormattedDeviceName(int id) {
+        String deviceName = App.getInputDeviceName(id);
+        return (deviceName.length() >= maxLength) ? deviceName.substring(0, maxLength - 3) + "..." : App.getInputDeviceName(id);
+    }
+    
+    private void updateIconPositions(int yOffset) {
+        icons[4].setPosition(position);
+        
+        for(int i = 0; i < 4; i++) {
+            icons[i].setPosition(position.x, position.y - yOffset, position.z);
+            yOffset += 16;
         }
     }
     

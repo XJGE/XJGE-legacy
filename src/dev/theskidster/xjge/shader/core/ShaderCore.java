@@ -44,7 +44,7 @@ public final class ShaderCore {
     
     /**
      * Changes the current active shader program the shader core will use for subsequent rendering operations. Program names supplied must correspond to those 
-     * defined in {@link theskidster.xjge.main.App#glInit() App.glInit()}.
+     * defined in {@link dev.theskidster.xjge.main.App#glInit() App.glInit()}.
      * 
      * @param name the name used to identify the shader program
      */
@@ -58,8 +58,8 @@ public final class ShaderCore {
     }
     
     /**
-     * Removes the shader program from the GPU. Program names supplied must correspond to those defined in {@link theskidster.xjge.main.App#glInit() App.glInit()}.
-     * Should only be called once the application is exiting. 
+     * Removes the shader program from the GPU. Program names supplied must correspond to those defined in 
+     * {@link dev.theskidster.xjge.main.App#glInit() App.glInit()}. Should only be called once the application is exiting. 
      * 
      * @param name the name used to identify the shader program
      */
