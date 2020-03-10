@@ -93,11 +93,23 @@ public class InputInfo extends Component {
         }
     }
     
+    /**
+     * Used to format the name of an input device to better fit the viewport.
+     * 
+     * @param id the unique number used to identify the input device in other parts of the engine. One of 
+     *           {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK}.
+     * @return a formatted string depending on its length.
+     */
     private String getFormattedDeviceName(int id) {
         String deviceName = App.getInputDeviceName(id);
         return (deviceName.length() >= maxLength) ? deviceName.substring(0, maxLength - 3) + "..." : App.getInputDeviceName(id);
     }
     
+    /**
+     * Sets the positions of each input device icon relative to some offset along the y axis.
+     * 
+     * @param yOffset the initial offset that each icon will use following the first one.
+     */
     private void updateIconPositions(int yOffset) {
         icons[4].setPosition(position);
         

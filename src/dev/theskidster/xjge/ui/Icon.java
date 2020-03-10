@@ -23,6 +23,10 @@ import org.lwjgl.system.MemoryStack;
  * Created: Mar 9, 2020
  */
 
+/**
+ * Represents a quickly comprehensible symbol included to help users better understand an interface. Icons make use of a 
+ * {@link dev.theskidster.xjge.graphics.SpriteSheet SpriteSheet} and as such, provide utilities for quickly switching between individual images as needed.
+ */
 public class Icon {
     
     private Graphics g = new Graphics();
@@ -32,6 +36,12 @@ public class Icon {
     
     private Map<Vector2i, Vector2f> texOffsets = new HashMap<>();
     
+    /**
+     * Creates a new icon object which can be used to comprise part of a larger user interface.
+     * 
+     * @param filename the texture to use.
+     * @param cell     the dimensions to split the texture by.
+     */
     public Icon(String filename, Cell cell) {
         texture = new Texture(filename);
         
@@ -91,14 +101,32 @@ public class Icon {
         }
     }
     
+    /**
+     * Sets the position of the icon.
+     * 
+     * @param position the position to set this icon to.
+     */
     public void setPosition(Vector3i position) {
         g.model.translation(new Vector3f(position.x, position.y, position.z));
     }
     
+    /**
+     * Overloaded version of {@link setPosition(Vector3i) }.
+     * 
+     * @param x the x position of the icon.
+     * @param y the y position of the icon.
+     * @param z the z position of the icon.
+     */
     public void setPosition(float x, float y, float z) {
         g.model.translation(x, y, z);
     }
     
+    /**
+     * Sets the sprite image to be used by the icon.
+     * 
+     * @param cellX the x position of the cell as it appears in the sprite sheet.
+     * @param cellY the y position of the cell as it appears in the sprite sheet.
+     */
     public void setSprite(int cellX, int cellY) {
         Vector2i cell = new Vector2i(cellX, cellY);
         
@@ -111,6 +139,9 @@ public class Icon {
         }
     }
     
+    /**
+     * Renders the icon image.
+     */
     public void render() {
         ShaderCore.use("default");
         

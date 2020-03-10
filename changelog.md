@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [Unreleased 1.0.9]
+## [1.0.9] - 2020-03-09
 
 ### Added
 
