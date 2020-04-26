@@ -1,28 +1,45 @@
 package dev.theskidster.xjge.graphics;
 
+import java.util.HashMap;
+import java.util.Map;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+
 /**
  * @author J Hoffman
  * Created: Jan 23, 2020
  */
 
 /**
- * A sprite sheet consists of a single {@link Texture} image split into smaller sub-images (known as sprites) according to the dimensions specified by its 
- * {@link Cell}. More specifically this object provides the data generated from that process such as the amount of rows an columns the texture has been evenly divided 
- * into, the total number of sprite images, and the dimensions of each sprite in a format understood by the graphics pipeline.
+ * A sprite sheet consists of a single {@link Texture} image split into smaller sub-images according to the pixel dimensions specified by its {@link Cell}. More 
+ * specifically, this object provides data generated from this process that can be used by other parts of the engine. 
+ * <p>The data provided by this class includes: </p>
+ * <ul>
+ * <li>The number of rows and columns the texture was divided into.</li>
+ * <li>The number of sub-images this sheet contains.</li>
+ * <li>The dimensions of a single sub-image as texture coordinates.</li>
+ * <li>A mapping of every sub-images cell positions to texture coordinates.</li>
+ * </ul>
  */
 public class SpriteSheet {
     
     public final int rows;
-    public final int cols;
-    public final int cellCount;
+    public final int columns;
+    public final int imgCount;
     
     /**
-     * Used in conjunction with a cells location on a sprite sheet to offset texture coordinates inside a shader.
+     * The dimensions (as texture coordinates) of a single sub-image.
      * 
-     * @see dev.theskidster.xjge.ui.BitmapFont#posOffsets
-     * @see dev.theskidster.xjge.ui.BitmapFont#init(Texture, Cell) 
+     * @see texOffsets
      */
-    public final float cellWidth, cellHeight;
+    public final float imgWidth, imgHeight;
+    
+    public Vector2f texCoords = new Vector2f();
+    
+    /**
+     * A collection sprite sheet data that joins sub-image cell locations to their corresponding texture coordinates.
+     */
+    public Map<Vector2i, Vector2f> imgOffsets = new HashMap<>();
     
     /**
      * Creates a new sprite sheet and supplies the data it generates from the texture and 
@@ -33,11 +50,17 @@ public class SpriteSheet {
      * @param cell    the dimensions to split the texture by.
      */
     public SpriteSheet(Texture texture, Cell cell) {
-        cellWidth  = (float) cell.width / texture.getWidth();
-        cellHeight = (float) cell.height / texture.getHeight();
-        rows       = texture.getWidth() / cell.width;
-        cols       = texture.getHeight() / cell.height;
-        cellCount  = rows * cols;
+        imgWidth  = (float) cell.width / texture.getWidth();
+        imgHeight = (float) cell.height / texture.getHeight();
+        rows      = texture.getWidth() / cell.width;
+        columns   = texture.getHeight() / cell.height;
+        imgCount  = rows * columns;
+        
+        for(int x = 0; x < rows; x++) {
+            for(int y = 0; y < columns; y++) {
+                imgOffsets.put(new Vector2i(x, y), new Vector2f(imgWidth * x, imgHeight * y));
+            }
+        }
     }
     
 }

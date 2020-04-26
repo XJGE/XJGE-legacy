@@ -57,10 +57,10 @@ public class Icon {
             g.indices  = stack.mallocInt(6);
             
             //(vec3 position), (vec2 tex coords)
-            g.vertices.put(0)         .put(cell.height).put(0)  .put(0).put(0);
-            g.vertices.put(cell.width).put(cell.height).put(0)  .put(sprite.cellWidth).put(0);
-            g.vertices.put(cell.width).put(0)          .put(0)  .put(sprite.cellWidth).put(sprite.cellHeight);
-            g.vertices.put(0)         .put(0)          .put(0)  .put(0).put(sprite.cellHeight);
+            g.vertices.put(0)         .put(cell.height).put(0)  .put(0)              .put(0);
+            g.vertices.put(cell.width).put(cell.height).put(0)  .put(sprite.imgWidth).put(0);
+            g.vertices.put(cell.width).put(0)          .put(0)  .put(sprite.imgWidth).put(sprite.imgHeight);
+            g.vertices.put(0)         .put(0)          .put(0)  .put(0)              .put(sprite.imgHeight);
             
             g.indices.put(0).put(1).put(2);
             g.indices.put(2).put(3).put(0);
@@ -82,9 +82,9 @@ public class Icon {
         int cellPosX  = 0;
         int cellPosY  = 0;
         
-        for(int i = 0; i < sprite.cellCount; i++) {
+        for(int i = 0; i < sprite.imgCount; i++) {
             if(i % sprite.rows != 0 && i != 0) {
-                texPosX += sprite.cellWidth;
+                texPosX += sprite.imgWidth;
                 cellPosX++;
                 
                 texOffsets.put(new Vector2i(cellPosX, cellPosY), new Vector2f(texPosX, texPosY));
@@ -93,7 +93,7 @@ public class Icon {
             } else {
                 texPosX  = 0;
                 cellPosX = 0;
-                texPosY += sprite.cellHeight;
+                texPosY += sprite.imgHeight;
                 cellPosY++; 
                 
                 texOffsets.put(new Vector2i(cellPosX, cellPosY), new Vector2f(texPosX, texPosY));
@@ -107,7 +107,7 @@ public class Icon {
      * @param position the position to set this icon to.
      */
     public void setPosition(Vector3i position) {
-        g.model.translation(new Vector3f(position.x, position.y, position.z));
+        g.modelMatrix.translation(new Vector3f(position.x, position.y, position.z));
     }
     
     /**
@@ -118,7 +118,7 @@ public class Icon {
      * @param z the z position of the icon.
      */
     public void setPosition(float x, float y, float z) {
-        g.model.translation(x, y, z);
+        g.modelMatrix.translation(x, y, z);
     }
     
     /**
@@ -148,7 +148,7 @@ public class Icon {
         glBindTexture(GL_TEXTURE_2D, texture.handle);
         glBindVertexArray(g.vao);
         
-        ShaderCore.setMat4("uModel", false, g.model);
+        ShaderCore.setMat4("uModel", false, g.modelMatrix);
         ShaderCore.setInt("uType", 4);
         ShaderCore.setVec2("uTexCoords", currCell);
                 

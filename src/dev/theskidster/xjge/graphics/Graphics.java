@@ -34,7 +34,7 @@ public class Graphics {
     public FloatBuffer vertices;
     public IntBuffer indices;
     
-    public Matrix4f model = new Matrix4f();
+    public Matrix4f modelMatrix = new Matrix4f();
     
     /**
      * Convenience method provided to bind the default buffers defined by this class. Implementing classes are expected to define vertex attribute layouts following 

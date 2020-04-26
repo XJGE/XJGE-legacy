@@ -48,8 +48,8 @@ public class EntityTest extends Entity {
     public void update() {
         angle += 1f;
         
-        g.model.translation(position);
-        g.model.rotateY((float) Math.toRadians(-angle));
+        g.modelMatrix.translation(position);
+        g.modelMatrix.rotateY((float) Math.toRadians(-angle));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class EntityTest extends Entity {
         ShaderCore.use("default");
         glBindVertexArray(g.vao);
         
-        ShaderCore.setMat4("uModel", false, g.model);
+        ShaderCore.setMat4("uModel", false, g.modelMatrix);
         ShaderCore.setInt("uType", 3);
         
         glDrawArrays(GL_TRIANGLES, 0, 3);

@@ -104,7 +104,7 @@ public class Terminal extends Component implements PropertyChangeListener {
         
         //GAMEPLAY
         commands.put("setLevel", new CmdSetLevel());
-        //TODO add new commands here.
+        //TODO add more gameplay commands here.
         
         keyChars.put(GLFW_KEY_SPACE,      new Key(' ', ' '));
         keyChars.put(GLFW_KEY_APOSTROPHE, new Key('\'', '\"'));

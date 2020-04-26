@@ -59,6 +59,7 @@ public class Audio implements AudioService {
     public void init() {
         //Sounds
         sounds.put("beep", new Sound("sfx_beep.ogg"));
+        //TODO add more sounds.
         
         //Songs
         //TODO add songs.

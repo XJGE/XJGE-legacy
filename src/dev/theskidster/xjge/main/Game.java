@@ -43,7 +43,7 @@ public final class Game {
      * Creates a new game instance and sets the initial level state. Called once immediately following the applications startup sequence. 
      */
     public Game() {
-        setLevel(new LevelTest()); //TODO set custom level
+        setLevel(new LevelTest()); //TODO set to custom level.
     }
     
     /**

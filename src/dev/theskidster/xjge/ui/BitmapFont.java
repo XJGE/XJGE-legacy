@@ -141,10 +141,10 @@ class BitmapFont {
         for(char c : charset.toCharArray()) {
             if(c != '\r') {
                 texOffsets.put(c, new Vector2f(charPosX, charPosY));
-                charPosX += data.sprite.cellWidth;
+                charPosX += data.sprite.imgWidth;
             } else {
                 charPosX = 0;
-                charPosY += data.sprite.cellHeight;
+                charPosY += data.sprite.imgHeight;
             }
         }
     }

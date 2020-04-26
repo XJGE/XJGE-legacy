@@ -53,16 +53,16 @@ public class Instance {
                 float height = cell.height / 2;
                 
                 //(vec3 position), (vec2 texCoords)
-                g.vertices.put(-width) .put(height).put(0)  .put(0)               .put(0);
-                g.vertices .put(width) .put(height).put(0)  .put(sprite.cellWidth).put(0);
-                g.vertices .put(width).put(-height).put(0)  .put(sprite.cellWidth).put(sprite.cellHeight);
-                g.vertices.put(-width).put(-height).put(0)  .put(0)               .put(sprite.cellHeight);
+                g.vertices.put(-width) .put(height).put(0)  .put(0)              .put(0);
+                g.vertices .put(width) .put(height).put(0)  .put(sprite.imgWidth).put(0);
+                g.vertices .put(width).put(-height).put(0)  .put(sprite.imgWidth).put(sprite.imgHeight);
+                g.vertices.put(-width).put(-height).put(0)  .put(0)              .put(sprite.imgHeight);
             } else {
                 //(vec3 position), (vec2 texCoords)
-                g.vertices.put(0)         .put(cell.height).put(0)  .put(0)               .put(0);
-                g.vertices.put(cell.width).put(cell.height).put(0)  .put(sprite.cellWidth).put(0);
-                g.vertices.put(cell.width).put(0)          .put(0)  .put(sprite.cellWidth).put(sprite.cellHeight);
-                g.vertices.put(0)         .put(0)          .put(0)  .put(0)               .put(sprite.cellHeight);
+                g.vertices.put(0)         .put(cell.height).put(0)  .put(0)              .put(0);
+                g.vertices.put(cell.width).put(cell.height).put(0)  .put(sprite.imgWidth).put(0);
+                g.vertices.put(cell.width).put(0)          .put(0)  .put(sprite.imgWidth).put(sprite.imgHeight);
+                g.vertices.put(0)         .put(0)          .put(0)  .put(0)              .put(sprite.imgHeight);
             }
             
             g.indices.put(0).put(1).put(2);
