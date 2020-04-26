@@ -69,6 +69,12 @@ public final class Logger {
                 writer.println(message);
                 writer.println();
                 if(ex != null) {
+                    var stackTrace = ex.getStackTrace();
+                    
+                    System.out.println(ex.toString());
+                    for(StackTraceElement element : stackTrace) System.out.println("\t" + element.toString());
+                    System.out.println();
+                    
                     ex.printStackTrace(writer);
                     writer.println();
                     ex = null;

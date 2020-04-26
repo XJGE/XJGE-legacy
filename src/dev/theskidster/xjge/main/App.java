@@ -42,6 +42,7 @@ import dev.theskidster.xjge.shader.core.ShaderProgram;
 import dev.theskidster.xjge.shader.core.ShaderSource;
 import dev.theskidster.xjge.ui.Component;
 import dev.theskidster.xjge.ui.InputInfo;
+import dev.theskidster.xjge.ui.RectangleBatch;
 import dev.theskidster.xjge.ui.RuntimeInfo;
 import dev.theskidster.xjge.ui.SystemInfo;
 import dev.theskidster.xjge.util.Color;
@@ -76,7 +77,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String VERSION        = "1.0.5";
+    public static final String VERSION        = "1.3.0";
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -472,9 +473,11 @@ public final class App {
         
         if(terminalEnabled) {
             Puppets.TERMINAL.setSplitPosition();
+            Puppets.TERMINAL.rectBatch = new RectangleBatch(1);
             addUIComponent(0, "terminal", Puppets.TERMINAL);
             device.setEnabled(false);
         } else {
+            Puppets.TERMINAL.rectBatch.destroy();
             removeUIComponent(0, "terminal");
             
             try {

@@ -51,8 +51,8 @@ public class Terminal extends Component implements PropertyChangeListener {
     private List<String> cmdHistory    = new ArrayList<>();
     private TerminalOutput[] cmdOutput = new TerminalOutput[5];
     
-    private RectangleBatch rectBatch = new RectangleBatch(1);
-    private Timer timer              = new Timer(1, 20, this);
+    public RectangleBatch rectBatch = new RectangleBatch(1);
+    private Timer timer             = new Timer(1, 20, this);
     
     Map<String, TerminalCommand> commands = new TreeMap<>();
     private Map<Integer, Key> keyChars    = new HashMap<>();

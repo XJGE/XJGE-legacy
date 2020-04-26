@@ -65,7 +65,11 @@ public final class Texture {
             height   = heightBuf.get();
             channels = chanBuf.get();
             
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
+            if(texture != null) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
+            } else {
+                throw new NullPointerException("STBI failed to parse texture data.");
+            }
             
             stbi_image_free(texture);
             MemoryUtil.memFree(imageBuf);
