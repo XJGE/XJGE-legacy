@@ -4,7 +4,6 @@ import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL30.*;
 import org.lwjgl.system.MemoryStack;
 import dev.theskidster.xjge.graphics.Graphics;
-import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.ErrorUtil;
 
