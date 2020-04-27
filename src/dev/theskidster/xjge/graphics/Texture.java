@@ -54,16 +54,16 @@ public final class Texture {
         try(MemoryStack stack = MemoryStack.stackPush()) {
             byte[] data = file.readAllBytes();
             
-            ByteBuffer imageBuf = MemoryUtil.memAlloc(data.length).put(data).flip();
-            IntBuffer widthBuf  = stack.mallocInt(1);
-            IntBuffer heightBuf = stack.mallocInt(1);
-            IntBuffer chanBuf   = stack.mallocInt(1);
+            ByteBuffer imageBuf  = MemoryUtil.memAlloc(data.length).put(data).flip();
+            IntBuffer widthBuf   = stack.mallocInt(1);
+            IntBuffer heightBuf  = stack.mallocInt(1);
+            IntBuffer channelBuf = stack.mallocInt(1);
             
-            ByteBuffer texture = stbi_load_from_memory(imageBuf, widthBuf, heightBuf, chanBuf, STBI_rgb_alpha);
+            ByteBuffer texture = stbi_load_from_memory(imageBuf, widthBuf, heightBuf, channelBuf, STBI_rgb_alpha);
             
             width    = widthBuf.get();
             height   = heightBuf.get();
-            channels = chanBuf.get();
+            channels = channelBuf.get();
             
             if(texture != null) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);

@@ -74,6 +74,8 @@ public final class App {
     private static boolean terminalEnabled;
     private static boolean freecamEnabled;
     
+    public static final int MAX_WEIGHTS       = 4;
+    public static final int MAX_TEXTURES      = 4;
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
@@ -171,7 +173,7 @@ public final class App {
         var shaderSources  = new ArrayList<ShaderSource>();
         var shaderPrograms = new HashMap<String, ShaderProgram>();
         
-        //Define additional shaders in a scope here.
+        //TODO: (OPTIONAL) Define additional shaders in a scope here.
         
         {
             shaderSources.add(new ShaderSource("defaultVertex.glsl",   GL_VERTEX_SHADER));
@@ -187,6 +189,11 @@ public final class App {
             program.addUniform(BufferType.MAT4, "uProjection");
             program.addUniform(BufferType.INT,  "uType");
             program.addUniform(BufferType.VEC2, "uTexCoords");
+            program.addUniform(BufferType.MAT3, "uNormal");
+            
+            program.addUniform(BufferType.VEC3, "uLight.position");
+            program.addUniform(BufferType.VEC3, "uLight.ambient");
+            program.addUniform(BufferType.VEC3, "uLight.diffuse");
         }
         
         ShaderCore.init(shaderPrograms);

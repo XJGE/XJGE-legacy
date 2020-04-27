@@ -6,6 +6,7 @@
  * <li>{@link Cell}</li>
  * <li>{@link Graphics}</li>
  * <li>{@link Instance}</li>
+ * <li>{@link Model}</li>
  * <li>{@link SpriteSheet}</li>
  * <li>{@link Texture}</li>
  * </ul>

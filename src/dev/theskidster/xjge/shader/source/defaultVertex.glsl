@@ -4,6 +4,7 @@
 layout (location = 0) in vec3 aPosition;
 layout (location = 1) in vec2 aTexCoords;
 layout (location = 2) in vec3 aColor;
+layout (location = 3) in vec3 aNormal;
 
 //Instanced attributes
 layout (location = 4) in vec3 aPosOffset;
@@ -15,9 +16,12 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform int uType;
 uniform vec2 uTexCoords;
+uniform mat3 uNormal;
 
 out vec2 ioTexCoords;
 out vec3 ioColor;
+out vec3 ioNormal;
+out vec3 ioFragPos;
 
 void main() {
     switch(uType) {
@@ -45,6 +49,13 @@ void main() {
         case 4: //Used for icons.
             ioTexCoords = aTexCoords + uTexCoords;
             gl_Position = uProjection * uModel * vec4(aPosition, 1);
+            break;
+
+        case 5: //Used for 3D models.
+            ioTexCoords = aTexCoords;
+            ioNormal    = aNormal * uNormal;
+            ioFragPos   = vec3(uModel * vec4(aPosition, 1));
+            gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
             break;
     }
 }
