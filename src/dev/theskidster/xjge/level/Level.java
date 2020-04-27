@@ -3,6 +3,7 @@ package dev.theskidster.xjge.level;
 import java.util.ArrayList;
 import java.util.List;
 import dev.theskidster.xjge.entities.Entity;
+import org.joml.Vector3f;
 
 /**
  * @author J Hoffman
@@ -39,7 +40,7 @@ public abstract class Level {
      * 
      * @see dev.theskidster.xjge.main.Game#loop()
      */
-    public abstract void render();
+    public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp);
     
     /**
      * Used to free any resources used by this level before changing to a new one.

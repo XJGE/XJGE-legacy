@@ -31,7 +31,6 @@ public class Model {
     
     private AIScene aiScene;
     private Matrix3f normal = new Matrix3f();
-    private Light light     = new Light(); //@todo this is a temp variable
     
     private Mesh[] meshes;
     private Texture[] textures;
@@ -270,10 +269,11 @@ public class Model {
             
             ShaderCore.setMat4("uModel", false, meshes[m].modelMatrix);
             ShaderCore.setMat3("uNormal", true, normal);
-            ShaderCore.setVec3("uLight.position", light.position);
-            ShaderCore.setVec3("uLight.ambient", light.ambient);
-            ShaderCore.setVec3("uLight.diffuse", light.diffuse);
             ShaderCore.setInt("uType", 5);
+            
+            for(int i = 0; i < App.MAX_LIGHTS; i++) {
+                
+            }
             
             glDrawElements(GL_TRIANGLES, meshes[m].indices.limit(), GL_UNSIGNED_INT, 0);
         }

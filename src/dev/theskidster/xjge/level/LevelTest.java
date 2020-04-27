@@ -35,8 +35,8 @@ public class LevelTest extends Level {
     }
 
     @Override
-    public void render() {
-        entityList.forEach(e -> e.render());
+    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
+        entityList.forEach(e -> e.render(camPos, camDir, camUp));
     }
 
     @Override

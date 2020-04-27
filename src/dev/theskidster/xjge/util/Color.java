@@ -1,5 +1,7 @@
 package dev.theskidster.xjge.util;
 
+import org.joml.Vector3f;
+
 /**
  * @author J Hoffman
  * Created: Jan 14, 2020
@@ -11,6 +13,7 @@ package dev.theskidster.xjge.util;
 public final class Color {
     
     public static final Color WHITE     = new Color(1);
+    public static final Color SILVER    = new Color(0.75f);
     public static final Color GRAY      = new Color(0.5f);
     public static final Color BLACK     = new Color();
     public static final Color RED       = new Color(255, 0, 0);
@@ -81,6 +84,10 @@ public final class Color {
                 (int) (Math.random() * 255),
                 (int) (Math.random() * 255),
                 (int) (Math.random() * 255));
+    }
+    
+    public static Vector3f convert(Color color) {
+        return new Vector3f(color.r, color.g, color.b);
     }
     
 }

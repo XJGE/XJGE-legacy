@@ -27,7 +27,7 @@ public class EntityTeapot extends Entity {
     }
 
     @Override
-    public void render() {
+    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
         model.render("default");
     }
 

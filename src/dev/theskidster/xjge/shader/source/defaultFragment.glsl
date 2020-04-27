@@ -1,11 +1,16 @@
 #version 330 core
 
+//Value should match the variable of the same name in the App class.
+#define MAX_LIGHTS 32
+
 in vec2 ioTexCoords;
 in vec3 ioColor;
 in vec3 ioNormal;
 in vec3 ioFragPos;
 
 struct Light {
+    float brightness;
+    float contrast;
     vec3 position;
     vec3 ambient;
     vec3 diffuse;
@@ -13,7 +18,7 @@ struct Light {
 
 uniform int uType;
 uniform sampler2D uTexture;
-uniform Light uLight;
+uniform Light uLights[];
 
 out vec4 ioResult;
 
@@ -54,12 +59,12 @@ void main() {
             break;
 
         case 5: //Used for 3D models.
-            vec3 ambient = uLight.ambient;
+            vec3 ambient = uLights[0].ambient;
 
             vec3 norm     = normalize(ioNormal);
-            vec3 lightDir = normalize(uLight.position - ioFragPos);
+            vec3 lightDir = normalize(uLights[0].position - ioFragPos);
             float diff    = max(dot(norm, lightDir), -0.5);
-            vec3 diffuse  = uLight.diffuse * diff;
+            vec3 diffuse  = uLights[0].diffuse * diff;
 
             ioResult = texture(uTexture, ioTexCoords) * vec4(ambient + diffuse, 1.0);
             break;

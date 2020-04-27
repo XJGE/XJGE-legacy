@@ -9,6 +9,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.openal.AL10.AL_PLAYING;
 import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import dev.theskidster.xjge.entities.Entity;
+import dev.theskidster.xjge.graphics.Light;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
 import dev.theskidster.xjge.level.Level;
 import dev.theskidster.xjge.level.LevelTest;
@@ -165,12 +166,16 @@ public final class Game {
     }
     
     /**
-     * Adds an entity to the current levels {@link dev.theskidster.xjge.level.Level#entityList entityList}.
+     * Adds an entity to the current levels {@link dev.theskidster.xjge.level.Level#entityList entityList}. Typically reserved for testing purposes.
      * 
      * @param e the entity we want to add
      */
     public static void addEntity(Entity e) {
         level.entityList.add(e);
+    }
+    
+    public static void addLightSource(Light light) {
+        
     }
     
     /**

@@ -76,6 +76,7 @@ public final class App {
     
     public static final int MAX_WEIGHTS       = 4;
     public static final int MAX_TEXTURES      = 4;
+    public static final int MAX_LIGHTS        = 1;
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
@@ -191,9 +192,14 @@ public final class App {
             program.addUniform(BufferType.VEC2, "uTexCoords");
             program.addUniform(BufferType.MAT3, "uNormal");
             
-            program.addUniform(BufferType.VEC3, "uLight.position");
-            program.addUniform(BufferType.VEC3, "uLight.ambient");
-            program.addUniform(BufferType.VEC3, "uLight.diffuse");
+            //@todo might be unessessary to loop through these
+            for(int i = 0; i < MAX_LIGHTS; i++) {
+                program.addUniform(BufferType.FLOAT, "uLights[" + i + "].brightness");
+                program.addUniform(BufferType.FLOAT, "uLights[" + i + "].contrast");
+                program.addUniform(BufferType.VEC3, "uLights[" + i + "].position");
+                program.addUniform(BufferType.VEC3, "uLights[" + i + "].ambient");
+                program.addUniform(BufferType.VEC3, "uLights[" + i + "].diffuse");
+            }
         }
         
         ShaderCore.init(shaderPrograms);
@@ -336,7 +342,7 @@ public final class App {
                     viewport.resetCamera();
                     
                     viewport.render("camera");
-                    level.render();
+                    level.render(viewport.currCamera.position, viewport.currCamera.direction, viewport.currCamera.up);
                     viewport.render("ui");
                 glBindFramebuffer(GL_FRAMEBUFFER, 0);
                 

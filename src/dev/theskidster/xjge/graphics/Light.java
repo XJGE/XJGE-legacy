@@ -1,5 +1,6 @@
 package dev.theskidster.xjge.graphics;
 
+import dev.theskidster.xjge.util.Color;
 import org.joml.Vector3f;
 
 /**
@@ -7,16 +8,29 @@ import org.joml.Vector3f;
  * Created: Apr 27, 2020
  */
 
-class Light {
+public class Light {
     
-    Vector3f position;
-    Vector3f ambient;
-    Vector3f diffuse;
+    public static final Light DAYLIGHT = new Light(0.59f, 0.225f, new Vector3f(-20, 40, 10), Color.WHITE, Color.WHITE);
     
-    Light() {
-        position = new Vector3f(0, 100, 0);
-        ambient  = new Vector3f(0.3f);
-        diffuse  = new Vector3f(0.6f);
+    public float brightness;
+    public float contrast;
+    
+    public Vector3f position;
+    public Vector3f ambient;
+    public Vector3f diffuse;
+    
+    public Color ambientColor;
+    public Color diffuseColor;
+    
+    public Light(float brightness, float contrast, Vector3f position, Color ambientColor, Color diffuseColor) {
+        this.brightness   = brightness;
+        this.contrast     = contrast;
+        this.position     = position;
+        this.ambientColor = ambientColor;
+        this.diffuseColor = diffuseColor;
+        
+        ambient = Color.convert(ambientColor);
+        diffuse = Color.convert(diffuseColor);
     }
     
 }

@@ -1,0 +1,13 @@
+INFO: --------------------------------------------------------------------------------
+INFO: OS NAME:		Windows 10
+INFO: JAVA VER:		12.0.1
+INFO: GLFW VER:		3.4.0 Win32 WGL EGL OSMesa VisualC DLL
+INFO: OPENGL VER:	4.5.0 - Build 23.20.16.4973
+INFO: OPENAL VER:	1.1 ALSOFT 1.19.1
+INFO: MONITORS:		2 (1920x1080 16:9 60hz)
+INFO: SPEAKERS:		1 (Speakers (Realtek High Definition Audio))
+INFO: CONTROLLERS:	0
+INFO: --------------------------------------------------------------------------------
+
+INFO: Level changed to: "LevelTest"
+

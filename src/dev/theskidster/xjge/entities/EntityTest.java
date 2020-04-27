@@ -53,7 +53,7 @@ public class EntityTest extends Entity {
     }
 
     @Override
-    public void render() {
+    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
         ShaderCore.use("default");
         glBindVertexArray(g.vao);
         

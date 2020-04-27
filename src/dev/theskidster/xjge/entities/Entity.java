@@ -34,7 +34,7 @@ public abstract class Entity {
      * Used to organize calls to the graphics API made by this entity through its {@link dev.theskidster.xjge.graphics.Graphics Graphics} component if it has one. 
      * Must be called exclusively through {@link dev.theskidster.xjge.level.Level#render() Level.render()};
      */
-    public abstract void render();
+    public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp);
     
     /**
      * Used to free resources used by this entity once it is no longer needed. Calls like 
