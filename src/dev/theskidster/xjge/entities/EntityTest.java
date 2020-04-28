@@ -4,6 +4,7 @@ import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL30.*;
 import org.lwjgl.system.MemoryStack;
 import dev.theskidster.xjge.graphics.Graphics;
+import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.ErrorUtil;
 
@@ -53,7 +54,9 @@ public class EntityTest extends Entity {
     }
 
     @Override
-    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
+    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights) {
+        glEnable(GL_DEPTH_TEST);
+        
         ShaderCore.use("default");
         glBindVertexArray(g.vao);
         
@@ -61,10 +64,14 @@ public class EntityTest extends Entity {
         ShaderCore.setInt("uType", 3);
         
         glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisable(GL_DEPTH_TEST);
+        
         ErrorUtil.checkGLError();
     }
 
     @Override
-    protected void destroy() {}
+    protected void destroy() {
+        g.freeBuffers();
+    }
     
 }

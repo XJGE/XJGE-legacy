@@ -98,6 +98,7 @@ public class Terminal extends Component implements PropertyChangeListener {
         commands.put("setVSync",             new CmdSetVSync());
         commands.put("setVideoMode",         new CmdSetVideoMode());
         commands.put("showInputInfo",        new CmdShowInputInfo());
+        commands.put("showLightSources",     new CmdShowLightSources());
         commands.put("showRuntimeInfo",      new CmdShowRuntimeInfo());
         commands.put("showSystemInfo",       new CmdShowSystemInfo());
         commands.put("terminate",            new CmdTerminate());

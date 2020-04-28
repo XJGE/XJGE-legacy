@@ -175,7 +175,7 @@ public final class Game {
     }
     
     public static void addLightSource(Light light) {
-        
+        level.addLightSource(light);
     }
     
     /**

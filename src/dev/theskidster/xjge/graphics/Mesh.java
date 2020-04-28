@@ -155,4 +155,13 @@ class Mesh {
         ErrorUtil.checkGLError();
     }
     
+    /**
+     * Frees the OpenGL buffer objects associated with this mesh.
+     */
+    void freeBuffers() {
+        glDeleteVertexArrays(vao);
+        glDeleteBuffers(vbo);
+        glDeleteBuffers(ibo);
+    }
+    
 }

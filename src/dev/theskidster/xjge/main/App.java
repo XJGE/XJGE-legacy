@@ -68,15 +68,16 @@ public final class App {
     
     private static boolean fullscreen;
     private static boolean vsync = true;
+    private static boolean showInputInfo;
+    private static boolean showLightSources = true; //@todo remove true assertion
     private static boolean showRuntimeInfo;
     private static boolean showSystemInfo;
-    private static boolean showInputInfo;
     private static boolean terminalEnabled;
     private static boolean freecamEnabled;
     
     public static final int MAX_WEIGHTS       = 4;
     public static final int MAX_TEXTURES      = 4;
-    public static final int MAX_LIGHTS        = 1;
+    public static final int MAX_LIGHTS        = 32;
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
@@ -191,8 +192,9 @@ public final class App {
             program.addUniform(BufferType.INT,  "uType");
             program.addUniform(BufferType.VEC2, "uTexCoords");
             program.addUniform(BufferType.MAT3, "uNormal");
+            program.addUniform(BufferType.VEC3, "uColor");
+            program.addUniform(BufferType.INT, "uNumLights");
             
-            //@todo might be unessessary to loop through these
             for(int i = 0; i < MAX_LIGHTS; i++) {
                 program.addUniform(BufferType.FLOAT, "uLights[" + i + "].brightness");
                 program.addUniform(BufferType.FLOAT, "uLights[" + i + "].contrast");
@@ -366,6 +368,7 @@ public final class App {
     public static boolean getShowRuntimeInfo()   { return showRuntimeInfo; }
     public static boolean getShowSystemInfo()    { return showSystemInfo; }
     public static boolean getShowInputInfo()     { return showInputInfo; }
+    public static boolean getShowLightSources()  { return showLightSources; }
     public static boolean getTerminalEnabled()   { return terminalEnabled; }
     public static boolean getFreecamEnabled()    { return freecamEnabled; }
     public static String getAudioDeviceName()    { return audioDevice.name; }
@@ -472,6 +475,13 @@ public final class App {
         } else {
             removeUIComponent(0, "input info");
         }
+    }
+    
+    public static void setShowLightSources(boolean value) {
+        showLightSources = value;
+        
+        if(showLightSources) Logger.log(LogLevel.INFO, "Light source locations visible.");
+        else                 Logger.log(LogLevel.INFO, "Light source locations hidden.");
     }
     
     /**

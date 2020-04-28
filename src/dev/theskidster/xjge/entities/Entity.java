@@ -1,5 +1,6 @@
 package dev.theskidster.xjge.entities;
 
+import dev.theskidster.xjge.graphics.LightSource;
 import org.joml.Vector3f;
 
 /**
@@ -33,8 +34,10 @@ public abstract class Entity {
     /**
      * Used to organize calls to the graphics API made by this entity through its {@link dev.theskidster.xjge.graphics.Graphics Graphics} component if it has one. 
      * Must be called exclusively through {@link dev.theskidster.xjge.level.Level#render() Level.render()};
+     * 
+     * @todo update documentation for all the render methods this changed
      */
-    public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp);
+    public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights);
     
     /**
      * Used to free resources used by this entity once it is no longer needed. Calls like 

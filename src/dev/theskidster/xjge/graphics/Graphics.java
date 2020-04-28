@@ -59,7 +59,7 @@ public class Graphics {
      * data was used during the implementing objects lifetime.
      */
     public void freeBuffers() {
-        glDeleteBuffers(vao);
+        glDeleteVertexArrays(vao);
         glDeleteBuffers(vbo);
         glDeleteBuffers(ibo);
     }

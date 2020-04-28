@@ -8,6 +8,7 @@ import dev.theskidster.xjge.util.Logger;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Map;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import org.lwjgl.PointerBuffer;
@@ -30,7 +31,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class Model {
     
     private AIScene aiScene;
-    private Matrix3f normal = new Matrix3f();
+    private Matrix3f normal  = new Matrix3f();
+    private Vector3f noValue = new Vector3f();
     
     private Mesh[] meshes;
     private Texture[] textures;
@@ -256,7 +258,7 @@ public class Model {
         for(Mesh mesh : meshes) mesh.modelMatrix.translation(position);
     }
     
-    public void render(String shader) {
+    public void render(String shader, LightSource[] lights, int numLights) {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         
@@ -269,10 +271,25 @@ public class Model {
             
             ShaderCore.setMat4("uModel", false, meshes[m].modelMatrix);
             ShaderCore.setMat3("uNormal", true, normal);
+            ShaderCore.setInt("uNumLights", numLights);
             ShaderCore.setInt("uType", 5);
             
             for(int i = 0; i < App.MAX_LIGHTS; i++) {
-                
+                if(lights[i] != null) {
+                    if(lights[i].enabled) {
+                        ShaderCore.setFloat("uLights[" + i + "].brightness", lights[i].getBrightness());
+                        ShaderCore.setFloat("uLights[" + i + "].contrast",   lights[i].getContrast());
+                        ShaderCore.setVec3("uLights[" + i + "].position",    lights[i].getPosition());
+                        ShaderCore.setVec3("uLights[" + i + "].ambient",     lights[i].getAmbient());
+                        ShaderCore.setVec3("uLights[" + i + "].diffuse",     lights[i].getDiffuse());
+                    } else {
+                        ShaderCore.setFloat("uLights[" + i + "].brightness", 0);
+                        ShaderCore.setFloat("uLights[" + i + "].contrast",   0);
+                        ShaderCore.setVec3("uLights[" + i + "].position",    noValue);
+                        ShaderCore.setVec3("uLights[" + i + "].ambient",     noValue);
+                        ShaderCore.setVec3("uLights[" + i + "].diffuse",     noValue);
+                    }
+                }
             }
             
             glDrawElements(GL_TRIANGLES, meshes[m].indices.limit(), GL_UNSIGNED_INT, 0);
@@ -282,6 +299,14 @@ public class Model {
         glDisable(GL_CULL_FACE);
         
         ErrorUtil.checkGLError();
+    }
+    
+    /**
+     * Frees all resources allocated by this model.
+     */
+    public void destroy() {
+        for(Mesh mesh : meshes) mesh.freeBuffers();
+        for(Texture texture : textures) texture.freeTexture();
     }
     
 }

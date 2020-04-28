@@ -17,6 +17,7 @@ uniform mat4 uProjection;
 uniform int uType;
 uniform vec2 uTexCoords;
 uniform mat3 uNormal;
+uniform vec3 uColor;
 
 out vec2 ioTexCoords;
 out vec3 ioColor;
@@ -55,6 +56,12 @@ void main() {
             ioTexCoords = aTexCoords;
             ioNormal    = aNormal * uNormal;
             ioFragPos   = vec3(uModel * vec4(aPosition, 1));
+            gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
+            break;
+
+        case 6: //Used for light source icons.
+            ioTexCoords = aTexCoords;
+            ioColor     = uColor;
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
             break;
     }

@@ -4,8 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/graphics/Model.java</file>
-            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/puppet/terminal/Terminal.java</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/shader/source/defaultFragment.glsl</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/main/Window.java</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/level/Level.java</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/graphics/Light.java</file>
             <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/main/App.java</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/level/LevelTest.java</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/shader/source/defaultVertex.glsl</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/graphics/LightSource.java</file>
+            <file>file:/C:/Users/thesk/Documents/Projects/XJGE/XJGE/src/dev/theskidster/xjge/level/LevelTest2.java</file>
         </group>
     </open-files>
 </project-private>

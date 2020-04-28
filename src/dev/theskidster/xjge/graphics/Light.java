@@ -11,6 +11,7 @@ import org.joml.Vector3f;
 public class Light {
     
     public static final Light DAYLIGHT = new Light(0.59f, 0.225f, new Vector3f(-20, 40, 10), Color.WHITE, Color.WHITE);
+    public static final Light BLOOD = new Light(0.59f, 0.225f, new Vector3f(-20, 40, 10), Color.RED, Color.RED);
     
     public float brightness;
     public float contrast;

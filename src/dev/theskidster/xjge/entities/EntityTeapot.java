@@ -1,5 +1,6 @@
 package dev.theskidster.xjge.entities;
 
+import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.graphics.Model;
 import org.joml.Vector3f;
 
@@ -27,11 +28,13 @@ public class EntityTeapot extends Entity {
     }
 
     @Override
-    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
-        model.render("default");
+    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights) {
+        model.render("default", lights, numLights);
     }
 
     @Override
-    protected void destroy() {}
+    protected void destroy() {
+        model.destroy();
+    }
     
 }
