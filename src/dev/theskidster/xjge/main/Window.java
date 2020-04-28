@@ -142,11 +142,11 @@ final class Window {
             if(key == GLFW_KEY_3 && action == GLFW_PRESS) {
                 float x = (float) Math.random() * 40;
                 float y = (float) Math.random() * 40;
-                float z = (float) Math.random() * 40;
+                float z = (float) (Math.random() * -40) + -100;
                 
                 Vector3f pos = new Vector3f(x, y, z);
                 
-                Game.addLightSource(new Light(1, 1, pos, Color.random(), Color.random()));
+                Game.addLightSource(new Light((float) Math.random(), 0.5f, pos, Color.random(), Color.random()));
             }
         });
         

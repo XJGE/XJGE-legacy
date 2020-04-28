@@ -8,7 +8,6 @@ import dev.theskidster.xjge.util.Logger;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.Map;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import org.lwjgl.PointerBuffer;
