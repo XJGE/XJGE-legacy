@@ -98,6 +98,10 @@ All notable changes to this project will be documented in this file. The format 
 - Game state traversal.
 - Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 82c1968c1063fe2c2f7fd55febfcf76eda9f1a01
 [1.0.9]: https://github.com/theskidster/XJGE/commit/90211a1e8cdc884334377beaf80c7fbf1671965a
 [1.0.5]: https://github.com/theskidster/XJGE/commit/0f82e35a60f807098d05be3c5e02283ff424e0f3
 [1.0.4]: https://github.com/theskidster/XJGE/commit/4bb6e591d3b40f52da837ec27a66d92f4c6e1dbf
