@@ -12,22 +12,24 @@ import org.joml.Vector3f;
  */
 public final class Color {
     
-    public static final Color WHITE     = new Color(1);
-    public static final Color SILVER    = new Color(0.75f);
-    public static final Color GRAY      = new Color(0.5f);
-    public static final Color BLACK     = new Color();
-    public static final Color RED       = new Color(255, 0, 0);
-    public static final Color ORANGE    = new Color(255, 153, 0);
-    public static final Color YELLOW    = new Color(255, 255, 0);
-    public static final Color GREEN     = new Color(0, 255, 0);
-    public static final Color CYAN      = new Color(0, 255, 255);
-    public static final Color BLUE      = new Color(0, 0, 255);
-    public static final Color PURPLE    = new Color(136, 0, 152);
-    public static final Color PINK      = new Color(255, 0, 255);
-    public static final Color BROWN     = new Color(70, 45, 10);
-    public static final Color NAVY      = new Color(0, 0, 128);
-    public static final Color SOFT_BLUE = new Color(92, 148, 252);
-    public static final Color TEAL      = new Color(0, 128, 128);
+    public static final Color WHITE      = new Color(1);
+    public static final Color SILVER     = new Color(0.75f);
+    public static final Color GRAY       = new Color(0.5f);
+    public static final Color BLACK      = new Color();
+    public static final Color RED        = new Color(255, 0, 0);
+    public static final Color ORANGE     = new Color(255, 153, 0);
+    public static final Color YELLOW     = new Color(255, 255, 0);
+    public static final Color GREEN      = new Color(0, 255, 0);
+    public static final Color CYAN       = new Color(0, 255, 255);
+    public static final Color BLUE       = new Color(0, 0, 255);
+    public static final Color PURPLE     = new Color(136, 0, 152);
+    public static final Color PINK       = new Color(255, 0, 255);
+    public static final Color BROWN      = new Color(70, 45, 10);
+    public static final Color NAVY       = new Color(0, 0, 128);
+    public static final Color SOFT_BLUE  = new Color(92, 148, 252);
+    public static final Color TEAL       = new Color(0, 128, 128);
+    public static final Color SLATE_GRAY = new Color(16, 21, 36);
+    public static final Color PERIWINKLE = new Color(141, 97, 156);
     
     public final float r; 
     public final float g; 

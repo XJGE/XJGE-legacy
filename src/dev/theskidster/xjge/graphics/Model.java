@@ -257,6 +257,15 @@ public class Model {
         for(Mesh mesh : meshes) mesh.modelMatrix.translation(position);
     }
     
+    /**
+     * Renders the 3D model. Should be called from within the implementing entities 
+     * {@link dev.theskidster.xjge.entities.Entity#render(org.joml.Vector3f, org.joml.Vector3f, org.joml.Vector3f, dev.theskidster.xjge.graphics.LightSource[], 
+     * int) render()} method.
+     * 
+     * @param shader    the shader to use to render this model
+     * @param lights    an array of light source objects inhabiting the current level
+     * @param numLights the total number of lights in the level
+     */
     public void render(String shader, LightSource[] lights, int numLights) {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
@@ -268,10 +277,10 @@ public class Model {
             
             glBindVertexArray(meshes[m].vao);
             
+            ShaderCore.setInt("uType", 5);
             ShaderCore.setMat4("uModel", false, meshes[m].modelMatrix);
             ShaderCore.setMat3("uNormal", true, normal);
             ShaderCore.setInt("uNumLights", numLights);
-            ShaderCore.setInt("uType", 5);
             
             for(int i = 0; i < App.MAX_LIGHTS; i++) {
                 if(lights[i] != null) {

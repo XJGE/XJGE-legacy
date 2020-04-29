@@ -52,6 +52,9 @@ public abstract class Level {
     /**
      * Organizes calls to the graphics API made by various objects in the game world.
      * 
+     * @param camPos the position of the viewports camera in the game world
+     * @param camDir the direction in which the viewports camera is facing
+     * @param camUp  the direction considered upwards relative to the viewports camera
      * @see dev.theskidster.xjge.main.Game#loop()
      */
     public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp);
@@ -72,11 +75,17 @@ public abstract class Level {
         entityList.removeIf(e -> e.getRemoveRequest());
     }
     
+    /**
+     * Frees all resources allocated by every entity in the level.
+     */
     protected void freeEntities() {
         entityList.forEach(e -> e.remove());
         resolveRemoveRequest();
     }
     
+    /**
+     * Frees all resources allocated by every light source in the level.
+     */
     protected void freeLightSources() {
         for(LightSource light : lights) {
             if(light != null && light != lights[0]) {
@@ -88,6 +97,12 @@ public abstract class Level {
     protected int getNumLights()              { return numLights; }
     protected LightSource[] getLightSources() { return lights; }
     
+    /**
+     * Adds a new light source to the level. If the maximum number of allowed light sources is exceeded, it will hijack an already existing one in place of a 
+     * new instance.
+     * 
+     * @param light the light data to use in the fragment shader
+     */
     public void addLightSource(Light light) {
         boolean search = true;
         
@@ -115,6 +130,10 @@ public abstract class Level {
         findNumLights();
     }
     
+    /**
+     * Calculates the number of light source objects currently inhabiting the level. This includes light sources which are disabled. Used to prematurely 
+     * terminate a loop in the default fragment shader.
+     */
     private void findNumLights() {
         numLights = 1;
         
@@ -123,6 +142,12 @@ public abstract class Level {
         }
     }
     
+    /**
+     * Sets the world light that will illuminate all entities effected by light in the current level regardless of their positions within the scene. Predefined 
+     * values such as {@link Light#DAYLIGHT DAYLIGHT} are available through the {@link Light} class, otherwise custom values may be passed.
+     * 
+     * @param light the light data to use as the world light.
+     */
     protected void setWorldLight(Light light) {
         if(light != null) {
             lights[0] = new LightSource(light, lights[0]);
@@ -131,12 +156,23 @@ public abstract class Level {
         }
     }
     
+    /**
+     * Updates each {@link LightSource} object that currently exists in the level.
+     */
     protected void updateLightSources() {
         for(LightSource light : lights) {
             if(light != null) light.update();
         }
     }
     
+    /**
+     * Renders each {@link LightSource} object in the level. Light source objects can be exposed or hidden through the use of the 
+     * {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) setShowLightSoures()} method in the App class.
+     * 
+     * @param camPos the position of the viewports camera in the game world
+     * @param camDir the direction in which the viewports camera is facing
+     * @param camUp  the direction considered upwards relative to the viewports camera
+     */
     protected void renderLightSources(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
         if(App.getShowLightSources()) {
             for(LightSource light : lights) {

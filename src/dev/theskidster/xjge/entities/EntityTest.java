@@ -60,8 +60,8 @@ public class EntityTest extends Entity {
         ShaderCore.use("default");
         glBindVertexArray(g.vao);
         
-        ShaderCore.setMat4("uModel", false, g.modelMatrix);
         ShaderCore.setInt("uType", 3);
+        ShaderCore.setMat4("uModel", false, g.modelMatrix);
         
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisable(GL_DEPTH_TEST);

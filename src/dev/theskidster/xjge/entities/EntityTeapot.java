@@ -12,6 +12,7 @@ import org.joml.Vector3f;
 public class EntityTeapot extends Entity {
 
     private Model model;
+    private float angle;
     
     public EntityTeapot(Vector3f position) {
         super(position);

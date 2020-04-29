@@ -148,8 +148,8 @@ public class Icon {
         glBindTexture(GL_TEXTURE_2D, texture.handle);
         glBindVertexArray(g.vao);
         
-        ShaderCore.setMat4("uModel", false, g.modelMatrix);
         ShaderCore.setInt("uType", 4);
+        ShaderCore.setMat4("uModel", false, g.modelMatrix);
         ShaderCore.setVec2("uTexCoords", currCell);
                 
         glDrawElements(GL_TRIANGLES, g.indices.limit(), GL_UNSIGNED_INT, 0);

@@ -13,9 +13,9 @@
  *     <b>ShaderCore.use("some shader");</b>
  *     glBindVertexArray(g.vao);
  * 
- *     <b>ShaderCore.setMat4("uModel", false, graphics.model);
- *     ShaderCore.setVec3("uColor", ambientColor);
- *     ShaderCore.setInt("uType", 0);</b>
+ *     <b>haderCore.setInt("uType", 0);
+ *     ShaderCore.setMat4("uModel", false, graphics.model);
+ *     ShaderCore.setVec3("uColor", ambientColor);</b>
  *     ...
  * 
  *     glDrawElements();

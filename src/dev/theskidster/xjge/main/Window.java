@@ -9,8 +9,6 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import dev.theskidster.xjge.graphics.Light;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
-import dev.theskidster.xjge.level.LevelTest;
-import dev.theskidster.xjge.level.LevelTest2;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
 import dev.theskidster.xjge.util.Color;
@@ -136,17 +134,14 @@ final class Window {
                 Puppets.FREECAM.setSpeedBoostEnabled(mods == GLFW_MOD_SHIFT);
             }
             
-            if(key == GLFW_KEY_1 && action == GLFW_PRESS) Game.setLevel(new LevelTest());
-            if(key == GLFW_KEY_2 && action == GLFW_PRESS) Game.setLevel(new LevelTest2());
-            
-            if(key == GLFW_KEY_3 && action == GLFW_PRESS) {
+            if(key == GLFW_KEY_1 && action == GLFW_PRESS) {
                 float x = (float) Math.random() * 40;
                 float y = (float) Math.random() * 40;
-                float z = (float) (Math.random() * -40) + -100;
+                float z = (float) -(Math.random() * 240);
                 
-                Vector3f pos = new Vector3f(x, y, z);
+                Color color = Color.YELLOW;
                 
-                Game.addLightSource(new Light((float) Math.random(), 0.5f, pos, Color.random(), Color.random()));
+                Game.addLightSource(new Light(0.5f, 0.5f, new Vector3f(x, y, z), color, color));
             }
         });
         

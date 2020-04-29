@@ -12,6 +12,9 @@ import org.lwjgl.system.MemoryStack;
  * Created: Apr 27, 2020
  */
 
+/**
+ * Encapsulates a source of visible light at some point in space. This can be best conceptualized as a physical object that emits light such as a light bulb
+ */
 public class LightSource {
     
     public boolean enabled = true;
@@ -20,6 +23,11 @@ public class LightSource {
     private Graphics g;
     private Texture texture;
     
+    /**
+     * Creates a new object that represents a source of light, such as a light bulb.
+     * 
+     * @param light the light data to use in the fragment shader
+     */
     public LightSource(Light light) {
         this.light = light;
         
@@ -59,6 +67,12 @@ public class LightSource {
         glEnableVertexAttribArray(1);
     }
     
+    /**
+     * Transfers the state of the light source object provided into this one.
+     * 
+     * @param light  the light data to use in the fragment shader
+     * @param source the light source object that this instance will assume
+     */
     public LightSource(Light light, LightSource source) {
         this.light = light;
         
@@ -67,10 +81,21 @@ public class LightSource {
         texture = source.texture;
     }
     
+    /**
+     * updates the position of the light source.
+     */
     public void update() {
         g.modelMatrix.translation(light.position);
     }
     
+    /**
+     * Renders an icon representing the position of the light source that will be visible through every object in the game world. Light sources can be made 
+     * visible by using the {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) setShowLightSources()} method in the App class.
+     * 
+     * @param camPos the position of the viewports camera in the game world
+     * @param camDir the direction in which the viewports camera is facing
+     * @param camUp  the direction considered upwards relative to the viewports camera
+     */
     public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
         g.modelMatrix.billboardSpherical(light.position, camPos, camUp);
 
@@ -79,15 +104,18 @@ public class LightSource {
         glBindTexture(GL_TEXTURE_2D, texture.handle);
         glBindVertexArray(g.vao);
 
+        ShaderCore.setInt("uType", 6);
         ShaderCore.setMat4("uModel", false, g.modelMatrix);
         ShaderCore.setVec3("uColor", light.ambient);
-        ShaderCore.setInt("uType", 6);
 
         glDrawElements(GL_TRIANGLES, g.indices.limit(), GL_UNSIGNED_INT, 0);
 
         ErrorUtil.checkGLError();
     }
     
+    /**
+     * Frees all resources used by this light source object.
+     */
     public void destroy() {
         g.freeBuffers();
         texture.freeTexture();
@@ -99,23 +127,48 @@ public class LightSource {
     public Vector3f getAmbient()  { return light.ambient; }
     public Vector3f getDiffuse()  { return light.diffuse; }
     
+    /**
+     * Sets the intensity and range of the sources light.
+     * 
+     * @param brightness the intensity of the light. Should be a non-negative value between 0 and 1.
+     */
     public void setBrightness(float brightness) {
         light.brightness = brightness;
     }
     
+    /**
+     * Controls the contrast between the ambient and diffuse colors of this sources light.
+     * 
+     * @param contrast the contrast of this light source. Should be a non-negative value between 0 and 1.
+     */
     public void setContrast(float contrast) {
         light.contrast = contrast;
     }
     
+    /**
+     * Sets the position from which the light will be emitted.
+     * 
+     * @param position the position to set this source to
+     */
     public void setPosition(Vector3f position) {
         light.position = position;
     }
     
+    /**
+     * Sets the ambient color that will determine the brightness and hue of nearby entities edges facing away from the light source.
+     * 
+     * @param color the color of the ambient lighting
+     */
     public void setAmbientColor(Color color) {
         light.ambientColor = color;
         light.ambient      = Color.convert(color);
     }
     
+    /**
+     * Sets the diffuse color that will be refactored by nearby entities relative to this light sources location.
+     * 
+     * @param color the color to reflect
+     */
     public void setDiffuseColor(Color color) {
         light.diffuseColor = color;
         light.diffuse      = Color.convert(color);

@@ -174,6 +174,12 @@ public final class Game {
         level.entityList.add(e);
     }
     
+    /**
+     * Adds a light source to the current levels {@link dev.theskidster.xjge.level.Level#lights lights} array. This is reserved for testing purposes only, if 
+     * you wish to add a new light source to a level you should use the protected method of the same name located in the level class.
+     * 
+     * @param light the light data to use in the fragment shader
+     */
     public static void addLightSource(Light light) {
         level.addLightSource(light);
     }

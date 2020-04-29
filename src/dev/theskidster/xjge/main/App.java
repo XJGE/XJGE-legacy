@@ -69,7 +69,7 @@ public final class App {
     private static boolean fullscreen;
     private static boolean vsync = true;
     private static boolean showInputInfo;
-    private static boolean showLightSources = true; //@todo remove true assertion
+    private static boolean showLightSources;
     private static boolean showRuntimeInfo;
     private static boolean showSystemInfo;
     private static boolean terminalEnabled;
@@ -477,6 +477,12 @@ public final class App {
         }
     }
     
+    /**
+     * Exposes the locations of all {@link dev.theskidster.xjge.graphics.LightSource LightSource} objects inhabiting the current 
+     * {@link dev.theskidster.xjge.level.Level Level}.
+     * 
+     * @param value true to expose the light source locations or false to hide them
+     */
     public static void setShowLightSources(boolean value) {
         showLightSources = value;
         
