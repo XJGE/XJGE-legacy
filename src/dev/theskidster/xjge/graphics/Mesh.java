@@ -1,12 +1,20 @@
 package dev.theskidster.xjge.graphics;
 
+import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.ErrorUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import org.joml.Matrix4f;
+import org.lwjgl.PointerBuffer;
+import org.lwjgl.assimp.AIBone;
 import org.lwjgl.assimp.AIFace;
 import org.lwjgl.assimp.AIMesh;
 import org.lwjgl.assimp.AIVector3D;
+import org.lwjgl.assimp.AIVertexWeight;
 import static org.lwjgl.opengl.GL30.*;
 import org.lwjgl.system.MemoryUtil;
 
@@ -27,6 +35,8 @@ class Mesh {
     IntBuffer indices;
     Matrix4f modelMatrix = new Matrix4f();
     
+    Bone[] bones;
+    
     /**
      * Creates a mesh object that will be used by the engine to render a {@link Model}.
      * 
@@ -38,12 +48,14 @@ class Mesh {
         parsePositionData(aiMesh);
         parseTexCoordData(aiMesh);
         parseNormalData(aiMesh);
+        parseBoneData(aiMesh);
         parseFaceData(aiMesh);
         
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glEnableVertexAttribArray(2);
-        glEnableVertexAttribArray(3);
+        glEnableVertexAttribArray(0); //position
+        glEnableVertexAttribArray(1); //texture coordinates
+        glEnableVertexAttribArray(3); //normal
+        glEnableVertexAttribArray(7); //boneIDs
+        glEnableVertexAttribArray(8); //weights
     }
     
     /**
@@ -133,6 +145,76 @@ class Mesh {
         MemoryUtil.memFree(normalBuf);
         
         ErrorUtil.checkGLError();
+    }
+    
+    /**
+     * Extracts vertex data necessary for use during skeletal animation. If no animation data is present, this step is skipped.
+     * 
+     * @param aiMesh the mesh object provided by the Assimp library with which vertex data will be parsed
+     */
+    private void parseBoneData(AIMesh aiMesh) {
+        bones = new Bone[aiMesh.mNumBones()];
+        PointerBuffer boneBuf = aiMesh.mBones();
+        
+        if(boneBuf != null) {
+            Map<Integer, List<VertexWeight>> weights = new TreeMap<>();
+            
+            for(int b = 0; b < bones.length; b++) {
+                AIBone aiBone = AIBone.create(boneBuf.get(b));
+                bones[b]      = new Bone(b, aiBone.mName().dataString(), aiBone.mOffsetMatrix());
+                
+                for(int w = 0; w < aiBone.mNumWeights(); w++) {
+                    AIVertexWeight aiWeight = aiBone.mWeights().get(w);
+                    VertexWeight weight     = new VertexWeight(b, aiWeight.mVertexId(), aiWeight.mWeight());
+                    
+                    List<VertexWeight> vwList = weights.get(weight.vertexID);
+                    
+                    if(vwList == null) {
+                        vwList = new ArrayList<>();
+                        weights.put(weight.vertexID, vwList);
+                    }
+                    
+                    vwList.add(weight);
+                }
+            }
+            
+            IntBuffer boneIDBuf   = MemoryUtil.memAllocInt(Integer.BYTES * aiMesh.mNumVertices());
+            FloatBuffer weightBuf = MemoryUtil.memAllocFloat(Float.BYTES * aiMesh.mNumVertices());
+            
+            for(int i = 0; i < aiMesh.mNumVertices(); i++) {
+                List<VertexWeight> vwList = weights.get(i);
+                int listSize = (vwList != null) ? vwList.size() : 0;
+                
+                for(int k = 0; k < App.MAX_WEIGHTS; k++) {
+                    if(k < listSize) {
+                        VertexWeight weight = vwList.get(k);
+                        
+                        boneIDBuf.put(weight.boneID);
+                        weightBuf.put(weight.weight);
+                    } else {
+                        boneIDBuf.put(0);
+                        weightBuf.put(0.0f);
+                    }
+                }
+            }
+            
+            vbo = glGenBuffers();
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBufferData(GL_ARRAY_BUFFER, boneIDBuf.flip(), GL_STATIC_DRAW);
+            glVertexAttribPointer(7, 4, GL_FLOAT, false, 0, 0);
+            MemoryUtil.memFree(boneIDBuf);
+            
+            vbo = glGenBuffers();
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBufferData(GL_ARRAY_BUFFER, weightBuf.flip(), GL_STATIC_DRAW);
+            glVertexAttribPointer(8, 4, GL_FLOAT, false, 0, 0);
+            MemoryUtil.memFree(weightBuf);
+            
+            ErrorUtil.checkGLError();
+            
+        } else {
+            //@todo: there is no bone data, this is a static mesh and should be loaded differently
+        }
     }
     
     /**

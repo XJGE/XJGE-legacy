@@ -78,10 +78,12 @@ public final class App {
     public static final int MAX_WEIGHTS       = 4;
     public static final int MAX_TEXTURES      = 4;
     public static final int MAX_LIGHTS        = 32;
+    public static final int MAX_BONES         = 32;
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
     public static final String VERSION        = "1.2.0";
+    public static final Matrix4f IDENTITY     = new Matrix4f();
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -194,6 +196,7 @@ public final class App {
             program.addUniform(BufferType.MAT3, "uNormal");
             program.addUniform(BufferType.VEC3, "uColor");
             program.addUniform(BufferType.INT, "uNumLights");
+            program.addUniform(BufferType.MAT4, "uBoneTransforms");
             
             for(int i = 0; i < MAX_LIGHTS; i++) {
                 program.addUniform(BufferType.FLOAT, "uLights[" + i + "].brightness");

@@ -11,6 +11,8 @@ import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL20.*;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
+import java.nio.FloatBuffer;
+import org.lwjgl.system.MemoryStack;
 
 /**
  * @author J Hoffman
@@ -160,6 +162,27 @@ public final class ShaderCore {
                 shaderProgram.getUniform(name).location,
                 transpose,
                 value.get(shaderProgram.getUniform(name).asFloatBuffer()));
+    }
+    
+    /**
+     * Array version of {@link setMat4(String, boolean, Matrix4f) setMat4()}. Allows multiple values to be passed at once. Used in {@link Model} to upload 
+     * the offset matrices of {@link dev.theskidster.xjge.graphics.Bone Bone} objects.
+     * 
+     * @param name      the name of the uniform variable exactly as it appears in the .glsl file in which it's defined
+     * @param transpose indicates whether or not to transpose the matrix as the values are loaded into the uniform variable
+     * @param values    the array of values we want to pass to the graphics pipeline
+     */
+    public static void setMat4(String name, boolean transpose, Matrix4f[] values) {
+        try(MemoryStack stack = MemoryStack.stackPush()) {
+            FloatBuffer matBuf = stack.mallocFloat(16 * values.length);
+            
+            for(int i = 0; i < values.length; i++) values[i].get(16 * i, matBuf);
+            
+            glUniformMatrix4fv(
+                    shaderProgram.getUniform(name).location,
+                    transpose,
+                    matBuf);
+        }
     }
     
 }

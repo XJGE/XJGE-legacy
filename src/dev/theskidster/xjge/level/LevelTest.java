@@ -1,7 +1,10 @@
 package dev.theskidster.xjge.level;
 
+import dev.theskidster.xjge.entities.Entity2DAnimTest;
+import dev.theskidster.xjge.entities.Entity3DAnimTest;
 import dev.theskidster.xjge.entities.EntityTeapot;
 import dev.theskidster.xjge.entities.EntityTest;
+import dev.theskidster.xjge.graphics.Light;
 import org.joml.Vector3f;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.Color;
@@ -22,8 +25,10 @@ public class LevelTest extends Level {
         App.setSplitType(ScreenSplitType.NO_SPLIT);
         App.setClearColor(Color.SOFT_BLUE);
         
-        entityList.add(new EntityTest(new Vector3f(0, 0, -200)));
+        entityList.add(new EntityTest(new Vector3f(0, 10, -150)));
         entityList.add(new EntityTeapot(new Vector3f(40, -10, -100)));
+        entityList.add(new Entity3DAnimTest(new Vector3f(-40, -10, -100)));
+        entityList.add(new Entity2DAnimTest(new Vector3f(0, -30, -100)));
     }
 
     @Override

@@ -8,7 +8,13 @@ import dev.theskidster.xjge.util.Logger;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.assimp.*;
@@ -32,9 +38,15 @@ public class Model {
     private AIScene aiScene;
     private Matrix3f normal  = new Matrix3f();
     private Vector3f noValue = new Vector3f();
+    private Matrix4f rootTransform;
+    
+    private Node rootNode;
+    private String currAnimation;
     
     private Mesh[] meshes;
     private Texture[] textures;
+    
+    private Map<String, SkeletalAnimation> animations;
     
     /**
      * Parses the file provided and generates a 3D model from the data it contains.
@@ -128,19 +140,47 @@ public class Model {
             
             aiScene = aiImportFileEx(filepath.substring(1), args, aiFileIO);
             
-            if(aiScene != null) {
+            if(aiScene == null) {
                 MemoryUtil.memFree(modelBuf);
+                throw new IllegalStateException(aiGetErrorString());
+            } else {
+                MemoryUtil.memFree(modelBuf);
+                
+                AINode aiRoot = aiScene.mRootNode();
+                rootTransform = Graphics.convertFromAssimp(aiRoot.mTransformation());
+                rootNode      = parseFileHierarchy(aiRoot, null);
                 
                 parseMeshData(aiScene.mMeshes());
                 parseTextureData(aiScene.mMaterials());
-            } else {
-                MemoryUtil.memFree(modelBuf);
-                throw new IllegalStateException(aiGetErrorString());
+                parseAnimationData(aiScene.mAnimations());
             }
         } catch(Exception e) {
             Logger.setStackTrace(e);
             Logger.log(LogLevel.WARNING, "Failed to load model: \"" + filename + "\"");
         }
+    }
+    
+    /**
+     * Translates the structure of the model file into a hierarchy that can be used by the engine.
+     * 
+     * @param aiNode the Assimp data structure from which a new node object will be constructed
+     * @param parent the parent of the unprocessed Assimp node or null if this is the root node
+     * @return a new child node of the parent provided 
+     */
+    private Node parseFileHierarchy(AINode aiNode, Node parent) {
+        String nodeName = aiNode.mName().dataString();
+        Node node       = new Node(nodeName, parent);
+        
+        PointerBuffer childBuf = aiNode.mChildren();
+        
+        for(int i = 0; i < aiNode.mNumChildren(); i++) {
+            AINode aiChild = AINode.create(childBuf.get(i));
+            Node childNode = parseFileHierarchy(aiChild, node);
+            
+            node.children.add(childNode);
+        }
+        
+        return node;
     }
     
     /**
@@ -167,7 +207,7 @@ public class Model {
      * Models are loaded directly from memory and as such, must embed their textures inside materials to load correctly. Additionally, textures must be located 
      * in the same directory as the model file itself.
      * 
-     * @param materialBuf the buffer of model material data provided by Assimp
+     * @param materialBuf the buffer of models material data provided by Assimp
      * @throws Exception  if one or more textures could not be located. This will likely result in the engine using a placeholder texture instead.
      */
     private void parseTextureData(PointerBuffer materialBuf) throws Exception {
@@ -202,6 +242,111 @@ public class Model {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glBindTexture(GL_TEXTURE_2D, 0);
         }
+    }
+    
+    /**
+     * Parses data required by this model during skeletal animation.
+     * 
+     * @param animationBuf the buffer of the models animation data as provided by Assimp
+     */
+    private void parseAnimationData(PointerBuffer animationBuf) {
+        animations = new HashMap<>();
+        
+        for(int i = 0; i < aiScene.mNumAnimations(); i++) {
+            AIAnimation aiAnimation  = AIAnimation.create(animationBuf.get(i));
+            PointerBuffer channelBuf = aiAnimation.mChannels();
+            
+            for(int c = 0; c < aiAnimation.mNumChannels(); c++) {
+                AINodeAnim aiNodeAnim = AINodeAnim.create(channelBuf.get(c));
+                String nodeName       = aiNodeAnim.mNodeName().dataString();
+                Node node             = rootNode.getNodeByName(nodeName);
+                
+                genTransforms(aiNodeAnim, node);
+            }
+            
+            SkeletalAnimation animation = new SkeletalAnimation(aiAnimation, genKeyFrames());
+            animations.put(animation.name, animation);
+        }
+    }
+    
+    /**
+     * Generates the final transforms of each {@link Node} that will be used to move the bones of the model during a {@link SkeletalAnimation}.
+     * 
+     * @param aiNodeAnim the Assimp structure that will be parsed to calculate a nodes transformations
+     * @param node       the node that will contain the calculated transformations
+     */
+    private void genTransforms(AINodeAnim aiNodeAnim, Node node) {
+        AIVectorKey.Buffer aiPosKeyBuf   = aiNodeAnim.mPositionKeys();
+        AIVectorKey.Buffer aiScaleKeyBuf = aiNodeAnim.mScalingKeys();
+        AIQuatKey.Buffer aiRotKeyBuf     = aiNodeAnim.mRotationKeys();
+        
+        for(int i = 0; i < aiNodeAnim.mNumPositionKeys(); i++) {
+            AIVectorKey aiVecKey = aiPosKeyBuf.get(i);
+            AIVector3D aiVec     = aiVecKey.mValue();
+            
+            Matrix4f transform = new Matrix4f().translate(aiVec.x(), aiVec.y(), aiVec.z());
+            
+            AIQuatKey aiQuatKey    = aiRotKeyBuf.get(i);
+            AIQuaternion aiQuat    = aiQuatKey.mValue();
+            Quaternionf quaternion = new Quaternionf(aiQuat.x(), aiQuat.y(), aiQuat.z(), aiQuat.w());
+            
+            transform.rotate(quaternion);
+            
+            if(i < aiNodeAnim.mNumScalingKeys()) {
+                aiVecKey = aiScaleKeyBuf.get(i);
+                aiVec    = aiVecKey.mValue();
+                
+                transform.scale(aiVec.x(), aiVec.y(), aiVec.z());
+            }
+            
+            node.transforms.add(transform);
+        }
+    }
+    
+    /**
+     * generates every {@link KeyFrame} of a {@link SkeletalAnimation}.
+     * 
+     * @return the list of keyframes used by the animation.
+     */
+    private List<KeyFrame> genKeyFrames() {
+        List<KeyFrame> frames = new ArrayList<>();
+        
+        for(Mesh mesh : meshes) {
+            for(int i = 0; i < rootNode.getNumKeyFrames(); i++) {
+                KeyFrame frame = new KeyFrame();
+                frames.add(frame);
+                
+                for(int b = 0; b < mesh.bones.length; b++) {
+                    Bone bone = mesh.bones[b];
+                    Node node = rootNode.getNodeByName(bone.name);
+                    
+                    Matrix4f boneTransform = Node.getParentTransform(node, i);
+                    
+                    boneTransform.mul(bone.offset);
+                    boneTransform = new Matrix4f(rootTransform).mul(boneTransform);
+                    
+                    frame.boneTransforms[b] = boneTransform;
+                }
+            }
+        }
+        
+        return frames;
+    }
+    
+    /**
+     * Sets the current animation that will be played by this model. Might contain a "Armature|" before the name of the animation itself.
+     * 
+     * @param name the name of the animation as it appears in the file.
+     */
+    public void setAnimation(String name) {
+        currAnimation = name;
+    }
+    
+    /**
+     * Updates the current skeletal animation.
+     */
+    public void updateAnimation() {
+        animations.get(currAnimation).step();
     }
     
     /**
@@ -244,7 +389,7 @@ public class Model {
      * 
      * @param factor the factor with which the models size will be multiplied by
      */
-    public void scale(int factor) {
+    public void scale(float factor) {
         for(Mesh mesh : meshes) mesh.modelMatrix.scale(factor);
     }
     
@@ -298,6 +443,11 @@ public class Model {
                         ShaderCore.setVec3("uLights[" + i + "].diffuse",     noValue);
                     }
                 }
+            }
+            
+            if(currAnimation != null) {
+                KeyFrame frame = animations.get(currAnimation).getCurrFrame();
+                ShaderCore.setMat4("uBoneTransforms", false, frame.boneTransforms);
             }
             
             glDrawElements(GL_TRIANGLES, meshes[m].indices.limit(), GL_UNSIGNED_INT, 0);

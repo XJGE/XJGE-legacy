@@ -96,7 +96,7 @@ void main() {
             ioResult = vec4(ioColor, 0);
             break;
 
-        case 4: //Used for icons.
+        case 4: case 7: //Used for icons and animated 2D sprites.
             makeTransparent(texture(uTexture, ioTexCoords).a);
             ioResult = texture(uTexture, ioTexCoords);
             break;
