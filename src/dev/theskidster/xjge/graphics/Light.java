@@ -9,7 +9,7 @@ import org.joml.Vector3f;
  */
 
 /**
- * Data structure which represents visible light.
+ * Data structure that contains information which can be used to simulate visible light.
  */
 public class Light {
     

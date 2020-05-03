@@ -6,8 +6,8 @@ package dev.theskidster.xjge.graphics;
  */
 
 /**
- * Data structure that represents a vertex weight that will determine how much influence a {@link Bone} has on a {@link Mesh}. Typically multiple weights will 
- * influence a single vertex to an extent.
+ * Data structure that represents a vertex weight that will determine how much influence a {@link Bone} has on the vertices of a {@link Mesh}. Typically multiple 
+ * weights will influence a single vertex to an extent.
  */
 class VertexWeight {
     
@@ -16,7 +16,7 @@ class VertexWeight {
     float weight;
     
     /**
-     * Creates a new vertex weight.
+     * Creates a new vertex weight that couples the bone to the vertex it influences.
      * 
      * @param boneID   an index value used to identify the bone in the vertex shader
      * @param vertexID the id of the vertex this weight will effect

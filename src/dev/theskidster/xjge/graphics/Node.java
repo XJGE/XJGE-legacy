@@ -12,7 +12,7 @@ import org.joml.Matrix4f;
 /**
  * Data structure that represents a single point of interest within a {@link Model} as defined by its file. Node objects are contained within a hierarchy and 
  * provide a unique name that can be used to traverse the tree. Nodes may also exhibit parent/child relationships with other nodes and are often used to 
- * calculate transformations in ascending order to move animated model {@link Bone bones}.
+ * calculate transformations in ascending order to move the {@link Bone bones} of an animated model.
  */
 class Node {
     
@@ -23,7 +23,7 @@ class Node {
     final List<Matrix4f> transforms = new ArrayList<>();
     
     /**
-     * Creates a new node using the data specified.
+     * Constructs a new node object that will couple the name of a node (most often corresponding to a {@link Bone}) to a parent if one exists.
      * 
      * @param name   the unique name used identify the node in the hierarchy
      * @param parent the parent node of this node

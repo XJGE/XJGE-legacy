@@ -30,7 +30,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Represents a 3D model. Models may possess animations, multiple meshes, textures, or a combination of these things. Various limitations are imposed by the 
- * engine to ensure models are loaded with consistency. The Autodesk .fbx file format is the preferred format of this engine for its compact size, though other 
+ * engine to ensure models are loaded with consistency. The Autodesk&trade; .fbx file format is the preferred format of this engine for its compact size, though other 
  * formats should work as well.
  */
 public class Model {

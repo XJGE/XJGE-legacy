@@ -65,6 +65,12 @@ public class Graphics {
         glDeleteBuffers(ibo);
     }
     
+    /**
+     * Converts the matrix data structure provided by Assimp into a format the engine understands.
+     * 
+     * @param aiMatrix the Assimp matrix data we want to convert
+     * @return         a new four-component engine-friendly matrix object
+     */
     static Matrix4f convertFromAssimp(AIMatrix4x4 aiMatrix) {
         Matrix4f conversion = new Matrix4f();
         

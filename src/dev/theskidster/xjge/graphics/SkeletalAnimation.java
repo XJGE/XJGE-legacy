@@ -9,7 +9,15 @@ import org.lwjgl.assimp.AIAnimation;
  */
 
 /**
- * Represents a 3D animation that uses a series of interconnected {@link Bone bones} to move a models {@link Mesh}.
+ * Skeletal animations utilize a series of interconnected bones (collectively known as an "Armature") to offset the vertex positions of a models mesh. More 
+ * generally, the individual bones of the models armature are arranged into one or more {@link KeyFrame keyframes} which are then played in sequence to create the 
+ * illusion of movement.
+ * <br><br>
+ * Because the structure of the armature is hierarchal, moving a single {@link Bone} will in turn effect each of its children equally. That is, if we move the 
+ * femur bone of some bipedal model for instance, the shin, foot, and toes will follow- however the hip bone (parent to the femur) will remain stationary.
+ * <br><br>
+ * The current implementation of skeletal animations as of version 1.2.0 of this engine does NOT make use of interpolation. This may be subject to change in the 
+ * future.
  */
 class SkeletalAnimation {
     
@@ -19,7 +27,7 @@ class SkeletalAnimation {
     List<KeyFrame> frames;
     
     /**
-     * Creates a new representation of a single 3D animation.
+     * Constructs a new skeletal animation using the animation data and keyframes provided.
      * 
      * @param aiAnimation the raw animation data as provided by Assimp
      * @param frames      the {@link KeyFrame keyframes} used by this animation
@@ -41,9 +49,9 @@ class SkeletalAnimation {
     }
     
     /**
-     * Gets the next {@link KeyFrame} in sequence.
+     * Finds the next {@link KeyFrame} in sequence.
      * 
-     * @return the keyframe following the current one
+     * @return the keyframe following the one currently being displayed
      */
     KeyFrame getNextFrame() {
         step();
@@ -51,7 +59,7 @@ class SkeletalAnimation {
     }
     
     /**
-     * Steps the animation forward by one {@link KeyFrame}.
+     * Increments the sequence of the animation forward one {@link KeyFrame}.
      */
     void step() {
         int nextFrame = currFrame + 1;

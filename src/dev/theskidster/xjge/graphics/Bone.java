@@ -9,7 +9,8 @@ import org.lwjgl.assimp.AIMatrix4x4;
  */
 
 /**
- * Simple data structure which represents a single bone of a greater skeleton used for {@link SkeletalAnimation skeletal animations}.
+ * Data structure which represents a single bone of a greater skeleton (or "Armature") that will be used to calculate the offset of one or more meshes vertex 
+ * positions in a {@link SkeletalAnimation}.
  */
 class Bone {
     
@@ -18,7 +19,8 @@ class Bone {
     Matrix4f offset;
     
     /**
-     * Creates a new bone object.
+     * Defines a couple fields which can be used to identify the bone in other parts of the engine along with an offset matrix that will be utilized to decouple 
+     * the position of the bone relative to the local space of the {@link Model} with which it's associated.
      * 
      * @param id     an index value used to identify the bone in the vertex shader
      * @param name   the unique name of this bone that will correspond to a {@link Node} object in the model files hierarchy

@@ -10,14 +10,16 @@ import org.joml.Matrix4f;
  */
 
 /**
- * Data structure that represents a single frame of a {@link SkeletalAnimation}. These can be though of as a single frame of a stop motion claymation model.
+ * Data structure which represents a single frame of a {@link SkeletalAnimation}. More specifically, a keyframe contains the individual transformations of each 
+ * {@link Bone} in the models armature. Key frames can be conceptualized as a sort of "snapshot" of the armatures pose at some point in time which can be used in 
+ * sequence with other keyframes to create the illusion of movement.
  */
 class KeyFrame {
     
     final Matrix4f[] boneTransforms;
     
     /**
-     * Creates a new KeyFrame object that will be used to represent a single pos of an animated models skeleton.
+     * Constructs an array of {@link Bone} transformations that will be used to define the pose of a models armature at a certain point in time.
      */
     KeyFrame() {
         boneTransforms = new Matrix4f[App.MAX_BONES];
