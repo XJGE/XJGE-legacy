@@ -108,7 +108,8 @@ void main() {
             for(int i = 1; i < uNumLights; i++) {
                 result += calcPointLight(uLights[i], normal, ioFragPos);
             }
-
+            
+            makeTransparent(texture(uTexture, ioTexCoords).a);
             ioResult = texture(uTexture, ioTexCoords) * vec4(result, 1.0);
             break;
 

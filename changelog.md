@@ -3,15 +3,20 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [1.2.3] - unreleased
+## [1.2.3] - 2020-05-19
 
 ### Added
 
-
+* The ability for model textures to exhibit transparency.
 
 ### Changed
 
-Changed the documentation of the 3D utilities added in the previous update to be more descriptive.
+* Changes made to the DAYLIGHT object to make it less intense.
+* The documentation of the 3D utilities added in the previous update to be more descriptive.
+
+### Removed
+
+* Unused light import in test level.
 
 
 

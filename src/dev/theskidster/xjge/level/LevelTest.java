@@ -4,7 +4,6 @@ import dev.theskidster.xjge.entities.Entity2DAnimTest;
 import dev.theskidster.xjge.entities.Entity3DAnimTest;
 import dev.theskidster.xjge.entities.EntityTeapot;
 import dev.theskidster.xjge.entities.EntityTest;
-import dev.theskidster.xjge.graphics.Light;
 import org.joml.Vector3f;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.Color;
