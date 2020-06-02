@@ -17,13 +17,14 @@ import org.joml.Matrix4f;
 class KeyFrame {
     
     final Matrix4f[] boneTransforms;
+    final Matrix4f IDENTITY = new Matrix4f();
     
     /**
      * Constructs an array of {@link Bone} transformations that will be used to define the pose of a models armature at a certain point in time.
      */
     KeyFrame() {
         boneTransforms = new Matrix4f[App.MAX_BONES];
-        Arrays.fill(boneTransforms, App.IDENTITY);
+        Arrays.fill(boneTransforms, IDENTITY);
     }
     
 }

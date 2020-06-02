@@ -20,8 +20,8 @@ import dev.theskidster.xjge.util.Logger;
  */
 
 /**
- * Supplies data parsed from audio files, supports both 8-bit mono and 16-bit stereo samples. Vorbis .ogg is the preferred format of this engine, though its usage is 
- * not explicitly defined. Use alternate formats at your own risk.
+ * Supplies the data parsed from an audio file into a new sound object that can be used by a {@link Source} object to play sound effects. The engine supports two 
+ * formats, 8-bit mono (for sound effects), and 16-bit stereo (for music). Vorbis&trade; .ogg is the preferred file format of this engine.
  */
 public final class Sound {
     
@@ -30,7 +30,7 @@ public final class Sound {
     private int sampleRate;
     
     /**
-     * Generates a new sound object to be used by a {@link Source} object. If the file cannot be found it will use a fallback sound.
+     * Creates a new sound object from the audio file specified. If the audio file cannot be found, the engine will instead use a fallback sound in its place.
      * 
      * @param filename the name of the file to load. Expects the file extension to be included.
      */

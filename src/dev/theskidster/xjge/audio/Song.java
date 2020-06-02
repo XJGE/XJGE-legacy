@@ -6,8 +6,8 @@ package dev.theskidster.xjge.audio;
  */
 
 /**
- * Represents some music, may or may not contain an intro which is played once before 
- * entering a looping body section.
+ * Represents a musical composition, may or may not contain an intro which is played once before entering a looping body section. All {@link Sound} objects used 
+ * by this object should be formatted as 16-bit stereo.
  */
 public class Song {
     
@@ -15,7 +15,7 @@ public class Song {
     public Sound body;
     
     /**
-     * Creates a new song object without an intro.
+     * Creates a new song object using the audio file specified. The file provided should be formatted in 16-bit stereo.
      * 
      * @param filename the name of the file to load. Expects the file extension to be included.
      */
@@ -24,7 +24,9 @@ public class Song {
     }
     
     /**
-     * Creates a new song object with an intro section.
+     * Creates a new song object using the audio files specified. The files provided should be formatted in 16-bit stereo. 
+     * {@link dev.theskidster.xjge.level.Level Levels} that use a song object with this constructor will need to call {@link Audio#checkIntroFinished()} otherwise
+     * the body section will not play.
      * 
      * @param introFilename the name of the file to load for the intro section. Expects the file extension to be included.
      * @param bodyFilename  the name of the file to load for the body section. Expects the file extension to be included.

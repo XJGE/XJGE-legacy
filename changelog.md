@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.5.0] - UNRELEASED
+
+### Added
+
+### Changed
+
+* Fixed the bug that would crash the engine if an audio device outside the number available was specified through the "setAudioDevice" terminal command.
+* Updated the documentation for several classes including; Texture.java, Sound.java, and Song.java.
+* Moved the IDENTITY matrix object from App.java to KeyFrame.java.
+
+### Removed
+
+
+
 ## [1.2.3] - 2020-05-19
 
 ### Added

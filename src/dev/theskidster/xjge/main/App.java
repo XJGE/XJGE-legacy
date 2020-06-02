@@ -83,7 +83,6 @@ public final class App {
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
     public static final String VERSION        = "1.2.3";
-    public static final Matrix4f IDENTITY     = new Matrix4f();
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -1111,7 +1110,7 @@ public final class App {
                     try {
                         int index = Integer.parseInt(operation);
                         
-                        if(displayDevices.containsKey(index)) {
+                        if(audioDevices.containsKey(index)) {
                             audioDevice = audioDevices.get(index);
                             audioDevice.setContextCurrent();
                             Logger.log(LogLevel.INFO, 

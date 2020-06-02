@@ -19,8 +19,8 @@ import dev.theskidster.xjge.util.Logger;
  */
 
 /**
- * Supplies data parsed from image files and generates a new two-dimensional texture object on the GPU. RBGA encoded .png is the preferred format of this engine. 
- * OpenGL texture parameters are expected to be defined outside of this class following the texture objects initialization in the implementing classes constructor.
+ * Supplies the data parsed from an image file into a new two-dimensional texture object that can be used by the graphics pipeline. RBGA encoded .png is the 
+ * preferred file format of this engine. OpenGL texture parameters are expected to be defined outside of this class following the texture objects initialization.
  */
 public final class Texture {
     
@@ -30,7 +30,7 @@ public final class Texture {
     private int channels;
     
     /**
-     * Generates a new texture object to be used by the graphics pipeline. If the file cannot be found it will use a fallback texture.
+     * Creates a new texture object from the image file specified. If the image file cannot be found, the engine will instead use a fallback texture in its place.
      * 
      * @param filename the name of the file to load. Expects the file extension to be included.
      */
@@ -50,6 +50,11 @@ public final class Texture {
         ErrorUtil.checkGLError();
     }
     
+    /**
+     * Parses the data of the image file specified and generates a new OpenGL texture object from its contents.
+     * 
+     * @param file the file to extract texture data from
+     */
     private void loadTexture(InputStream file) {
         try(MemoryStack stack = MemoryStack.stackPush()) {
             byte[] data = file.readAllBytes();
@@ -68,7 +73,7 @@ public final class Texture {
             if(texture != null) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             } else {
-                throw new NullPointerException("STBI failed to parse texture data.");
+                throw new NullPointerException("STBI failed to parse texture image data.");
             }
             
             stbi_image_free(texture);
@@ -76,7 +81,7 @@ public final class Texture {
             
         } catch(IOException e) {
             Logger.setStackTrace(e);
-            Logger.log(LogLevel.SEVERE, "Failed to load fallback texture.");
+            Logger.log(LogLevel.SEVERE, "Failed to load fallback texture image.");
         }
     }
     
