@@ -23,7 +23,7 @@ public abstract class Camera {
     /**
      * The position of the camera in the game world.
      */
-    public Vector3f position  = new Vector3f();
+    public Vector3f position = new Vector3f();
     
     /**
      * The direction in which the camera is pointing.
@@ -33,10 +33,10 @@ public abstract class Camera {
     /**
      * The direction that's considered upwards relative to the camera.
      */
-    public Vector3f up        = new Vector3f(0, 1, 0);
+    public Vector3f up = new Vector3f(0, 1, 0);
     
-    protected Matrix4f view   = new Matrix4f();
-    protected Matrix4f proj   = new Matrix4f();
+    public Matrix4f viewMatrix    = new Matrix4f();
+    protected Matrix4f projMatrix = new Matrix4f();
     
     /**
      * Creates a new camera object that will use the projection type specified. The engine provides two projection types by default; orthographic projection and 
@@ -79,13 +79,13 @@ public abstract class Camera {
     public void setType(String type, int width, int height) {        
         switch(type) {
             case "ortho":
-                proj.setOrtho(0, width, 0, height, 0, Integer.MAX_VALUE);
-                ShaderCore.setMat4("uProjection", false, proj);
+                projMatrix.setOrtho(0, width, 0, height, 0, Integer.MAX_VALUE);
+                ShaderCore.setMat4("uProjection", false, projMatrix);
                 break;
                 
             case "persp":
-                proj.setPerspective((float) Math.toRadians(45), (float) width / height, 0.1f, Float.POSITIVE_INFINITY);
-                ShaderCore.setMat4("uProjection", false, proj);
+                projMatrix.setPerspective((float) Math.toRadians(45), (float) width / height, 0.1f, Float.POSITIVE_INFINITY);
+                ShaderCore.setMat4("uProjection", false, projMatrix);
                 break;
         }
     }

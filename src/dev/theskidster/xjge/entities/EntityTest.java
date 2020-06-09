@@ -6,6 +6,7 @@ import org.lwjgl.system.MemoryStack;
 import dev.theskidster.xjge.graphics.Graphics;
 import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.shader.core.ShaderCore;
+import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.ErrorUtil;
 
 /**
@@ -54,7 +55,7 @@ public class EntityTest extends Entity {
     }
 
     @Override
-    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights) {
+    public void render(Camera camera, LightSource[] lights, int numLights) {
         glEnable(GL_DEPTH_TEST);
         
         ShaderCore.use("default");

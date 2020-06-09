@@ -5,9 +5,12 @@ import java.util.List;
 import dev.theskidster.xjge.entities.Entity;
 import dev.theskidster.xjge.graphics.Light;
 import dev.theskidster.xjge.graphics.LightSource;
+import dev.theskidster.xjge.graphics.Skybox;
 import dev.theskidster.xjge.main.App;
+import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 /**
@@ -28,10 +31,11 @@ public abstract class Level {
      */
     public List<Entity> entityList = new ArrayList<>();
     
+    private Skybox skybox;
     private LightSource[] lights = new LightSource[App.MAX_LIGHTS];
     
     Level() {
-        lights[0] = new LightSource(Light.DAYLIGHT);
+        lights[0] = new LightSource(Light.NOON);
     }
     
     /**
@@ -52,12 +56,11 @@ public abstract class Level {
     /**
      * Organizes calls to the graphics API made by various objects in the game world.
      * 
-     * @param camPos the position of the viewports camera in the game world
-     * @param camDir the direction in which the viewports camera is facing
-     * @param camUp  the direction considered upwards relative to the viewports camera
+     * @param camera the {@link dev.theskidster.xjge.util.Camera Camera} object of the {@link dev.theskidster.xjge.main.Viewport Viewport} currently being 
+     *                rendered
      * @see dev.theskidster.xjge.main.Game#loop()
      */
-    public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp);
+    public abstract void render(Camera camera);
     
     /**
      * Used to free any resources used by this level before changing to a new one.
@@ -157,6 +160,20 @@ public abstract class Level {
     }
     
     /**
+     * Sets the {@link Skybox} to use for this level. If a skybox is used, the {@link renderSkybox(Matrix4f) renderSkybox()} method must be called first in the 
+     * render method of this level.
+     * 
+     * @param skybox the skybox object to render
+     */
+    protected void setSkybox(Skybox skybox) {
+        if(skybox != null) {
+            this.skybox = skybox;
+        } else {
+            Logger.log(LogLevel.WARNING, "Level skybox may not be null.");
+        }
+    }
+    
+    /**
      * Updates each {@link LightSource} object that currently exists in the level.
      */
     protected void updateLightSources() {
@@ -179,6 +196,16 @@ public abstract class Level {
                 if(light != null) light.render(camPos, camDir, camUp);
             }
         }
+    }
+    
+    /**
+     * Renders the levels current {@link dev.theskidster.xjge.graphics.Skybox Skybox}. This method must be called first BEFORE all other rendering operations 
+     * in the levels {@link render(Camera camera) render()} method to work correctly.
+     * 
+     * @param viewMatrix the view matrix of the viewport camera currently rendering the level
+     */
+    protected void renderSkybox(Matrix4f viewMatrix) {
+        skybox.render(viewMatrix);
     }
     
 }

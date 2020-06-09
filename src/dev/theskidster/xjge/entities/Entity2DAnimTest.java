@@ -7,6 +7,7 @@ import dev.theskidster.xjge.graphics.SpriteAnimation;
 import dev.theskidster.xjge.graphics.SpriteSheet;
 import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.shader.core.ShaderCore;
+import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.ErrorUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +93,7 @@ public class Entity2DAnimTest extends Entity {
     }
 
     @Override
-    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights) {
+    public void render(Camera camera, LightSource[] lights, int numLights) {
         glEnable(GL_DEPTH_TEST);
         
         ShaderCore.use("default");

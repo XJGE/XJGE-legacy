@@ -7,11 +7,19 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
+* New Cubemap class that represents three-dimensional textures.
+* New Skybox class that enables a greater level of detail in 3D environments.
+* Various utilities to the Level class including setSkybox() and renderSkybox() methods to allow it to utilize skyboxes objects.
+* New default Skybox objects that correspond to the default Light objects.
+
 ### Changed
 
 * Fixed the bug that would crash the engine if an audio device outside the number available was specified through the "setAudioDevice" terminal command.
-* Updated the documentation for several classes including; Texture.java, Sound.java, and Song.java.
-* Moved the IDENTITY matrix object from App.java to KeyFrame.java.
+* The documentation for several classes to reflect changes including; Texture.java, Sound.java, Song.java, Entity.java, and Level.java
+* the location of the IDENTITY matrix object from App.java to KeyFrame.java.
+* Fixed broken link in freeTexture() method documentation.
+* The signature of the render() function in entity/level, it will now just pass the viewports current camera object instead of its vectors.
+* Modified default shaders to permit the use of skyboxes.
 
 ### Removed
 

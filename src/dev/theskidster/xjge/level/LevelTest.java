@@ -4,8 +4,11 @@ import dev.theskidster.xjge.entities.Entity2DAnimTest;
 import dev.theskidster.xjge.entities.Entity3DAnimTest;
 import dev.theskidster.xjge.entities.EntityTeapot;
 import dev.theskidster.xjge.entities.EntityTest;
+import dev.theskidster.xjge.graphics.Light;
+import dev.theskidster.xjge.graphics.Skybox;
 import org.joml.Vector3f;
 import dev.theskidster.xjge.main.App;
+import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.Color;
 import dev.theskidster.xjge.util.ScreenSplitType;
 
@@ -22,7 +25,10 @@ public class LevelTest extends Level {
     @Override
     public void init() {
         App.setSplitType(ScreenSplitType.NO_SPLIT);
-        App.setClearColor(Color.SOFT_BLUE);
+        App.setClearColor(Color.SLATE_GRAY);
+
+        setSkybox(Skybox.NOON);
+        setWorldLight(Light.NOON);
         
         entityList.add(new EntityTest(new Vector3f(0, 10, -150)));
         entityList.add(new EntityTeapot(new Vector3f(40, -10, -100)));
@@ -41,9 +47,10 @@ public class LevelTest extends Level {
     }
 
     @Override
-    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
-        entityList.forEach(e -> e.render(camPos, camDir, camUp, getLightSources(), getNumLights()));
-        renderLightSources(camPos, camDir, camUp);
+    public void render(Camera camera) {
+        renderSkybox(camera.viewMatrix);
+        entityList.forEach(e -> e.render(camera, getLightSources(), getNumLights()));
+        renderLightSources(camera.position, camera.direction, camera.up);
     }
 
     @Override

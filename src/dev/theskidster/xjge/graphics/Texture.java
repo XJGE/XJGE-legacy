@@ -42,7 +42,7 @@ public final class Texture {
             loadTexture(file);
         } catch(Exception e) {
             Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to load texture: \"" + filename + "\"");
+            Logger.log(LogLevel.WARNING, "Failed to load texture image: \"" + filename + "\"");
             
             loadTexture(Texture.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/img_null.png"));
         }
@@ -92,7 +92,7 @@ public final class Texture {
     /**
      * Frees the OpenGL texture image associated with this object. Should be used when a texture is no longer needed.
      * 
-     * @see dev.org.lwjgl.opengl.GL11#glDeleteTextures(int)
+     * @see org.lwjgl.opengl.GL11#glDeleteTextures(int)
      */
     public void freeTexture() {
         glDeleteTextures(handle);

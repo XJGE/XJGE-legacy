@@ -2,6 +2,7 @@ package dev.theskidster.xjge.entities;
 
 import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.graphics.Model;
+import dev.theskidster.xjge.util.Camera;
 import org.joml.Vector3f;
 
 /**
@@ -30,7 +31,7 @@ public class Entity3DAnimTest extends Entity {
     }
 
     @Override
-    public void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights) {
+    public void render(Camera camera, LightSource[] lights, int numLights) {
         model.render("default", lights, numLights);
     }
 

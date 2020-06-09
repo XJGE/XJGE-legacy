@@ -7,6 +7,7 @@ in vec2 ioTexCoords;
 in vec3 ioColor;
 in vec3 ioNormal;
 in vec3 ioFragPos;
+in vec3 ioSkyTexCoords;
 
 struct Light {
     float brightness;
@@ -18,6 +19,7 @@ struct Light {
 
 uniform int uType;
 uniform sampler2D uTexture;
+uniform samplerCube uSkyTexture;
 uniform Light uLights[MAX_LIGHTS];
 uniform int uNumLights;
 
@@ -116,6 +118,11 @@ void main() {
         case 6: //Used for light source icons.
             makeTransparent(texture(uTexture, ioTexCoords).a);
             ioResult = texture(uTexture, ioTexCoords) * vec4(ioColor, 1);
+            break;
+
+        case 8: //used for skyboxes.
+            makeTransparent(texture(uSkyTexture, ioSkyTexCoords).a);
+            ioResult = texture(uSkyTexture, ioSkyTexCoords);
             break;
     }
 }

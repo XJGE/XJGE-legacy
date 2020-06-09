@@ -52,8 +52,8 @@ public class Freecam extends Camera {
         ShaderCore.getPrograms().forEach(name -> {
             ShaderCore.use(name);
             
-            view.setLookAt(position, position.add(direction, tempFront), up);
-            ShaderCore.setMat4("uView", false, view);
+            viewMatrix.setLookAt(position, position.add(direction, tempFront), up);
+            ShaderCore.setMat4("uView", false, viewMatrix);
         });
     }
     

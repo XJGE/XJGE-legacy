@@ -4,6 +4,7 @@
  * <p>Abstractions include: </p>
  * <ul>
  * <li>{@link Cell}</li>
+ * <li>{@link Cubemap}</li>
  * <li>{@link Graphics}</li>
  * <li>{@link Instance}</li>
  * <li>{@link Model}</li>

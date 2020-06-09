@@ -1,6 +1,7 @@
 package dev.theskidster.xjge.entities;
 
 import dev.theskidster.xjge.graphics.LightSource;
+import dev.theskidster.xjge.util.Camera;
 import org.joml.Vector3f;
 
 /**
@@ -35,15 +36,14 @@ public abstract class Entity {
      * Used to organize calls to the graphics API made by this entity through its {@link dev.theskidster.xjge.graphics.Graphics Graphics} component if it has one. 
      * Must be called exclusively through {@link dev.theskidster.xjge.level.Level#render(Vector3f, Vector3f, Vector3f) Level.render()}.
      * 
-     * @param camPos    the position of the viewports camera in the game world
-     * @param camDir    the direction in which the viewports camera is facing
-     * @param camUp     the direction considered upwards relative to the viewports camera
+     * @param camera    the {@link dev.theskidster.xjge.util.Camera Camera} object of the {@link dev.theskidster.xjge.main.Viewport Viewport} currently being 
+     *                  rendered
      * @param lights    the array of light source objects provided by the current level through 
      *                  {@link dev.theskidster.xjge.level.Level#getLightSources() getLightSources()}
      * @param numLights the number of lights the current level is using. This number will increase until 
      *                  {@link dev.theskidster.xjge.main.App#MAX_LIGHTS App.MAX_LIGHTS} has been reached, or the current level has been changed.
      */
-    public abstract void render(Vector3f camPos, Vector3f camDir, Vector3f camUp, LightSource[] lights, int numLights);
+    public abstract void render(Camera camera, LightSource[] lights, int numLights);
     
     /**
      * Used to free resources used by this entity once it is no longer needed. Calls like 

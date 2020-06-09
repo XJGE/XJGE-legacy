@@ -30,6 +30,7 @@ out vec2 ioTexCoords;
 out vec3 ioColor;
 out vec3 ioNormal;
 out vec3 ioFragPos;
+out vec3 ioSkyTexCoords;
 
 void main() {
     switch(uType) {
@@ -102,6 +103,11 @@ void main() {
         case 7: //used for animated 2D sprites.
             ioTexCoords = aTexCoords + uTexCoords;
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
+            break;
+
+        case 8: //used for skyboxes.
+            ioSkyTexCoords = aPosition;
+            gl_Position    = (uProjection * uView * vec4(aPosition, 1));
             break;
     }
 }
