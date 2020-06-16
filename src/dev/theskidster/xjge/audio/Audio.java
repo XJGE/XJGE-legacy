@@ -8,6 +8,8 @@ import static org.lwjgl.openal.AL11.*;
 import dev.theskidster.xjge.util.ErrorUtil;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
+import java.util.TreeMap;
+import org.joml.Vector3f;
 
 /**
  * @author J Hoffman
@@ -39,22 +41,13 @@ public class Audio implements AudioService {
     private Map<Integer, Integer> sourceStates  = new HashMap<>();
     private Map<Integer, String> sourceSounds   = new HashMap<>();
     
+    private Map<Integer, Vector3f> camPos  = new HashMap<>();
+    private Map<Integer, Vector3f> camDir  = new HashMap<>();
+    private Map<Integer, Double> distances = new TreeMap<>();
+    
     private Map<String, Sound> sounds = new HashMap<>();
     private Map<String, Song> songs   = new HashMap<>();
     
-    @Override
-    public void findSourceStates() {
-        if(musicSource != null) {
-            for(Source source : sources) {
-                sourceSamples.put(source.handle, alGetSourcei(source.handle, AL_SAMPLE_OFFSET));
-                sourceStates.put(source.handle, alGetSourcei(source.handle, AL_SOURCE_STATE));
-            }
-            
-            prevMusicSourceSample = alGetSourcei(musicSource.handle, AL_SAMPLE_OFFSET);
-            prevMusicSourceState  = alGetSourcei(musicSource.handle, AL_SOURCE_STATE);
-        }
-    }
-
     @Override
     public void init() {
         //Sounds
@@ -100,31 +93,6 @@ public class Audio implements AudioService {
             musicSource = new Source();
         }
     }
-
-    @Override
-    public float getSoundMasterVolume() {
-        return soundMasterVolume;
-    }
-
-    @Override
-    public float getMusicMasterVolume() {
-        return musicMasterVolume;
-    }
-
-    @Override
-    public void setSoundMasterVolume(float masterVolume) {
-        soundMasterVolume = masterVolume;
-        
-        for(Source source : sources) {
-            alSourcef(source.handle, AL_GAIN, masterVolume);
-        }
-    }
-
-    @Override
-    public void setMusicMasterVolume(float masterVolume) {
-        musicMasterVolume = masterVolume;
-        alSourcef(musicSource.handle, AL_GAIN, masterVolume);
-    }
     
     /**
      * Finds an available {@link Source} object to use or steals one according to whichever is playing at the lowest volume.
@@ -162,8 +130,39 @@ public class Audio implements AudioService {
         return source;
     }
     
+    /**
+     * Finds the ID number of the viewport who's camera is positioned closest to the location of a source object in the game world.
+     * 
+     * @param position the position of the source object to compare
+     * @return the id number of the viewport
+     * @see updateSourcePositions()
+     */
+    private int findClosestViewport(Vector3f position) {
+        for(int i = 0; i < camDir.size(); i++) {
+            distances.put(i, Math.sqrt(position.distance(camPos.get(i))));
+        }
+        
+        return distances.entrySet().stream()
+                .min(Comparator.comparingDouble(Map.Entry::getValue))
+                .get()
+                .getKey();
+    }
+    
     @Override
-    public int playSound(String sound, boolean loop) {
+    public void findSourceStates() {
+        if(musicSource != null) {
+            for(Source source : sources) {
+                sourceSamples.put(source.handle, alGetSourcei(source.handle, AL_SAMPLE_OFFSET));
+                sourceStates.put(source.handle, alGetSourcei(source.handle, AL_SOURCE_STATE));
+            }
+            
+            prevMusicSourceSample = alGetSourcei(musicSource.handle, AL_SAMPLE_OFFSET);
+            prevMusicSourceState  = alGetSourcei(musicSource.handle, AL_SOURCE_STATE);
+        }
+    }
+    
+    @Override
+    public int playSound(String sound, Vector3f position, boolean loop) {
         Source source = findSource();
         
         if(sounds.containsKey(sound)) {
@@ -176,10 +175,91 @@ public class Audio implements AudioService {
         sourceSounds.put(source.handle, sound);
         
         source.setLooping(loop);
+        source.setWorldPosition(position);
         
         alSourcePlay(source.handle);
         ErrorUtil.checkALError();
         return source.handle;
+    }
+    
+    @Override
+    public void playMusic(String song) {
+        alSourceStop(musicSource.handle);
+        
+        musicSource = new Source();
+        
+        if(songs.containsKey(song)) {
+            currSongBody = songs.get(song).body;
+            
+            if(songs.get(song).intro != null) {
+                introFinished = false;
+                musicSource.queueSound(songs.get(song).intro);
+                musicSource.queueSound(currSongBody);
+            } else {
+                introFinished = true;
+                musicSource.queueSound(currSongBody);
+            }
+        } else {
+            Logger.log(LogLevel.WARNING, "Could not find song: \"" + song + "\"");
+            currSongBody = sounds.get("beep");
+            musicSource.queueSound(currSongBody);
+            introFinished = false;
+        }
+        prevMusicSourceSong = song;
+        
+        musicSource.setLooping(introFinished);
+        
+        alSourcePlay(musicSource.handle);
+        ErrorUtil.checkALError();
+    }
+
+    @Override public void pauseMusic()  { alSourcePause(musicSource.handle); }
+    @Override public void resumeMusic() { alSourcePlay(musicSource.handle); }
+    @Override public void stopMusic()   { alSourceStop(musicSource.handle); }
+
+    @Override
+    public void checkIntroFinished() {
+        if(alGetSourcei(musicSource.handle, AL_BUFFERS_PROCESSED) == 2 && !introFinished) {
+            alSourceUnqueueBuffers(musicSource.handle);
+            
+            musicSource.queueSound(currSongBody);
+            musicSource.setLooping(true);
+            
+            alSourcePlay(musicSource.handle);
+            
+            introFinished = true;
+        }
+    }
+    
+    @Override
+    public void updateSourcePositions() {
+        for(Source source : sources) {
+            if(source != null && source.getState(AL_PLAYING)) {
+                int id = findClosestViewport(source.getPosition());
+                source.setSourcePosition(camPos.get(id), camDir.get(id));
+            }
+        }
+        
+        camPos.clear();
+        camDir.clear();
+    }
+
+    @Override public float getSoundMasterVolume() { return soundMasterVolume; }
+    @Override public float getMusicMasterVolume() { return musicMasterVolume; }
+
+    @Override
+    public void setSoundMasterVolume(float masterVolume) {
+        soundMasterVolume = masterVolume;
+        
+        for(Source source : sources) {
+            alSourcef(source.handle, AL_GAIN, masterVolume);
+        }
+    }
+
+    @Override
+    public void setMusicMasterVolume(float masterVolume) {
+        musicMasterVolume = masterVolume;
+        alSourcef(musicSource.handle, AL_GAIN, masterVolume);
     }
     
     @Override
@@ -230,63 +310,9 @@ public class Audio implements AudioService {
     }
     
     @Override
-    public void playMusic(String song) {
-        alSourceStop(musicSource.handle);
-        
-        musicSource = new Source();
-        
-        if(songs.containsKey(song)) {
-            currSongBody = songs.get(song).body;
-            
-            if(songs.get(song).intro != null) {
-                introFinished = false;
-                musicSource.queueSound(songs.get(song).intro);
-                musicSource.queueSound(currSongBody);
-            } else {
-                introFinished = true;
-                musicSource.queueSound(currSongBody);
-            }
-        } else {
-            Logger.log(LogLevel.WARNING, "Could not find song: \"" + song + "\"");
-            currSongBody = sounds.get("beep");
-            musicSource.queueSound(currSongBody);
-            introFinished = false;
-        }
-        prevMusicSourceSong = song;
-        
-        musicSource.setLooping(introFinished);
-        
-        alSourcePlay(musicSource.handle);
-        ErrorUtil.checkALError();
-    }
-
-    @Override
-    public void pauseMusic() {
-        alSourcePause(musicSource.handle);
-    }
-
-    @Override
-    public void resumeMusic() {
-        alSourcePlay(musicSource.handle);
-    }
-
-    @Override
-    public void stopMusic() {
-        alSourceStop(musicSource.handle);
-    }
-
-    @Override
-    public void checkIntroFinished() {
-        if(alGetSourcei(musicSource.handle, AL_BUFFERS_PROCESSED) == 2 && !introFinished) {
-            alSourceUnqueueBuffers(musicSource.handle);
-            
-            musicSource.queueSound(currSongBody);
-            musicSource.setLooping(true);
-            
-            alSourcePlay(musicSource.handle);
-            
-            introFinished = true;
-        }
+    public void setViewportCamData(int id, Vector3f position, Vector3f direction) {
+        camPos.put(id, position);
+        camDir.put(id, direction);
     }
     
 }

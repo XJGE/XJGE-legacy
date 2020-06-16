@@ -459,7 +459,7 @@ public class Terminal extends Component implements PropertyChangeListener {
 
         @Override
         public void execute(List<String> args) {
-            ServiceLocator.getAudio().playSound("beep", false);
+            ServiceLocator.getAudio().playSound("beep", null, false);
         }
         
     }

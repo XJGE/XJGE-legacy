@@ -49,6 +49,11 @@ public final class Sound {
         ErrorUtil.checkALError();
     }
     
+    /**
+     * Parses the data of the sound file specified and generates a new data buffer from its contents that can be used by a {@link Source} object.
+     * 
+     * @param file the file to extract sound data from
+     */
     private void loadSound(InputStream file) {
         try(MemoryStack stack = MemoryStack.stackPush()) {
             byte[] data = file.readAllBytes();

@@ -176,7 +176,7 @@ public final class App {
         var shaderSources  = new ArrayList<ShaderSource>();
         var shaderPrograms = new HashMap<String, ShaderProgram>();
         
-        //TODO: (OPTIONAL) Define additional shaders in a scope here.
+        //TODO (OPTIONAL) Define additional shaders in a scope here.
         
         {
             shaderSources.add(new ShaderSource("defaultVertex.glsl",   GL_VERTEX_SHADER));
@@ -314,8 +314,12 @@ public final class App {
             if(viewport.active && viewport.currCamera != null) {
                 viewport.currCamera.update();
                 viewport.ui.forEach((name, component) -> component.update());
+                
+                ServiceLocator.getAudio().setViewportCamData(viewport.id, viewport.currCamera.position, viewport.currCamera.direction);
             }
         }
+        
+        ServiceLocator.getAudio().updateSourcePositions();
     }
     
     /**

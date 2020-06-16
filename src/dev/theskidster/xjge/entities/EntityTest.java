@@ -8,6 +8,7 @@ import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.util.ServiceLocator;
 
 /**
  * @author J Hoffman
@@ -44,6 +45,8 @@ public class EntityTest extends Entity {
         
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(2);
+        
+        ServiceLocator.getAudio().playSound("beep", position, true);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class EntityTest extends Entity {
         angle += 1f;
         
         g.modelMatrix.translation(position);
-        g.modelMatrix.rotateY((float) Math.toRadians(-angle));
+        g.modelMatrix.rotateY((float) Math.toRadians(angle));
     }
 
     @Override

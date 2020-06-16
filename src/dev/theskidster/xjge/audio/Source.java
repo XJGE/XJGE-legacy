@@ -2,6 +2,7 @@ package dev.theskidster.xjge.audio;
 
 import static org.lwjgl.openal.AL11.*;
 import dev.theskidster.xjge.util.ErrorUtil;
+import org.joml.Vector3f;
 
 /**
  * @author J Hoffman
@@ -19,6 +20,8 @@ class Source {
     private boolean loop;
     
     private Sound sound;
+    private Vector3f position;
+    private Vector3f tempPos = new Vector3f();
     
     /**
      * Generates a new source object.
@@ -41,6 +44,7 @@ class Source {
         handle = alGenSources();
         
         setLooping(source.loop);
+        setWorldPosition(source.position);
         
         if(sound != null) {
             setSound(sound);
@@ -100,6 +104,46 @@ class Source {
      */
     public boolean getState(int state) {
         return alGetSourcei(handle, AL_SOURCE_STATE) == state;
+    }
+    
+    public Vector3f getPosition() { return position; }
+    
+    /**
+     * Sets the position of the source object as its found in the game world. This vector will be used in conjunction with the position and direction vectors of
+     * the nearest {@link dev.theskidster.xjge.util.Camera camera} object to calculate its final position relative to the OpenAL listener object.
+     * 
+     * @param position the position to place the source at
+     */
+    public void setWorldPosition(Vector3f position) {
+        if(position != null) this.position = position;
+    }
+    
+    /**
+     * Calculates the final position of the source object given its position in the game world relative to the position and direction of the nearest viewports 
+     * {@link dev.theskidster.xjge.util.Camera camera} object.
+     * 
+     * @param position  the current position of the viewports camera
+     * @param direction the direction the viewports camera is currently facing
+     */
+    public void setSourcePosition(Vector3f position, Vector3f direction) {
+        this.position.sub(position, tempPos);
+        
+        float dot   = tempPos.dot(direction);
+        float det   = tempPos.x * direction.z - tempPos.z * direction.x; //determinant
+        float angle = (float) Math.toDegrees(Math.atan2(det, dot)) - 90;
+        
+        if(angle < 0) {
+            float offset = 180 + angle;
+            angle = 180 + offset;
+        }
+        
+        float dist = position.distance(this.position);
+        
+        float rad = (float) Math.toRadians(angle);
+        float x   = (float) -(dist * Math.cos(rad));
+        float z   = (float) (dist * Math.sin(rad));
+        
+        alSource3f(handle, AL_POSITION, x, tempPos.y, z);
     }
     
     /**
