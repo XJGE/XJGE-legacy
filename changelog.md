@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [1.3.0] - UNRELEASED
+## [1.3.0] - 2020-06-19
 
 ### Added
 
@@ -143,6 +143,7 @@ All notable changes to this project will be documented in this file. The format 
 - Game state traversal.
 - Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
 
+[1.3.0]: https://github.com/theskidster/XJGE/commit/753cda066ed1c58c21a31786c020d0cfdb99ead0
 [1.2.3]: https://github.com/theskidster/XJGE/commit/805bc8c1ec004f7bd08d22b429cdcdfb5bf7f69c
 [1.2.0]: https://github.com/theskidster/XJGE/commit/17331b216f6002e1ab2e348be722d4812cb756bc
 [1.0.9]: https://github.com/theskidster/XJGE/commit/90211a1e8cdc884334377beaf80c7fbf1671965a
