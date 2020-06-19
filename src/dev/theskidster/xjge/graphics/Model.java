@@ -446,8 +446,7 @@ public class Model {
             }
             
             if(currAnimation != null) {
-                KeyFrame frame = animations.get(currAnimation).getCurrFrame();
-                ShaderCore.setMat4("uBoneTransforms", false, frame.boneTransforms);
+                ShaderCore.setMat4("uBoneTransforms", false, animations.get(currAnimation).getCurrFrame().boneTransforms);
             }
             
             glDrawElements(GL_TRIANGLES, meshes[m].indices.limit(), GL_UNSIGNED_INT, 0);

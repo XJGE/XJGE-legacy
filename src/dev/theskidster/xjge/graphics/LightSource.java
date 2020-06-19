@@ -46,10 +46,10 @@ public class LightSource {
             g.indices  = stack.mallocInt(6);
             
             //(vec3 position), (vec2 texCoords)
-            g.vertices.put(-5) .put(5).put(0)   .put(0).put(0);
-            g.vertices .put(5) .put(5).put(0)   .put(1).put(0);
-            g.vertices .put(5).put(-5).put(0)   .put(1).put(1);
-            g.vertices.put(-5).put(-5).put(0)   .put(0).put(1);
+            g.vertices.put(-8) .put(8).put(0)   .put(0).put(0);
+            g.vertices .put(8) .put(8).put(0)   .put(1).put(0);
+            g.vertices .put(8).put(-8).put(0)   .put(1).put(1);
+            g.vertices.put(-8).put(-8).put(0)   .put(0).put(1);
             
             g.indices.put(0).put(1).put(2);
             g.indices.put(2).put(3).put(0);

@@ -1,7 +1,6 @@
 package dev.theskidster.xjge.level;
 
-import dev.theskidster.xjge.entities.EntityTeapot;
-import dev.theskidster.xjge.entities.EntityTest;
+import dev.theskidster.xjge.entities.Entity3DAnimTest;
 import dev.theskidster.xjge.graphics.Light;
 import dev.theskidster.xjge.graphics.Skybox;
 import org.joml.Vector3f;
@@ -28,8 +27,9 @@ public class LevelTest extends Level {
         setSkybox(Skybox.NOON);
         setWorldLight(Light.NOON);
         
-        entityList.add(new EntityTest(new Vector3f(0, 10, -80)));
-        entityList.add(new EntityTeapot(new Vector3f(-40, 0, -60)));
+        //entityList.add(new EntityTest(new Vector3f(0, 10, -80)));
+        //entityList.add(new EntityTeapot(new Vector3f(-40, 0, -60)));
+        entityList.add(new Entity3DAnimTest(new Vector3f(0, 0, -40)));
     }
 
     @Override
@@ -44,9 +44,7 @@ public class LevelTest extends Level {
 
     @Override
     public void render(Camera camera) {
-        renderSkybox(camera.viewMatrix);
         entityList.forEach(e -> e.render(camera, getLightSources(), getNumLights()));
-        renderLightSources(camera.position, camera.direction, camera.up);
     }
 
     @Override

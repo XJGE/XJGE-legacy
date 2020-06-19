@@ -20,20 +20,9 @@ public abstract class Camera {
     
     public final String type;
     
-    /**
-     * The position of the camera in the game world.
-     */
-    public Vector3f position = new Vector3f();
-    
-    /**
-     * The direction in which the camera is pointing.
-     */
+    public Vector3f position  = new Vector3f();
     public Vector3f direction = new Vector3f(0, 0, -1);
-    
-    /**
-     * The direction that's considered upwards relative to the camera.
-     */
-    public Vector3f up = new Vector3f(0, 1, 0);
+    public Vector3f up        = new Vector3f(0, 1, 0);
     
     public Matrix4f viewMatrix    = new Matrix4f();
     protected Matrix4f projMatrix = new Matrix4f();

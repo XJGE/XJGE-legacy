@@ -82,7 +82,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String VERSION        = "1.5.0";
+    public static final String VERSION        = "1.3.0";
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -350,7 +350,9 @@ public final class App {
                     viewport.resetCamera();
                     
                     viewport.render("camera");
+                    level.renderSkybox(viewport.currCamera.viewMatrix);
                     level.render(viewport.currCamera);
+                    level.renderLightSources(viewport.currCamera.position, viewport.currCamera.direction, viewport.currCamera.up);
                     viewport.render("ui");
                 glBindFramebuffer(GL_FRAMEBUFFER, 0);
                 
@@ -901,9 +903,9 @@ public final class App {
      * Used to update the vectors of a viewport camera.
      * 
      * @param id  the unique number used to identify the viewport in other parts of the engine
-     * @param pos the corresponding {@link dev.theskidster.xjge.util.Camera#position Camera.position} vector
-     * @param dir the corresponding {@link dev.theskidster.xjge.util.Camera#direction Camera.direction} vector
-     * @param up  the corresponding {@link dev.theskidster.xjge.util.Camera#up Camera.up} vector
+     * @param pos the position of the camera in the game world
+     * @param dir the direction in which the camera's pointing
+     * @param up  the direction that's considered upwards relative to the camera
      * @see dev.theskidster.xjge.util.Camera
      */
     public static void setViewportCameraVectors(int id, Vector3f pos, Vector3f dir, Vector3f up) {

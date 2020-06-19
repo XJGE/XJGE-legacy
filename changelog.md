@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [1.5.0] - UNRELEASED
+## [1.3.0] - UNRELEASED
 
 ### Added
 
@@ -25,6 +25,9 @@ All notable changes to this project will be documented in this file. The format 
 * The ordering of several methods in the AudioService and Audio classes to better resemble the loose conventions imposed by the engine.
 
 ### Removed
+
+* The model matrix object from the render method of the Skybox class since it was unused.
+* The documentation for the vectors in the Camera class as it was creating too much clutter, updated any documentation links accordingly.
 
 
 

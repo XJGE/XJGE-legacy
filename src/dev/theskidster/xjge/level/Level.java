@@ -56,8 +56,7 @@ public abstract class Level {
     /**
      * Organizes calls to the graphics API made by various objects in the game world.
      * 
-     * @param camera the {@link dev.theskidster.xjge.util.Camera Camera} object of the {@link dev.theskidster.xjge.main.Viewport Viewport} currently being 
-     *                rendered
+     * @param camera the {@link Camera Camera} object of the {@link dev.theskidster.xjge.main.Viewport Viewport} currently being rendered
      * @see dev.theskidster.xjge.main.Game#loop()
      */
     public abstract void render(Camera camera);
@@ -183,29 +182,37 @@ public abstract class Level {
     }
     
     /**
+     * <b>*For internal use only*</b> 
+     * <br><br>
+     * Renders the levels current {@link dev.theskidster.xjge.graphics.Skybox Skybox}. Called automatically by the {@link App} class before this levels 
+     * {@link render(Camera) render()} method.
+     * 
+     * @param viewMatrix the view matrix of the viewport camera currently rendering the level
+     */
+    public void renderSkybox(Matrix4f viewMatrix) {
+        if(skybox != null) skybox.render(viewMatrix);
+    }
+    
+    /**
+     * <b>*For internal use only*</b> 
+     * <br><br>
      * Renders each {@link LightSource} object in the level. Light source objects can be exposed or hidden through the use of the 
-     * {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) setShowLightSoures()} method in the App class.
+     * {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) setShowLightSoures()} method in the App class. Or during runtime with the 
+     * showLightSources terminal command.
+     * <br><br>
+     * Additional debug information that requires objects to be displayed within the game world (such as displaying collision boxes, entity names, etc.) should 
+     * be included by the implementation in a similar manner to this. 
      * 
      * @param camPos the position of the viewports camera in the game world
      * @param camDir the direction in which the viewports camera is facing
      * @param camUp  the direction considered upwards relative to the viewports camera
      */
-    protected void renderLightSources(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
+    public void renderLightSources(Vector3f camPos, Vector3f camDir, Vector3f camUp) {
         if(App.getShowLightSources()) {
             for(LightSource light : lights) {
                 if(light != null) light.render(camPos, camDir, camUp);
             }
         }
-    }
-    
-    /**
-     * Renders the levels current {@link dev.theskidster.xjge.graphics.Skybox Skybox}. This method must be called first BEFORE all other rendering operations 
-     * in the levels {@link render(Camera camera) render()} method to work correctly.
-     * 
-     * @param viewMatrix the view matrix of the viewport camera currently rendering the level
-     */
-    protected void renderSkybox(Matrix4f viewMatrix) {
-        skybox.render(viewMatrix);
     }
     
 }

@@ -190,7 +190,6 @@ public class Skybox {
         
         ShaderCore.setInt("uType", 8);
         ShaderCore.setMat4("uView", false, newView);
-        ShaderCore.setMat4("uModel", false, g.modelMatrix); //@todo unused?
         
         glDrawElements(GL_TRIANGLES, g.indices.limit(), GL_UNSIGNED_INT, 0);
         glDepthMask(true);

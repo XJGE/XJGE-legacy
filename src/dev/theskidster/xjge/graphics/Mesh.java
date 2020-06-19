@@ -162,7 +162,7 @@ class Mesh {
             for(int b = 0; b < bones.length; b++) {
                 AIBone aiBone = AIBone.create(boneBuf.get(b));
                 bones[b]      = new Bone(b, aiBone.mName().dataString(), aiBone.mOffsetMatrix());
-                
+                                
                 for(int w = 0; w < aiBone.mNumWeights(); w++) {
                     AIVertexWeight aiWeight = aiBone.mWeights().get(w);
                     VertexWeight weight     = new VertexWeight(b, aiWeight.mVertexId(), aiWeight.mWeight());
