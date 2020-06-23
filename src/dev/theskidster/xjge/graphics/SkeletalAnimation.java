@@ -10,7 +10,7 @@ import org.lwjgl.assimp.AIAnimation;
 
 /**
  * Skeletal animations utilize a series of interconnected bones (collectively known as an "Armature") to offset the vertex positions of a models mesh. More 
- * generally, the individual bones of the models armature are arranged into one or more {@link KeyFrame keyframes} which are then played in sequence to create the 
+ * generally, the individual bones of the models armature are arranged into one or more {@link KeyFrame KeyFrames} which are then played in sequence to create the 
  * illusion of movement.
  * <br><br>
  * Because the structure of the armature is hierarchal, moving a single {@link Bone} will in turn effect each of its children equally. That is, if we move the 
@@ -30,7 +30,7 @@ class SkeletalAnimation {
      * Constructs a new skeletal animation using the animation data and keyframes provided.
      * 
      * @param aiAnimation the raw animation data as provided by Assimp
-     * @param frames      the {@link KeyFrame keyframes} used by this animation
+     * @param frames      a collection of every {@link KeyFrame KeyFrame} object that will be used by this animation
      */
     SkeletalAnimation(AIAnimation aiAnimation, List<KeyFrame> frames) {
         currFrame   = 0;

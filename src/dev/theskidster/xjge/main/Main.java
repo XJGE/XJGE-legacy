@@ -13,7 +13,7 @@ public class Main {
     /**
      * Application entry point.
      * 
-     * @param args the arguments to be supplied to the application when ran from a command line
+     * @param args the arguments to be supplied to the application when run from a command line
      */
     public static void main(String args[]) {
         new App().start();

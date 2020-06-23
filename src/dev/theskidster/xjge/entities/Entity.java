@@ -28,15 +28,15 @@ public abstract class Entity {
     }
     
     /**
-     * Used to organize entity game logic. Must be called exclusively through {@link dev.theskidster.xjge.level.Level#update() Level.update()};
+     * Used to organize entity game logic. Must be called exclusively through {@link dev.theskidster.xjge.level.Level#update() Level.update()}.
      */
     public abstract void update();
     
     /**
      * Used to organize calls to the graphics API made by this entity through its {@link dev.theskidster.xjge.graphics.Graphics Graphics} component if it has one. 
-     * Must be called exclusively through {@link dev.theskidster.xjge.level.Level#render(Vector3f, Vector3f, Vector3f) Level.render()}.
+     * Must be called exclusively through {@link dev.theskidster.xjge.level.Level#render(Camera) Level.render()}.
      * 
-     * @param camera    the {@link dev.theskidster.xjge.util.Camera Camera} object of the {@link dev.theskidster.xjge.main.Viewport Viewport} currently being 
+     * @param camera    the {@link Camera} object of the {@link dev.theskidster.xjge.main.Viewport Viewport} currently being 
      *                  rendered
      * @param lights    the array of light source objects provided by the current level through 
      *                  {@link dev.theskidster.xjge.level.Level#getLightSources() getLightSources()}
@@ -53,8 +53,8 @@ public abstract class Entity {
     protected abstract void destroy();
     
     /**
-     * Finds if this entity has made a request for <a>{@link remove removal}</a>. If it has, the entity is  <a>{@link destroy destroyed}</a>
-     * and subsequently removed from the current levels <a>{@link dev.theskidster.xjge.level.Level#entityList entity list}</a>.
+     * Finds if this entity has made a request for {@linkplain remove removal}. If it has, the entity is {@linkplain destroy destroyed} and subsequently removed 
+     * from the current levels {@linkplain dev.theskidster.xjge.level.Level#entityList entity list}.
      * 
      * @return true if the entity has requested removal
      * @see dev.theskidster.xjge.level.Level#resolveRemoveRequest() 

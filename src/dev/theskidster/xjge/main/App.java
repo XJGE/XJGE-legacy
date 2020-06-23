@@ -82,7 +82,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String VERSION        = "1.3.0";
+    public static final String VERSION        = "1.4.0";
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -148,9 +148,8 @@ public final class App {
     /**
      * Establishes the graphics pipeline. Any shader programs required by the implementation should be defined here.
      * <p>
-     * If you wish to provide additional shader programs do so following the Model View Projection structure of the default program otherwise 
-     * {@link dev.theskidster.xjge.util.Camera Camera} objects will fail. Remember to clear the shaderSources collection between program 
-     * definitions.
+     * If you wish to provide additional shader programs do so following the Model View Projection structure of the default program otherwise {@link Camera} 
+     * objects will fail. Remember to clear the shaderSources collection between program definitions.
      * 
      * @see dev.theskidster.xjge.shader.core
      */
@@ -228,8 +227,8 @@ public final class App {
     }
     
     /**
-     * Finds every available audio device currently connected to the system and adds it to a collection of 
-     * {@link dev.theskidster.xjge.hardware.AudioDevice AudioDevice} objects which can be used for audio output. 
+     * Finds every available audio device currently connected to the system and adds it to a collection of {@link AudioDevice} objects which can be used for 
+     * audio output. 
      */
     static void findAudioDevices() {
         audioDevices.forEach((id, device) -> alcCloseDevice(device.handle));
@@ -247,8 +246,8 @@ public final class App {
     }
     
     /**
-     * Finds every available display device currently connected to the system and adds it to a collection of  
-     * {@link dev.theskidster.xjge.hardware.DisplayDevice DisplayDevice} objects which can be used for viewing the output of the applications graphics pipeline.
+     * Finds every available display device currently connected to the system and adds it to a collection of  {@link DisplayDevice} objects which can be used 
+     * for viewing the output of the applications graphics pipeline.
      */
     static void findDisplayDevices() {
         PointerBuffer displayBuf = glfwGetMonitors();
@@ -263,8 +262,8 @@ public final class App {
     }
     
     /**
-     * Finds every available controller currently connected to the system and adds it to a collection of {@link dev.theskidster.xjge.hardware.Controller Controller}
-     * objects which may be used for player input.
+     * Finds every available controller currently connected to the system and adds it to a collection of {@link Controller} objects which may be used for player 
+     * input.
      */
     static void findInputDevices() {
         for(int i = 0; i < GLFW_JOYSTICK_5; i++) {
@@ -282,7 +281,7 @@ public final class App {
     }
     
     /**
-     * <a>{@link dev.theskidster.xjge.hardware.InputDevice#poll() Polls}</a> the input of each connected input device.
+     * {@linkplain InputDevice#poll() Polls} the input of each connected input device.
      */
     static void pollInput() {
         inputDevices.forEach((deviceID, device) -> {
@@ -291,8 +290,8 @@ public final class App {
     }
     
     /**
-     * Generates new viewport objects using their previous states. Called whenever some operation performed by the application invalidates the current state of the 
-     * viewports. 
+     * Generates new viewport objects using their previous states. Called whenever some operation performed by the application invalidates the current state of 
+     * the viewports. 
      */
     private static void resetViewports() {
         for(int i = 0; i < viewports.length; i++) {
@@ -303,7 +302,7 @@ public final class App {
     }
     
     /**
-     * Updates each viewports UI components and current {@link dev.theskidster.xjge.util.Camera Camera} object.
+     * Updates each viewports UI components and current {@link Camera} object.
      * 
      * @see Viewport
      * @see dev.theskidster.xjge.ui
@@ -486,8 +485,7 @@ public final class App {
     }
     
     /**
-     * Exposes the locations of all {@link dev.theskidster.xjge.graphics.LightSource LightSource} objects inhabiting the current 
-     * {@link dev.theskidster.xjge.level.Level Level}.
+     * Exposes the locations of all {@link dev.theskidster.xjge.graphics.LightSource LightSource} objects inhabiting the current {@link Level}.
      * 
      * @param value true to expose the light source locations or false to hide them
      */
@@ -499,8 +497,8 @@ public final class App {
     }
     
     /**
-     * Provides access to the engines debugging utilities via the <a>{@link dev.theskidster.xjge.puppet.terminal.Terminal command line terminal}</a>. Opening the 
-     * command terminal will disable free roaming camera movement.
+     * Provides access to the engines debugging utilities via the {@linkplain dev.theskidster.xjge.puppet.terminal.Terminal command line terminal}. While open, 
+     * the command terminal will disable free roaming camera movement.
      * 
      * @param value if true, the command terminal will be opened. Supplying false will close it.
      */
@@ -735,11 +733,10 @@ public final class App {
     }
     
     /**
-     * Sets the type of <a>{@link dev.theskidster.xjge.util.ScreenSplitType Split}</a> to be used by the viewports during split screen.
+     * Sets the type of {@linkplain ScreenSplitType Split} to be used by the viewports during split screen.
      * 
-     * @param value the type of split to use. One of {@link dev.theskidster.xjge.util.ScreenSplitType#NO_SPLIT NO_SPLIT}, 
-     *              {@link dev.theskidster.xjge.util.ScreenSplitType#VERTICAL VERTICAL}, {@link dev.theskidster.xjge.util.ScreenSplitType#HORIZONTAL HORIZONTAL},
-     *              {@link dev.theskidster.xjge.util.ScreenSplitType#TRIPLE TRIPLE}, or {@link dev.theskidster.xjge.util.ScreenSplitType#QUADRUPLE QUADRUPLE}.
+     * @param value the type of split to use. One of {@link ScreenSplitType#NO_SPLIT NO_SPLIT}, {@link ScreenSplitType#VERTICAL VERTICAL}, 
+     *              {@link ScreenSplitType#HORIZONTAL HORIZONTAL}, {@link ScreenSplitType#TRIPLE TRIPLE}, or {@link ScreenSplitType#QUADRUPLE QUADRUPLE}.
      */
     public static void setSplitType(ScreenSplitType value) {
         split = value;
@@ -859,7 +856,7 @@ public final class App {
      * 
      * @param id     the unique number used to identify the viewport in other parts of the engine. Can be a 
      *               {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK} value or ALL_VIEWPORTS to effect each viewport.
-     * @param camera the camera to be used by the viewport
+     * @param camera the {@link Camera} object to be used by the viewport
      */
     public static void setViewportCamera(int id, Camera camera) {
         if(camera == null) camera = new Freecam();
@@ -906,7 +903,7 @@ public final class App {
      * @param pos the position of the camera in the game world
      * @param dir the direction in which the camera's pointing
      * @param up  the direction that's considered upwards relative to the camera
-     * @see dev.theskidster.xjge.util.Camera
+     * @see Camera
      */
     public static void setViewportCameraVectors(int id, Vector3f pos, Vector3f dir, Vector3f up) {
         viewports[id].currCamera.position  = pos;
@@ -915,7 +912,7 @@ public final class App {
     }
     
     /**
-     * Adds a {@link dev.theskidster.xjge.ui.Component UI Component} to the viewport(s) specified.
+     * Adds a {@linkplain Component UI Component} to the viewport(s) specified.
      * 
      * @param id        the unique number used to identify the viewport in other parts of the engine. Can be a 
      *                  {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK} value or ALL_VIEWPORTS to effect each viewport.
@@ -938,13 +935,10 @@ public final class App {
     }
     
     /**
-     * Removes a {@link dev.theskidster.xjge.ui.Component UI Component} from the viewport 
-     * specified.
+     * Removes a {@linkplain Component UI Component} from the viewport specified.
      * 
-     * @param id   the unique number used to identify the viewport in other parts of the 
-     *             engine. Or {@link ALL_VIEWPORTS} to effect every viewport.
-     * @param name the name specified in 
-     *             {@link addUIComponent(int, String, Component) addUIComponent()}.
+     * @param id   the unique number used to identify the viewport in other parts of the engine. Or {@link ALL_VIEWPORTS} to effect every viewport.
+     * @param name the name specified in {@link addUIComponent(int, String, Component) addUIComponent()}
      */
     public static void removeUIComponent(int id, String name) {
         switch(id) {
@@ -991,10 +985,9 @@ public final class App {
      * should not be supplied anywhere outside of {@link Game#pauseEvents()}.
      * 
      * @param id      the unique id of the input device (specified with {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK}). Or a value to perform this 
-     *                operation on multiple devices such as  {@link dev.theskidster.xjge.hardware.InputDevice#ALL_EXCEPT_1 ALL_EXCEPT_X} 
-     *                and {@link dev.theskidster.xjge.hardware.InputDevice#ALL_DEVICES ALL_DEVICES}.
+     *                operation on multiple devices such as  {@link InputDevice#ALL_EXCEPT_1 ALL_EXCEPT_X} and {@link InputDevice#ALL_DEVICES ALL_DEVICES}.
      * @param enabled if true, the input device(s) will be enabled. Supplying false will disable the specified device(s).
-     * @see dev.theskidster.xjge.hardware.InputDevice
+     * @see InputDevice
      */
     public static void setInputDeviceEnabled(int id, boolean enabled) {
         switch(id) {
@@ -1015,8 +1008,11 @@ public final class App {
                 });
                 break;
                 
-            //The following should ONLY be called in the event queue after an event has 
-            //been successfully resolved. This includes curscenes, pauses, errors, etc.
+            /*
+            Do NOT call PREV_STATE manually. The event queue will automatically revert to 
+            its previous state once an event has been resolved.
+            */
+                
             case PREV_STATE:
                 inputDevices.forEach((deviceID, device) -> {
                     try {
@@ -1042,7 +1038,7 @@ public final class App {
     }
     
     /**
-     * Changes the current {@link dev.theskidster.xjge.puppets.Puppet Puppet} object to be used by the input device specified.
+     * Changes the current {@link Puppet} object to be used by the input device specified.
      * 
      * @param id     the unique number used to identify the input device in other parts of the engine. Either a 
      *               {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK} value or KEYBOARD for the keyboard. ALL_DEVICES is not accepted here.
@@ -1076,10 +1072,10 @@ public final class App {
     }
     
     /**
-     * Sets the current audio device of the application. Doing so will change the 
-     * {@link dev.theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to that device.
+     * Sets the current audio device of the application. Doing so will change the {@linkplain AudioDevice#setContextCurrent() AL Context} to that device.
      * 
-     * @param operation the method of traversal either explicitly as the ID number of the device or "prev"/"next" to move to the previous or next device in the list
+     * @param operation the method of traversal either explicitly as the ID number of the device or "prev"/"next" to move to the previous or next device in the 
+     *                  list
      */
     public static void setAudioDevice(String operation) {
         ServiceLocator.getAudio().findSourceStates();

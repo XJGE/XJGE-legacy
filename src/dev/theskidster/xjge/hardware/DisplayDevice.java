@@ -67,12 +67,10 @@ public final class DisplayDevice {
     }
     
     /**
-     * Generates a string which provides information about the display devices current 
-     * video mode.
+     * Generates a string which provides information about the display devices current video mode.
      * 
      * @param mode the video mode to parse information from.
-     * @return A string detailing the video modes resolution, aspect ratio, and 
-     *             refresh rate.
+     * @return A string detailing the video modes resolution, aspect ratio, and refresh rate.
      */
     private String findInfo(GLFWVidMode mode) { 
         return mode.width() + "x" + mode.height() + " " + findAspect(mode) + " " + mode.refreshRate() + "hz";

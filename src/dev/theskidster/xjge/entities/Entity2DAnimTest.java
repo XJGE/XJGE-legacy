@@ -27,7 +27,7 @@ import org.lwjgl.system.MemoryStack;
 
 public class Entity2DAnimTest extends Entity {
 
-    private Graphics g = new Graphics();
+    private Graphics g;
     private Texture texture;
     private SpriteSheet sprite;
     
@@ -36,16 +36,16 @@ public class Entity2DAnimTest extends Entity {
     public Entity2DAnimTest(Vector3f position) {
         super(position);
         
-        
         Cell cell = new Cell(20, 20);
-        texture   = new Texture("spr_icons_load.png");
+        
+        g       = new Graphics();
+        texture = new Texture("spr_engineicons.png");
+        sprite  = new SpriteSheet(texture, cell);
         
         glBindTexture(GL_TEXTURE_2D, texture.handle);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glBindTexture(GL_TEXTURE_2D, 0);
-        
-        sprite = new SpriteSheet(texture, cell);
         
         try(MemoryStack stack = MemoryStack.stackPush()) {
             g.vertices = stack.mallocFloat(20);
@@ -76,13 +76,9 @@ public class Entity2DAnimTest extends Entity {
             frames.add(new Vector2i(0, 0));
             frames.add(new Vector2i(1, 0));
             frames.add(new Vector2i(2, 0));
-            frames.add(new Vector2i(3, 0));
-            frames.add(new Vector2i(0, 1));
-            frames.add(new Vector2i(1, 1));
-            frames.add(new Vector2i(2, 1));
-            frames.add(new Vector2i(3, 1));
+            frames.add(new Vector2i(1, 0));
             
-        animations.put("load", new SpriteAnimation(frames, 6));
+        animations.put("load", new SpriteAnimation(frames, 20));
     }
 
     @Override

@@ -27,7 +27,7 @@ public abstract class Level {
     private int numLights = 1;
     
     /**
-     * Contains every entity present in the level.
+     * Collection that contains every {@link Entity} currently present in the game world.
      */
     public List<Entity> entityList = new ArrayList<>();
     
@@ -69,9 +69,9 @@ public abstract class Level {
     public abstract void exit();
     
     /**
-     * Used in {@link update()} to remove <a>{@link Entity entities}</a> from the entity list safely.
+     * Used in {@link update()} to remove {@linkplain Entity entities} from the {@linkplain entityList entity list} safely.
      * 
-     * @see dev.theskidster.xjge.entities.Entity#getRemoveRequest()
+     * @see Entity#getRemoveRequest()
      */
     protected void resolveRemoveRequest() {
         entityList.removeIf(e -> e.getRemoveRequest());
@@ -184,8 +184,7 @@ public abstract class Level {
     /**
      * <b>*For internal use only*</b> 
      * <br><br>
-     * Renders the levels current {@link dev.theskidster.xjge.graphics.Skybox Skybox}. Called automatically by the {@link App} class before this levels 
-     * {@link render(Camera) render()} method.
+     * Renders the levels current {@link Skybox Skybox}. Called automatically by the {@link App} class before this levels {@link render(Camera) render()} method.
      * 
      * @param viewMatrix the view matrix of the viewport camera currently rendering the level
      */
@@ -197,8 +196,7 @@ public abstract class Level {
      * <b>*For internal use only*</b> 
      * <br><br>
      * Renders each {@link LightSource} object in the level. Light source objects can be exposed or hidden through the use of the 
-     * {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) setShowLightSoures()} method in the App class. Or during runtime with the 
-     * showLightSources terminal command.
+     * {@link App#setShowLightSources(boolean) setShowLightSoures()} method in the App class. Or during runtime with the <i>showLightSources</i> terminal command.
      * <br><br>
      * Additional debug information that requires objects to be displayed within the game world (such as displaying collision boxes, entity names, etc.) should 
      * be included by the implementation in a similar manner to this. 

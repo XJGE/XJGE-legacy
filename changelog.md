@@ -3,6 +3,22 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.4.0] - UNRELEASED
+
+### Added
+
+### Changed
+
+- Merged the "img_light.png" and "spr_icons_input.png" files into a single sprite sheet image. Changed the classes which used these files accordingly.
+- Entity2DAnimTest class to instead use the controller sprites instead of the loading icon.
+- Fixed some broken documentation links, made minor changes to some sections.
+
+### Removed
+
+- The "spr_icons_load.png" sprite sheet image.
+
+
+
 ## [1.3.0] - 2020-06-19
 
 ### Added

@@ -14,8 +14,7 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.*;
 import org.lwjgl.system.MemoryStack;
 
 /**
@@ -24,8 +23,8 @@ import org.lwjgl.system.MemoryStack;
  */
 
 /**
- * Represents a quickly comprehensible symbol included to help users better understand an interface. Icons make use of a 
- * {@link dev.theskidster.xjge.graphics.SpriteSheet SpriteSheet} and as such, provide utilities for quickly switching between individual images as needed.
+ * Represents a quickly comprehensible symbol included to help users better understand an interface. Icons make use of a {@link SpriteSheet} and as such, provide 
+ * utilities for quickly switching between individual images as needed.
  */
 public class Icon {
     
@@ -111,7 +110,7 @@ public class Icon {
     }
     
     /**
-     * Overloaded version of {@link setPosition(Vector3i) }.
+     * Alternate version of {@link setPosition(Vector3i)}.
      * 
      * @param x the x position of the icon.
      * @param y the y position of the icon.

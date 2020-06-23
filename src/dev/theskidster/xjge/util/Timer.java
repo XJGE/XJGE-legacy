@@ -28,7 +28,7 @@ public class Timer {
      * 
      * @param time  the total number of steps the timer must complete before it is finished
      * @param speed the number of update ticks to wait before stepping forward. A single tick typically takes a millisecond.
-     * @see dev.theskidster.xjge.main.Game#tick(int)
+     * @see Game#tick(int)
      */
     public Timer(int time, int speed) {
         this.time   = time;
@@ -44,7 +44,7 @@ public class Timer {
      * @param speed    the number of update ticks to wait before stepping forward. A single tick typically takes a millisecond.
      * @param observer the object waiting for this timer to finish
      * @see Observable
-     * @see dev.theskidster.xjge.main.Game#tick(int)
+     * @see Game#tick(int)
      */
     public Timer(int time, int speed, PropertyChangeListener observer) {
         this.time   = time;
@@ -63,7 +63,7 @@ public class Timer {
      * @param speed     the number of update ticks to wait before stepping forward. A single tick typically takes a millisecond.
      * @param observers the objects waiting for this timer to finish
      * @see Observable
-     * @see dev.theskidster.xjge.main.Game#tick(int)
+     * @see Game#tick(int)
      */
     public Timer(int time, int speed, List<PropertyChangeListener> observers) {
         this.time   = time;

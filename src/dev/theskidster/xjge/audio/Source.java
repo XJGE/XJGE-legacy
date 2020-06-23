@@ -99,7 +99,7 @@ class Source {
      * Finds the current state of the source from which its called.
      * 
      * @param state the state we want to check for
-     * @return the current state of the source object. One of {@link org.lwjgl.openal.AL11#AL_INITIAL AL_INITIAL},{@link org.lwjgl.openal.AL11#AL_PAUSED AL_PLAYING}, 
+     * @return the current state of the source object. One of {@link org.lwjgl.openal.AL11#AL_INITIAL AL_INITIAL}, {@link org.lwjgl.openal.AL11#AL_PAUSED AL_PLAYING}, 
      *         {@link org.lwjgl.openal.AL11#AL_PAUSED AL_PAUSED}, or {@link org.lwjgl.openal.AL11#AL_PAUSED AL_STOPPED}.
      */
     public boolean getState(int state) {
@@ -110,7 +110,7 @@ class Source {
     
     /**
      * Sets the position of the source object as its found in the game world. This vector will be used in conjunction with the position and direction vectors of
-     * the nearest {@link dev.theskidster.xjge.util.Camera camera} object to calculate its final position relative to the OpenAL listener object.
+     * the nearest {@link dev.theskidster.xjge.util.Camera Camera} object to calculate its final position relative to the OpenAL listener object.
      * 
      * @param position the position to place the source at
      */
@@ -120,7 +120,7 @@ class Source {
     
     /**
      * Calculates the final position of the source object given its position in the game world relative to the position and direction of the nearest viewports 
-     * {@link dev.theskidster.xjge.util.Camera camera} object.
+     * {@link dev.theskidster.xjge.util.Camera Camera} object.
      * 
      * @param position  the current position of the viewports camera
      * @param direction the direction the viewports camera is currently facing

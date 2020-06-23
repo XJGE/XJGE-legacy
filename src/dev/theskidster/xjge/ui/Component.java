@@ -42,8 +42,8 @@ public abstract class Component {
     public abstract void render();
     
     /**
-     * Called automatically anytime a change to the applications viewports occurs. Using this method, components can update the positions of their elements to better
-     * suit the size of the viewport.
+     * Called automatically anytime a change to the applications viewports occurs. Using this method, components can update the positions of their elements to 
+     * better suit the size of the viewport.
      */
     public abstract void setSplitPosition();
     

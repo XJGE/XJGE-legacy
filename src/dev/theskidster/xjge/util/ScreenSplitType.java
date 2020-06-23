@@ -7,6 +7,12 @@ package dev.theskidster.xjge.util;
 
 /**
  * Used to determine the method in which the screen will be divided among each {@link dev.theskidster.xjge.main.Viewport Viewport}.
+ * 
+ * @see NO_SPLIT
+ * @see VERTICAL
+ * @see HORIZONTAL
+ * @see TRIPLE
+ * @see QUADRUPLE
  */
 public enum ScreenSplitType {
     
@@ -18,6 +24,8 @@ public enum ScreenSplitType {
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+     * 
+     * @see ScreenSplitType
      */
     NO_SPLIT,
     
@@ -29,6 +37,8 @@ public enum ScreenSplitType {
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
      * |&nbsp;&nbsp;0&nbsp;&nbsp;|&nbsp;&nbsp;1&nbsp;&nbsp;|<br>
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+     * 
+     * @see ScreenSplitType
      */
     VERTICAL,
     
@@ -40,6 +50,8 @@ public enum ScreenSplitType {
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
      * |-----------|<br>
      * |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+     * 
+     * @see ScreenSplitType
      */
     HORIZONTAL,
     
@@ -51,6 +63,8 @@ public enum ScreenSplitType {
      * |&nbsp;&nbsp;0&nbsp;&nbsp;|&nbsp;&nbsp;1&nbsp;&nbsp;|<br>
      * |-----------|<br>
      * |XX|&nbsp;&nbsp;2&nbsp;&nbsp;|XX|
+     * 
+     * @see ScreenSplitType
      */
     TRIPLE,
     
@@ -62,6 +76,8 @@ public enum ScreenSplitType {
      * |&nbsp;&nbsp;0&nbsp;&nbsp;|&nbsp;&nbsp;1&nbsp;&nbsp;|<br>
      * |-----+-----|<br>
      * |&nbsp;&nbsp;2&nbsp;&nbsp;|&nbsp;&nbsp;3&nbsp;&nbsp;|
+     * 
+     * @see ScreenSplitType
      */
     QUADRUPLE
 }

@@ -11,8 +11,7 @@ import static dev.theskidster.xjge.hardware.InputDevice.KEYBOARD;
  */
 
 /**
- * Defines how input data supplied from a users {@link dev.theskidster.xjge.hardware.InputDevice InputDevice} should be utilized in relation to the control of the 
- * implementing object.
+ * Defines how input data supplied from a users {@link InputDevice} should be utilized in relation to the control of the implementing object.
  * 
  * @see Puppet
  */
@@ -44,7 +43,7 @@ public abstract class Command {
      * @param device the input device that executed the command
      * @param value  the value of the input state returned from the input device. This is helpful for instances where the interactive component is fluid in its 
      *               action (see {@link pressed(InputDevice, String, float) pressed()}).
-     * @see dev.theskidster.xjge.hardware.InputDevice#poll()
+     * @see InputDevice#poll()
      */
     public abstract void execute(InputDevice device, float value);
     

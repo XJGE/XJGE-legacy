@@ -114,7 +114,7 @@ class Viewport {
     }
     
     /**
-     * Viewport rendering is done in three phases:
+     * Renders a scene from the perspective of this viewport. Viewport rendering is done in three phases:
      * 
      * <ol>
      * <li>The perspective of the camera object used by this viewport is rendered.</li>
@@ -181,8 +181,8 @@ class Viewport {
     }
     
     /**
-     * Adds a new UI component to this viewport. UI components will be rendered in the order of their z-positions with lower numbers denoting a higher priority. For 
-     * example, a component with a z-position of 0 will be rendered in front of a component with a z-position of 1. Accessed exclusively through 
+     * Adds a new UI component to this viewport. UI components will be rendered in the order of their z-positions with lower numbers denoting a higher priority. 
+     * For example, a component with a z-position of 0 will be rendered in front of a component with a z-position of 1. Accessed exclusively through 
      * {@link App#addUIComponent(int, String, Component)}.
      * 
      * @param name      the name that will be used to identify and remove the component later

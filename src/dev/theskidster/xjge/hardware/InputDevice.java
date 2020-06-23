@@ -75,7 +75,7 @@ public abstract class InputDevice {
     
     /**
      * Looks for any state changes in the input devices interactive components (buttons, switches, axes, etc) and resolves the input event according to the 
-     * definition supplied by this devices current {@link dev.theskidster.xjge.puppets.Puppet Puppet} object.
+     * definition supplied by this devices current {@link Puppet} object.
      */
     public abstract void poll();
     
@@ -96,7 +96,7 @@ public abstract class InputDevice {
     }
     
     /**
-     * Sets the input devices current {@link dev.theskidster.xjge.puppets.Puppet Puppet} object to the one specified here.
+     * Sets the input devices current {@link Puppet} object to the one specified here.
      * 
      * @param puppet the puppet object we want this input device to control
      */

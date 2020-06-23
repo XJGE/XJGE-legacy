@@ -27,7 +27,7 @@ public abstract class Menu extends Component {
     protected Map<String, SubMenu> menus = new HashMap<>();
     
     /**
-     * A smaller menu object which can be populated with <a>{@link Option options}</a> and used to comprise a single node of a larger menu hierarchy.
+     * A smaller menu object which can be populated with {@linkplain Option options} and used to comprise a single node of a larger menu hierarchy.
      */
     protected class SubMenu {
         public List<Option> options = new ArrayList<>();

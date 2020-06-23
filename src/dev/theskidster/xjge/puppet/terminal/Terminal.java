@@ -24,9 +24,9 @@ import dev.theskidster.xjge.util.Timer;
  */
 
 /**
- * Provides direct access to the game engine through a command line which can be extended to support more commands as needed by the implementation. The terminal is 
- * particularly useful for performing debugging at runtime, or managing the application during demos. By default the terminal will always be opened in viewport 0 
- * and will override access to the keyboard input device while it is open. If debugging is permitted, F1 can be used to open the command terminal.
+ * Provides direct access to the game engine through a command line which can be extended to support more commands as needed by the implementation. The terminal 
+ * is particularly useful for performing debugging at runtime, or managing the application during demos. By default the terminal will always be opened in 
+ * viewport 0 and will override access to the keyboard input device while it is open. If debugging is permitted, F1 can be used to open the command terminal.
  */
 public class Terminal extends Component implements PropertyChangeListener {
     
@@ -364,8 +364,8 @@ public class Terminal extends Component implements PropertyChangeListener {
     }
     
     /**
-     * Offsets the visible portion of the string typed in the terminal by the position of the cursor. Used to navigate large strings that extend beyond the screens
-     * width.
+     * Offsets the visible portion of the string typed in the terminal by the position of the cursor. Used to navigate large strings that extend beyond the 
+     * screens width.
      */
     private void scrollX() {
         if(typed.length() > 0) {

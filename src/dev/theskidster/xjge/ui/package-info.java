@@ -3,7 +3,7 @@
  * 
  * <p>
  * The engines UI system uses several {@link Component} objects to comprise an interface. These components are local to the viewports in which they're attached. 
- * Additionally, some components may use {@link dev.theskidster.xjge.puppets Puppet} objects to handle input (forms, menus, etc.) whereas others are used more 
+ * Additionally, some components may use {@link dev.theskidster.xjge.puppets.Puppet Puppet} objects to handle input (forms, menus, etc.) whereas others are used more 
  * passively to provide information to the user (health bar, gold, etc).
  * </p>
  * <p>

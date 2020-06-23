@@ -13,7 +13,7 @@
  *     <b>ShaderCore.use("some shader");</b>
  *     glBindVertexArray(g.vao);
  * 
- *     <b>haderCore.setInt("uType", 0);
+ *     <b>ShaderCore.setInt("uType", 0);
  *     ShaderCore.setMat4("uModel", false, graphics.model);
  *     ShaderCore.setVec3("uColor", ambientColor);</b>
  *     ...

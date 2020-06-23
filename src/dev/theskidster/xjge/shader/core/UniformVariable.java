@@ -10,9 +10,9 @@ import java.nio.IntBuffer;
  */
 
 /**
- * Provides a type-neutral structure in which uniform variable data may be stored and retrieved.
+ * Provides a type-neutral structure in which uniform variable data may be stored and retrieved as the type needed.
  */
-class UniformVariable {
+public class UniformVariable {
     
     final int location;
     private Buffer buffer;

@@ -11,8 +11,8 @@ import dev.theskidster.xjge.shader.core.ShaderCore;
  */
 
 /**
- * Abstract class which can be used to create specialized camera objects for viewports. Subclasses of this object use a combination of matrices to alter how the game 
- * world is perceived.
+ * Abstract class which can be used to create specialized camera objects for viewports. Subclasses of this object use a combination of matrices to alter how the 
+ * game world is perceived.
  * 
  * @see Camera(String)
  */

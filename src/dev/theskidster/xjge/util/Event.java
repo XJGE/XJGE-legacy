@@ -7,7 +7,7 @@ package dev.theskidster.xjge.util;
 
 /**
  * Objects of this type represent a game or application event (such as a pause, cutscene, or error) that temporarily disrupts the normal flow of execution. Events 
- * should be used anytime two systems need to be decoupled in time, otherwise an <a>{@link Observable Oberserver}</a> should be considered.
+ * should be used anytime two systems need to be decoupled in time, otherwise an {@linkplain Observable Oberserver} should be considered.
  */
 public final class Event {
     

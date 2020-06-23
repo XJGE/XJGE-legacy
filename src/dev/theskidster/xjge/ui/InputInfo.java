@@ -30,10 +30,10 @@ public class InputInfo extends Component {
         }
         
         for(int i = 0; i < icons.length; i++) {
-            icons[i] = new Icon("spr_icons_input.png", new Cell(18, 12));
+            icons[i] = new Icon("spr_engineicons.png", new Cell(20, 20));
         }
         
-        icons[4].setSprite(3, 0);
+        icons[4].setSprite(0, 1);
         
         setSplitPosition();
     }

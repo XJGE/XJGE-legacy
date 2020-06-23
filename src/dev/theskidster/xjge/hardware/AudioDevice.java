@@ -43,8 +43,8 @@ public class AudioDevice {
     }
     
     /**
-     * Before an audio device can start playing sounds from {@link dev.theskidster.xjge.audio.Source Source} objects, OpenAL must create a context. Using this method will 
-     * create a new OpenAL context on the device from which its called.
+     * Before an audio device can start playing sounds from {@link dev.theskidster.xjge.audio.Source Source} objects, OpenAL must create a context. Using this 
+     * method will create a new OpenAL context on the device from which it is called.
      */
     public void setContextCurrent() {
         try {

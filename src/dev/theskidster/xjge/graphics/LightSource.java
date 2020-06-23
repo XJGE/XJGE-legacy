@@ -22,6 +22,7 @@ public class LightSource {
     private Light light;
     private Graphics g;
     private Texture texture;
+    private SpriteSheet sprite;
     
     /**
      * Creates a new object that represents a source of light, such as a light bulb.
@@ -31,8 +32,11 @@ public class LightSource {
     public LightSource(Light light) {
         this.light = light;
         
+        Cell cell = new Cell(20, 20);
+        
         g       = new Graphics();
-        texture = new Texture("img_light.png");
+        texture = new Texture("spr_engineicons.png");
+        sprite  = new SpriteSheet(texture, cell);
         
         glBindTexture(GL_TEXTURE_2D, texture.handle);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -46,10 +50,10 @@ public class LightSource {
             g.indices  = stack.mallocInt(6);
             
             //(vec3 position), (vec2 texCoords)
-            g.vertices.put(-8) .put(8).put(0)   .put(0).put(0);
-            g.vertices .put(8) .put(8).put(0)   .put(1).put(0);
-            g.vertices .put(8).put(-8).put(0)   .put(1).put(1);
-            g.vertices.put(-8).put(-8).put(0)   .put(0).put(1);
+            g.vertices.put(-8) .put(8).put(0)   .put(sprite.imgWidth)    .put(sprite.imgHeight);
+            g.vertices .put(8) .put(8).put(0)   .put(sprite.imgWidth * 2).put(sprite.imgHeight);
+            g.vertices .put(8).put(-8).put(0)   .put(sprite.imgWidth * 2).put(sprite.imgHeight * 2);
+            g.vertices.put(-8).put(-8).put(0)   .put(sprite.imgWidth)    .put(sprite.imgHeight * 2);
             
             g.indices.put(0).put(1).put(2);
             g.indices.put(2).put(3).put(0);
@@ -68,7 +72,8 @@ public class LightSource {
     }
     
     /**
-     * Transfers the state of the light source object provided into this one.
+     * Transfers the state of the light source object provided into this one. Called automatically from 
+     * {@link dev.theskidster.xjge.level.Level#addLightSource(Light) Level.addLightSource()}.
      * 
      * @param light  the light data to use in the fragment shader
      * @param source the light source object that this instance will assume
@@ -76,9 +81,10 @@ public class LightSource {
     public LightSource(Light light, LightSource source) {
         this.light = light;
         
-        enabled = source.enabled;
-        g       = source.g;
-        texture = source.texture;
+        enabled    = source.enabled;
+        g          = source.g;
+        texture    = source.texture;
+        sprite     = source.sprite;
     }
     
     /**
@@ -90,7 +96,8 @@ public class LightSource {
     
     /**
      * Renders an icon representing the position of the light source that will be visible through every object in the game world. Light sources can be made 
-     * visible by using the {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) setShowLightSources()} method in the App class.
+     * visible by using the {@link dev.theskidster.xjge.main.App#setShowLightSources(boolean) App.setShowLightSources()} method. Or at runtime through the 
+     * <i>showLightSources</i> terminal command.
      * 
      * @param camPos the position of the viewports camera in the game world
      * @param camDir the direction in which the viewports camera is facing

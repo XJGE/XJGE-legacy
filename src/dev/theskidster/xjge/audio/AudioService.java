@@ -13,17 +13,14 @@ import org.joml.Vector3f;
 public interface AudioService {
     
     /**
-     * Loads {@link Sound Sounds} and {@link Song Songs} then initializes the  
-     * {@link Source Sound Sources} to be used by the audio engine. If sources existed 
-     * previously their state is transferred to ensure a (relatively) smooth transition 
-     * between {@link dev.theskidster.xjge.hardware.AudioDevice Audio Devices}.
+     * Loads {@link Sound Sounds} and {@link Song Songs} then initializes the  {@link Source Sound Sources} to be used by the audio engine. If sources existed 
+     * previously their state is transferred to ensure a (relatively) smooth transition between {@link Audio Audio Devices}.
      */
     void init();
     
     /**
-     * Saves the state of each source in the last 
-     * {@link dev.theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to be 
-     * transferred over to this context once {@link init()} is called.
+     * Saves the state of each source in the last {@link dev.theskidster.xjge.hardware.AudioDevice#setContextCurrent() AL Context} to be transferred over to 
+     * this context once {@link init()} is called.
      */
     void findSourceStates();
     
@@ -72,7 +69,7 @@ public interface AudioService {
      * Because OpenAL only permits one listener object per device context, a custom 3D audio positioning solution was developed to enable individual viewports 
      * to experience stereo sound effects during split screen play. 
      * <br><br>
-     * First, the solution collects information about the orientation of each active viewports {@link dev.theskidster.xjge.util.Camera camera} object. Then it 
+     * First, the solution collects information about the orientation of each active viewports {@link dev.theskidster.xjge.util.Camera Camera} object. Then it 
      * positions each {@link Source} object around the single OpenAL listener object located at the origin point of the game world relative to the nearest camera.
      * 
      * @see setViewportCamData(int, Vector3f, Vector3f)

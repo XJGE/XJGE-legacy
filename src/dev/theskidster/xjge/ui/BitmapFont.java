@@ -119,8 +119,8 @@ class BitmapFont {
     }
     
     /**
-     * Generates positions which will be used to offset glyph instances when drawing strings. The effects of this process are most apparent in strings that use fonts
-     * which aren't monospaced.
+     * Generates positions which will be used to offset glyph instances when drawing strings. The effects of this process are most apparent in strings that use 
+     * fonts which aren't monospaced.
      * 
      * @param texture the texture to be used as a sprite sheet
      * @param cell    the dimensions of the cells the texture will be split by

@@ -105,10 +105,10 @@ public final class Game {
     }
     
     /**
-     * Alters the path of execution away from the normal game update depending on which events are queued. Events are processed in the order of their priorities. If 
-     * no events are present in the queue, the game will update normally.
+     * Alters the path of execution away from the normal game update depending on which events are queued. Events are processed in the order of their priorities. 
+     * If no events are present in the queue, the game will update normally.
      * 
-     * @see dev.theskidster.xjge.util.Event
+     * @see Event
      */
     private void pauseEvents() {
         if(events.size() > 0) {
@@ -166,7 +166,7 @@ public final class Game {
     }
     
     /**
-     * Adds an entity to the current levels {@link dev.theskidster.xjge.level.Level#entityList entityList}. Typically reserved for testing purposes.
+     * Adds an entity to the current levels {@linkplain Level#entityList entity list}. Typically reserved for testing purposes.
      * 
      * @param e the entity we want to add
      */
@@ -175,8 +175,8 @@ public final class Game {
     }
     
     /**
-     * Adds a light source to the current levels {@link dev.theskidster.xjge.level.Level#lights lights} array. This is reserved for testing purposes only, if 
-     * you wish to add a new light source to a level you should use the protected method of the same name located in the level class.
+     * Adds a light source to the current levels {@linkplain Level#lights lights} array. This is reserved for testing purposes only, if you wish to add a new 
+     * light source to a level you should use the protected method of the same name located in the level class.
      * 
      * @param light the light data to use in the fragment shader
      */

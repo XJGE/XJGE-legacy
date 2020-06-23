@@ -11,8 +11,8 @@ import java.util.Map;
  */
 
 /**
- * Component object which can be used to relay information about state changes occurring in the implementing object to one or more observers located anywhere in the 
- * application. Objects which use observable should define the properties (often fields) observers should look for in their constructors with the properties 
+ * Component object which can be used to relay information about state changes occurring in the implementing object to one or more observers located anywhere in 
+ * the application. Objects which use observable should define the properties (often fields) observers should look for in their constructors with the properties 
  * collection provided.
  */
 public class Observable {

@@ -33,8 +33,8 @@ abstract class TerminalCommand {
     }
     
     /**
-     * Executes the command and returns an output string indicating its success or failure. Values parsed from the arguments passed by the command terminal must be 
-     * validated individually by subclasses that contain this method.
+     * Executes the command and returns an output string indicating its success or failure. Values parsed from the arguments passed by the command terminal must 
+     * be validated individually by subclasses that contain this method.
      * 
      * @param args any arguments required by the command
      */

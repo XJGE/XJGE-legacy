@@ -30,8 +30,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Represents a 3D model. Models may possess animations, multiple meshes, textures, or a combination of these things. Various limitations are imposed by the 
- * engine to ensure models are loaded with consistency. The Autodesk&trade; .fbx file format is the preferred format of this engine for its compact size, though other 
- * formats should work as well.
+ * engine to ensure models are loaded with consistency. The Autodesk&trade; .fbx file format is the preferred format of this engine for its compact size, though 
+ * other formats should work as well.
  */
 public class Model {
     
@@ -201,8 +201,8 @@ public class Model {
     /**
      * Parses the textures used by this model.
      * <br><br>
-     * The engine imposes a maximum number of textures a single model may use at once though the {@link dev.theskidster.xjge.main.App#MAX_TEXTURES MAX_TEXTURES}
-     * field. By default this is set to four but can be changed at the discretion of the implementation to better suit its needs.
+     * The engine imposes a maximum number of textures a single model may use at once though the {@link App#MAX_TEXTURES MAX_TEXTURES} field. By default this is 
+     * set to four but can be changed at the discretion of the implementation to better suit its needs.
      * <br><br>
      * Models are loaded directly from memory and as such, must embed their textures inside materials to load correctly. Additionally, textures must be located 
      * in the same directory as the model file itself.
@@ -404,8 +404,7 @@ public class Model {
     
     /**
      * Renders the 3D model. Should be called from within the implementing entities 
-     * {@link dev.theskidster.xjge.entities.Entity#render(org.joml.Vector3f, org.joml.Vector3f, org.joml.Vector3f, dev.theskidster.xjge.graphics.LightSource[], 
-     * int) render()} method.
+     * {@link dev.theskidster.xjge.entities.Entity#render(Camera, LightSource[], int) render()} method.
      * 
      * @param shader    the shader to use to render this model
      * @param lights    an array of light source objects inhabiting the current level

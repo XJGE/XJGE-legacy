@@ -14,7 +14,7 @@ import dev.theskidster.xjge.main.App;
 
 /**
  * Represents a keyboard and mouse. Only one keyboard object should be present at any given time, implementations which make use of the engines local multiplayer 
- * features should instead use {@link Controller Controller} objects to handle player input.
+ * features should instead use {@link Controller} objects to handle player input.
  */
 public class Keyboard extends InputDevice {
 
@@ -59,8 +59,11 @@ public class Keyboard extends InputDevice {
             y = stack.mallocDouble(1);
         }
         
-        //The default configuration seen here is modeled after a 3D camera. Though the 
-        //implementation can alter this as needed.
+        /*
+        The default configuration seen below is modeled after a 3D camera. Though the 
+        implementation may alter this according to its own needs.
+        */
+        
         keys.put("a button",     GLFW_KEY_SPACE);
         keys.put("b button",     GLFW_KEY_Q);
         keys.put("x button",     GLFW_KEY_R);

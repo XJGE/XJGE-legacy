@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * A component object that enables the implementing object to make use of input captured from an {@link dev.theskidster.xjge.hardware.InputDevice InputDevice} by 
- * coupling an interactive component of the device (such as a button) to a <a>{@link Command meaningful action}</a> defined by the implementation.  
+ * coupling an interactive component of the device (such as a button) to a {@linkplain Command meaningful action} defined by the implementation.  
  * 
  * @see dev.theskidster.xjge.puppets
  */
@@ -19,7 +19,7 @@ public class Puppet {
     public Object object;
     
     /**
-     * A collection of <a>{@link Command commands}</a>. Command definitions should exhibit the following structure:
+     * A collection of {@linkplain Command commands}. Command definitions should exhibit the following structure:
      * <blockquote><pre>
      * puppet.commands.put("a button", myCommand1());
      * puppet.commands.put("left x",   myCommand2("x"));
@@ -29,6 +29,7 @@ public class Puppet {
      * Notice how the keys of the collection correspond with those defined in the {@link dev.theskidster.xjge.hardware.Controller Controller} and 
      * {@link dev.theskidster.xjge.hardware.Keyboard Keyboard} classes. Additionally some commands may be supplied twice with an action represented as a string. 
      * This is typically useful for actions which require the use of an axis such as changing the direction of a 3D camera.
+     * <br><br>
      */
     public Map<String, Command> commands = new HashMap<>();
     

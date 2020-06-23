@@ -1,5 +1,6 @@
 package dev.theskidster.xjge.level;
 
+import dev.theskidster.xjge.entities.Entity2DAnimTest;
 import dev.theskidster.xjge.entities.Entity3DAnimTest;
 import dev.theskidster.xjge.graphics.Light;
 import dev.theskidster.xjge.graphics.Skybox;
@@ -15,7 +16,7 @@ import dev.theskidster.xjge.util.ScreenSplitType;
  */
 
 /**
- * Demonstrates the general structure of a game level. Intended for testing purposes only.
+ * Demonstrates the general structure of a game level. Included for testing purposes.
  */
 public class LevelTest extends Level {
     
@@ -30,6 +31,7 @@ public class LevelTest extends Level {
         //entityList.add(new EntityTest(new Vector3f(0, 10, -80)));
         //entityList.add(new EntityTeapot(new Vector3f(-40, 0, -60)));
         entityList.add(new Entity3DAnimTest(new Vector3f(0, 0, -40)));
+        entityList.add(new Entity2DAnimTest(new Vector3f(0, 0, -30)));
     }
 
     @Override

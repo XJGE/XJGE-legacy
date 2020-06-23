@@ -9,9 +9,8 @@ import dev.theskidster.xjge.puppet.terminal.Terminal;
  */
 
 /**
- * Contains objects that use <a>{@link Puppet puppets}</a> to facilitate their input (with exception to the 
- * {@link dev.theskidster.xjge.puppet.terminal.Terminal Terminal} and {@link dev.theskidster.xjge.puppet.freecam.Freecam Freecam} objects, which instead 
- * override access to the {@link dev.theskidster.xjge.hardware.Keyboard keyboard} while active). 
+ * Contains objects that use {@linkplain Puppet puppets} to facilitate their input (with exception to the {@link Terminal} and {@link Freecam} objects, which 
+ * instead override access to the {@link dev.theskidster.xjge.hardware.Keyboard keyboard} while active). 
  */
 public final class Puppets {
     
