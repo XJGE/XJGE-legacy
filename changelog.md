@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file. The format 
 - Merged the "img_light.png" and "spr_icons_input.png" files into a single sprite sheet image. Changed the classes which used these files accordingly.
 - Entity2DAnimTest class to instead use the controller sprites instead of the loading icon.
 - Fixed some broken documentation links, made minor changes to some sections.
+- Fixed a bug in the Model class that would erroneously assign textures to the wrong meshes.
+- Fixed a bug where keyframes would compound into a single animation during model loading.
+- Increased default MAX_BONE size from 32 to 128.
+- Fixed the bug that would incorrectly assign vertex weights to the wrong bones.
+- Fixed bug that would crash the engine if null was passed as the sound source position in the playSound() method.
 
 ### Removed
 

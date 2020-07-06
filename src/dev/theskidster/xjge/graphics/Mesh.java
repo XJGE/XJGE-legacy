@@ -32,23 +32,26 @@ class Mesh {
     private int vbo = glGenBuffers();
     final int ibo   = glGenBuffers();
     
+    int matIndex;
+    
     IntBuffer indices;
     Matrix4f modelMatrix = new Matrix4f();
-    
-    Bone[] bones;
     
     /**
      * Creates a mesh object that will be used by the engine to render a {@link Model}.
      * 
      * @param aiMesh the mesh object provided by the Assimp library with which vertex data will be parsed
      */
-    Mesh(AIMesh aiMesh) {
+    Mesh(AIMesh aiMesh, List<Bone> bones) {
         glBindVertexArray(vao);
+        
+        //Used to specify which texture to use for this mesh
+        matIndex = aiMesh.mMaterialIndex(); //@todo test with no texture model
         
         parsePositionData(aiMesh);
         parseTexCoordData(aiMesh);
         parseNormalData(aiMesh);
-        parseBoneData(aiMesh);
+        parseBoneData(aiMesh, bones);
         parseFaceData(aiMesh);
         
         glEnableVertexAttribArray(0); //position
@@ -97,7 +100,7 @@ class Mesh {
         if(aiVecBuf != null) {
             for(int i = 0; i < aiVecBuf.remaining(); i++) {
                 AIVector3D aiVec = aiVecBuf.get(i);
-                
+                                
                 texCoordBuf.put(aiVec.x())
                            .put(aiVec.y());
             }
@@ -152,20 +155,21 @@ class Mesh {
      * 
      * @param aiMesh the mesh object provided by the Assimp library with which vertex data will be parsed
      */
-    private void parseBoneData(AIMesh aiMesh) {
-        bones = new Bone[aiMesh.mNumBones()];
+    private void parseBoneData(AIMesh aiMesh, List<Bone> bones) {
         PointerBuffer boneBuf = aiMesh.mBones();
         
         if(boneBuf != null) {
             Map<Integer, List<VertexWeight>> weights = new TreeMap<>();
             
-            for(int b = 0; b < bones.length; b++) {
+            for(int b = 0; b < aiMesh.mNumBones(); b++) {
                 AIBone aiBone = AIBone.create(boneBuf.get(b));
-                bones[b]      = new Bone(b, aiBone.mName().dataString(), aiBone.mOffsetMatrix());
-                                
+                Bone bone     = new Bone(bones.size(), aiBone.mName().dataString(), aiBone.mOffsetMatrix());
+                
+                bones.add(bone);
+                
                 for(int w = 0; w < aiBone.mNumWeights(); w++) {
                     AIVertexWeight aiWeight = aiBone.mWeights().get(w);
-                    VertexWeight weight     = new VertexWeight(b, aiWeight.mVertexId(), aiWeight.mWeight());
+                    VertexWeight weight     = new VertexWeight(bone.id, aiWeight.mVertexId(), aiWeight.mWeight());
                     
                     List<VertexWeight> vwList = weights.get(weight.vertexID);
                     

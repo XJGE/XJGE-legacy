@@ -2,7 +2,7 @@
 
 //Values should correspond to the varaibles of the same name in the App class. 
 #define MAX_WEIGHTS 4
-#define MAX_BONES 32
+#define MAX_BONES 128
 
 //Non-instanced attributes
 layout (location = 0) in vec3  aPosition;

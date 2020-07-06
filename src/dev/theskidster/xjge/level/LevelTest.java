@@ -1,14 +1,14 @@
 package dev.theskidster.xjge.level;
 
-import dev.theskidster.xjge.entities.Entity2DAnimTest;
 import dev.theskidster.xjge.entities.Entity3DAnimTest;
+import dev.theskidster.xjge.entities.EntityBody;
 import dev.theskidster.xjge.graphics.Light;
 import dev.theskidster.xjge.graphics.Skybox;
-import org.joml.Vector3f;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.Color;
 import dev.theskidster.xjge.util.ScreenSplitType;
+import org.joml.Vector3f;
 
 /**
  * @author J Hoffman
@@ -20,6 +20,9 @@ import dev.theskidster.xjge.util.ScreenSplitType;
  */
 public class LevelTest extends Level {
     
+    public static EntityBody mario      = new EntityBody(new Vector3f(0, -10, -40));
+    public static Entity3DAnimTest test = new Entity3DAnimTest(new Vector3f(50, 0, -40));
+    
     @Override
     public void init() {
         App.setSplitType(ScreenSplitType.NO_SPLIT);
@@ -30,8 +33,9 @@ public class LevelTest extends Level {
         
         //entityList.add(new EntityTest(new Vector3f(0, 10, -80)));
         //entityList.add(new EntityTeapot(new Vector3f(-40, 0, -60)));
-        entityList.add(new Entity3DAnimTest(new Vector3f(0, 0, -40)));
-        entityList.add(new Entity2DAnimTest(new Vector3f(0, 0, -30)));
+        entityList.add(test);
+        //entityList.add(new Entity2DAnimTest(new Vector3f(20, 0, -30)));
+        entityList.add(mario);
     }
 
     @Override
@@ -53,6 +57,11 @@ public class LevelTest extends Level {
     public void exit() {
         freeEntities();
         freeLightSources();
+    }
+    
+    public static void setAnimation(String name) {
+        //test.model.setAnimation(name);
+        mario.model.setAnimation(name);
     }
     
 }

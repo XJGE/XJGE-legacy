@@ -139,7 +139,8 @@ public class Audio implements AudioService {
      */
     private int findClosestViewport(Vector3f position) {
         for(int i = 0; i < camDir.size(); i++) {
-            distances.put(i, Math.sqrt(position.distance(camPos.get(i))));
+            if(position != null) distances.put(i, Math.sqrt(position.distance(camPos.get(i))));
+            else                 distances.put(i, 0.0);
         }
         
         return distances.entrySet().stream()

@@ -126,24 +126,26 @@ class Source {
      * @param direction the direction the viewports camera is currently facing
      */
     public void setSourcePosition(Vector3f position, Vector3f direction) {
-        this.position.sub(position, tempPos);
-        
-        float dot   = tempPos.dot(direction);
-        float det   = tempPos.x * direction.z - tempPos.z * direction.x; //determinant
-        float angle = (float) Math.toDegrees(Math.atan2(det, dot)) - 90;
-        
-        if(angle < 0) {
-            float offset = 180 + angle;
-            angle = 180 + offset;
+        if(this.position != null) {
+            this.position.sub(position, tempPos);
+            
+            float dot   = tempPos.dot(direction);
+            float det   = tempPos.x * direction.z - tempPos.z * direction.x; //determinant
+            float angle = (float) Math.toDegrees(Math.atan2(det, dot)) - 90;
+            
+            if(angle < 0) {
+                float offset = 180 + angle;
+                angle = 180 + offset;
+            }
+
+            float dist = position.distance(this.position);
+
+            float rad = (float) Math.toRadians(angle);
+            float x   = (float) -(dist * Math.cos(rad));
+            float z   = (float) (dist * Math.sin(rad));
+
+            alSource3f(handle, AL_POSITION, x, tempPos.y, z);
         }
-        
-        float dist = position.distance(this.position);
-        
-        float rad = (float) Math.toRadians(angle);
-        float x   = (float) -(dist * Math.cos(rad));
-        float z   = (float) (dist * Math.sin(rad));
-        
-        alSource3f(handle, AL_POSITION, x, tempPos.y, z);
     }
     
     /**

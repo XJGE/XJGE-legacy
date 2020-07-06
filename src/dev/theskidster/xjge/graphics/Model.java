@@ -2,6 +2,7 @@ package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.shader.core.ShaderCore;
+import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.ErrorUtil;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
@@ -35,6 +36,8 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class Model {
     
+    private int prevNumKeyFrames;
+    
     private AIScene aiScene;
     private Matrix3f normal  = new Matrix3f();
     private Vector3f noValue = new Vector3f();
@@ -45,6 +48,8 @@ public class Model {
     
     private Mesh[] meshes;
     private Texture[] textures;
+    
+    private List<Bone> bones = new ArrayList<>();
     
     private Map<String, SkeletalAnimation> animations;
     
@@ -73,6 +78,11 @@ public class Model {
     public Model(String filename, int args) {
         loadModel(filename, args); 
     }
+    
+    /**
+     * @todo add overloaded method that will manually load textures? might be 
+     * useful for loading a model like a standard kart with a different color scheme
+     */
     
     /**
      * Specifies various file open/read/close procedures and then constructs a new model instance using the data parsed from the file.
@@ -194,21 +204,28 @@ public class Model {
         
         for(int i = 0; i < meshes.length; i++) {
             AIMesh aiMesh = AIMesh.create(meshBuf.get(i));
-            meshes[i]     = new Mesh(aiMesh);
+            meshes[i]     = new Mesh(aiMesh, bones);
         }
     }
     
     /**
-     * Parses the textures used by this model.
+     * Parses each texture that will be used by this model.
      * <br><br>
-     * The engine imposes a maximum number of textures a single model may use at once though the {@link App#MAX_TEXTURES MAX_TEXTURES} field. By default this is 
-     * set to four but can be changed at the discretion of the implementation to better suit its needs.
-     * <br><br>
-     * Models are loaded directly from memory and as such, must embed their textures inside materials to load correctly. Additionally, textures must be located 
-     * in the same directory as the model file itself.
+     * The engine imposes a number of significant restrictions regarding textures that should be considered during the model creation process. Specifically;
+     * <ol>
+     * <li>Models may not exceed the maximum number of allowed textures specified through the {@link App#MAX_TEXTURES MAX_TEXTURES} field. By default this 
+     * number is four, but may be altered at the discretion of the implementation as needed.</li>
+     * <br>
+     * <li>Any {@link Mesh} object representing part of this model can not use more than one texture concurrently. That is, a single texture may be shared 
+     * between multiple meshes, but a single mesh may not exhibit multiple textures.</li>
+     * <br>
+     * <li>Since models are loaded directly from memory, they must embed their textures inside of materials in order to load correctly.</li>
+     * <br>
+     * <li>Texture image files used by models must be located in the same directory as the model file itself.</li>
+     * </ol>
      * 
      * @param materialBuf the buffer of models material data provided by Assimp
-     * @throws Exception  if one or more textures could not be located. This will likely result in the engine using a placeholder texture instead.
+     * @throws Exception  if one or more textures could not be located. The engine will instead use a placeholder texture.
      */
     private void parseTextureData(PointerBuffer materialBuf) throws Exception {
         if(aiScene.mNumMaterials() > App.MAX_TEXTURES) {
@@ -264,7 +281,10 @@ public class Model {
                 genTransforms(aiNodeAnim, node);
             }
             
-            SkeletalAnimation animation = new SkeletalAnimation(aiAnimation, genKeyFrames());
+            List<KeyFrame> keyFrames = genKeyFrames();
+            prevNumKeyFrames         = keyFrames.size();
+            
+            SkeletalAnimation animation = new SkeletalAnimation(aiAnimation, keyFrames);
             animations.put(animation.name, animation);
         }
     }
@@ -311,22 +331,26 @@ public class Model {
     private List<KeyFrame> genKeyFrames() {
         List<KeyFrame> frames = new ArrayList<>();
         
-        for(Mesh mesh : meshes) {
-            for(int i = 0; i < rootNode.getNumKeyFrames(); i++) {
-                KeyFrame frame = new KeyFrame();
-                frames.add(frame);
-                
-                for(int b = 0; b < mesh.bones.length; b++) {
-                    Bone bone = mesh.bones[b];
-                    Node node = rootNode.getNodeByName(bone.name);
-                    
-                    Matrix4f boneTransform = Node.getParentTransform(node, i);
-                    
-                    boneTransform.mul(bone.offset);
-                    boneTransform = new Matrix4f(rootTransform).mul(boneTransform);
-                    
-                    frame.boneTransforms[b] = boneTransform;
-                }
+        /*
+        We provide the prevNumKeyFrames field here to offset the starting frame
+        of each animation since the keyframes specified by the model file are
+        stored sequentially regardless of animation.
+        */
+        
+        for(int i = prevNumKeyFrames; i < rootNode.getNumKeyFrames(); i++) {
+            KeyFrame frame = new KeyFrame();
+            frames.add(frame);
+            
+            for(int b = 0; b < bones.size(); b++) {
+                Bone bone = bones.get(b);
+                Node node = rootNode.getNodeByName(bone.name);
+
+                Matrix4f boneTransform = Node.getParentTransform(node, i);
+
+                boneTransform.mul(bone.offset);
+                boneTransform = new Matrix4f(rootTransform).mul(boneTransform);
+
+                frame.boneTransforms[b] = boneTransform;
             }
         }
         
@@ -339,7 +363,11 @@ public class Model {
      * @param name the name of the animation as it appears in the file.
      */
     public void setAnimation(String name) {
-        currAnimation = name;
+        if(animations.containsKey(name)) {
+            currAnimation = name;
+        } else {
+            Logger.log(LogLevel.WARNING, "Model does not contain an animation by the name of " + name + ".");
+        }
     }
     
     /**
@@ -416,13 +444,13 @@ public class Model {
         
         ShaderCore.use(shader);
         
-        for(int m = 0; m < meshes.length; m++) {
-            if(m < textures.length) glBindTexture(GL_TEXTURE_2D, textures[m].handle);
+        for(Mesh mesh : meshes) {
+            glBindTexture(GL_TEXTURE_2D, textures[mesh.matIndex].handle);
             
-            glBindVertexArray(meshes[m].vao);
+            glBindVertexArray(mesh.vao);
             
             ShaderCore.setInt("uType", 5);
-            ShaderCore.setMat4("uModel", false, meshes[m].modelMatrix);
+            ShaderCore.setMat4("uModel", false, mesh.modelMatrix);
             ShaderCore.setMat3("uNormal", true, normal);
             ShaderCore.setInt("uNumLights", numLights);
             
@@ -448,7 +476,7 @@ public class Model {
                 ShaderCore.setMat4("uBoneTransforms", false, animations.get(currAnimation).getCurrFrame().boneTransforms);
             }
             
-            glDrawElements(GL_TRIANGLES, meshes[m].indices.limit(), GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, mesh.indices.limit(), GL_UNSIGNED_INT, 0);
         }
         
         glDisable(GL_DEPTH_TEST);
