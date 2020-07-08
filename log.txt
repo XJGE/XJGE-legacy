@@ -6,8 +6,25 @@ INFO: OPENGL VER:	4.5.0 - Build 23.20.16.4973
 INFO: OPENAL VER:	1.1 ALSOFT 1.19.1
 INFO: MONITORS:		2 (1920x1080 16:9 60hz)
 INFO: SPEAKERS:		1 (Speakers (Realtek High Definition Audio))
-INFO: CONTROLLERS:	0
+INFO: CONTROLLERS:	1
 INFO: --------------------------------------------------------------------------------
 
 INFO: Level changed to: "LevelTest"
+
+
+07-08-2020 2:18PM
+WARNING: Failed to load texture image: ""
+
+java.lang.NullPointerException: STBI failed to parse texture image data.
+	at dev.theskidster.xjge.graphics.Texture.loadTexture(Texture.java:76)
+	at dev.theskidster.xjge.graphics.Texture.<init>(Texture.java:42)
+	at dev.theskidster.xjge.graphics.Model.parseTextureData(Model.java:261)
+	at dev.theskidster.xjge.graphics.Model.loadModel(Model.java:164)
+	at dev.theskidster.xjge.graphics.Model.<init>(Model.java:62)
+	at dev.theskidster.xjge.entities.EntityCube.<init>(EntityCube.java:22)
+	at dev.theskidster.xjge.level.LevelTest.init(LevelTest.java:40)
+	at dev.theskidster.xjge.main.Game.setLevel(Game.java:165)
+	at dev.theskidster.xjge.main.Game.<init>(Game.java:47)
+	at dev.theskidster.xjge.main.App.start(App.java:129)
+	at dev.theskidster.xjge.main.Main.main(Main.java:19)
 

@@ -34,7 +34,6 @@ public class LevelTest extends Level {
         //entityList.add(new EntityTest(new Vector3f(0, 10, -80)));
         //entityList.add(new EntityTeapot(new Vector3f(-40, 0, -60)));
         entityList.add(test);
-        //entityList.add(new Entity2DAnimTest(new Vector3f(20, 0, -30)));
         entityList.add(mario);
     }
 

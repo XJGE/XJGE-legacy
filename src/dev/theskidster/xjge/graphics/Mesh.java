@@ -45,8 +45,7 @@ class Mesh {
     Mesh(AIMesh aiMesh, List<Bone> bones) {
         glBindVertexArray(vao);
         
-        //Used to specify which texture to use for this mesh
-        matIndex = aiMesh.mMaterialIndex(); //@todo test with no texture model
+        matIndex = aiMesh.mMaterialIndex(); //Used to specify which texture to use for this mesh
         
         parsePositionData(aiMesh);
         parseTexCoordData(aiMesh);
@@ -104,8 +103,6 @@ class Mesh {
                 texCoordBuf.put(aiVec.x())
                            .put(aiVec.y());
             }
-        } else {
-            //@todo default initialize with 0 for each value in the event the model has no texture/coordinates.
         }
         
         vbo = glGenBuffers();
@@ -136,8 +133,6 @@ class Mesh {
                          .put(aiVec.y())
                          .put(aiVec.z());
             }
-        } else {
-            //@todo same situation as the above tex coords.
         }
         
         vbo = glGenBuffers();
@@ -214,10 +209,7 @@ class Mesh {
             glVertexAttribPointer(8, 4, GL_FLOAT, false, 0, 0);
             MemoryUtil.memFree(weightBuf);
             
-            ErrorUtil.checkGLError();
-            
-        } else {
-            //@todo: there is no bone data, this is a static mesh and should be loaded differently
+            ErrorUtil.checkGLError();   
         }
     }
     

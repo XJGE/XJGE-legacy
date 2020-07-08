@@ -80,11 +80,6 @@ public class Model {
     }
     
     /**
-     * @todo add overloaded method that will manually load textures? might be 
-     * useful for loading a model like a standard kart with a different color scheme
-     */
-    
-    /**
      * Specifies various file open/read/close procedures and then constructs a new model instance using the data parsed from the file.
      * 
      * @param filename the name of the file to load. Expects the file extension to be included.
@@ -234,7 +229,15 @@ public class Model {
                     "Invalid number of textures. Limit of " + App.MAX_TEXTURES + 
                     " permitted, found " + aiScene.mNumMaterials());
         } else {
-            textures = new Texture[aiScene.mNumMaterials()];
+            if(aiScene.mNumMaterials() == 1) {
+                AIMaterial aiMaterial = AIMaterial.create(materialBuf.get(0));
+                AIString filename     = AIString.calloc();
+                Assimp.aiGetMaterialTexture(aiMaterial, aiTextureType_DIFFUSE, 0, filename, (IntBuffer) null, null, null, null, null, null);
+                
+                textures = new Texture[aiScene.mNumMaterials()];
+            } else {
+                textures = new Texture[aiScene.mNumMaterials()];
+            }
         }
         
         /*
@@ -251,6 +254,8 @@ public class Model {
             Assimp.aiGetMaterialTexture(aiMaterial, aiTextureType_DIFFUSE, 0, filename, (IntBuffer) null, null, null, null, null, null);
             
             textures[i] = new Texture(filename.dataString());
+            
+            filename.free();
             
             glBindTexture(GL_TEXTURE_2D, textures[i].handle);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
