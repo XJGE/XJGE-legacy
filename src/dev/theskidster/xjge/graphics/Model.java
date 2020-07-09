@@ -229,15 +229,7 @@ public class Model {
                     "Invalid number of textures. Limit of " + App.MAX_TEXTURES + 
                     " permitted, found " + aiScene.mNumMaterials());
         } else {
-            if(aiScene.mNumMaterials() == 1) {
-                AIMaterial aiMaterial = AIMaterial.create(materialBuf.get(0));
-                AIString filename     = AIString.calloc();
-                Assimp.aiGetMaterialTexture(aiMaterial, aiTextureType_DIFFUSE, 0, filename, (IntBuffer) null, null, null, null, null, null);
-                
-                textures = new Texture[aiScene.mNumMaterials()];
-            } else {
-                textures = new Texture[aiScene.mNumMaterials()];
-            }
+            textures = new Texture[aiScene.mNumMaterials()];
         }
         
         /*

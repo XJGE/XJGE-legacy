@@ -2,7 +2,6 @@ package dev.theskidster.xjge.entities;
 
 import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.graphics.Model;
-import dev.theskidster.xjge.main.Game;
 import dev.theskidster.xjge.util.Camera;
 import org.joml.Vector3f;
 
@@ -31,7 +30,7 @@ public class EntityBody extends Entity {
         model.translation(position);
         model.scale(0.01f);
         
-        if(Game.tick(2)) model.updateAnimation();
+        model.updateAnimation();
         
         //model.rotateY(angle++);
     }

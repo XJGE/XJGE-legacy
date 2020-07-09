@@ -88,7 +88,7 @@ class Node {
         
         for(Node node : children) {
             int childFrame = node.getNumKeyFrames();
-            numFrames      = Math.max(numFrames, childFrame);
+            numFrames = Math.max(numFrames, childFrame);
         }
         
         return numFrames;

@@ -11,20 +11,3 @@ INFO: --------------------------------------------------------------------------
 
 INFO: Level changed to: "LevelTest"
 
-
-07-08-2020 2:18PM
-WARNING: Failed to load texture image: ""
-
-java.lang.NullPointerException: STBI failed to parse texture image data.
-	at dev.theskidster.xjge.graphics.Texture.loadTexture(Texture.java:76)
-	at dev.theskidster.xjge.graphics.Texture.<init>(Texture.java:42)
-	at dev.theskidster.xjge.graphics.Model.parseTextureData(Model.java:261)
-	at dev.theskidster.xjge.graphics.Model.loadModel(Model.java:164)
-	at dev.theskidster.xjge.graphics.Model.<init>(Model.java:62)
-	at dev.theskidster.xjge.entities.EntityCube.<init>(EntityCube.java:22)
-	at dev.theskidster.xjge.level.LevelTest.init(LevelTest.java:40)
-	at dev.theskidster.xjge.main.Game.setLevel(Game.java:165)
-	at dev.theskidster.xjge.main.Game.<init>(Game.java:47)
-	at dev.theskidster.xjge.main.App.start(App.java:129)
-	at dev.theskidster.xjge.main.Main.main(Main.java:19)
-

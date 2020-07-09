@@ -1,6 +1,5 @@
 package dev.theskidster.xjge.level;
 
-import dev.theskidster.xjge.entities.Entity3DAnimTest;
 import dev.theskidster.xjge.entities.EntityBody;
 import dev.theskidster.xjge.graphics.Light;
 import dev.theskidster.xjge.graphics.Skybox;
@@ -21,7 +20,7 @@ import org.joml.Vector3f;
 public class LevelTest extends Level {
     
     public static EntityBody mario      = new EntityBody(new Vector3f(0, -10, -40));
-    public static Entity3DAnimTest test = new Entity3DAnimTest(new Vector3f(50, 0, -40));
+    //public static Entity3DAnimTest test = new Entity3DAnimTest(new Vector3f(50, 0, -40));
     
     @Override
     public void init() {
@@ -33,7 +32,8 @@ public class LevelTest extends Level {
         
         //entityList.add(new EntityTest(new Vector3f(0, 10, -80)));
         //entityList.add(new EntityTeapot(new Vector3f(-40, 0, -60)));
-        entityList.add(test);
+        //entityList.add(test);
+        //entityList.add(new EntityCube(new Vector3f()));
         entityList.add(mario);
     }
 
