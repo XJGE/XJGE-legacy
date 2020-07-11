@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file. The format 
 - Increased default MAX_BONE size from 32 to 128.
 - Fixed the bug that would incorrectly assign vertex weights to the wrong bones.
 - Fixed bug that would crash the engine if null was passed as the sound source position in the playSound() method.
+- Changes made to permit interpolation between keyframes of skeletal animations.
 
 ### Removed
 

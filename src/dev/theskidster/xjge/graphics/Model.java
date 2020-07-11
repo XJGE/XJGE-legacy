@@ -470,7 +470,7 @@ public class Model {
             }
             
             if(currAnimation != null) {
-                ShaderCore.setMat4("uBoneTransforms", false, animations.get(currAnimation).getCurrFrame().boneTransforms);
+                ShaderCore.setMat4("uBoneTransforms", false, animations.get(currAnimation).getFinalTransforms());
             }
             
             glDrawElements(GL_TRIANGLES, mesh.indices.limit(), GL_UNSIGNED_INT, 0);

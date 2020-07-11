@@ -16,7 +16,7 @@ import org.joml.Matrix4f;
  */
 class KeyFrame {
     
-    final Matrix4f[] boneTransforms;
+    final Matrix4f[] boneTransforms; 
     final Matrix4f IDENTITY = new Matrix4f();
     
     /**

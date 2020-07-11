@@ -1,6 +1,10 @@
 package dev.theskidster.xjge.graphics;
 
+import dev.theskidster.xjge.main.App;
+import dev.theskidster.xjge.main.Game;
+import java.util.ArrayList;
 import java.util.List;
+import org.joml.Matrix4f;
 import org.lwjgl.assimp.AIAnimation;
 
 /**
@@ -21,10 +25,19 @@ import org.lwjgl.assimp.AIAnimation;
  */
 class SkeletalAnimation {
     
-    int currFrame;
-    double duration;
-    String name;
-    List<KeyFrame> frames;
+    private float animTime  = 0;
+    private float frameTime = 0;
+    private float speed     = 0.5f;
+    
+    final float duration;
+    
+    final String name;
+    
+    private KeyFrame prevFrame;
+    private KeyFrame nextFrame;
+    
+    private List<KeyFrame> frames;
+    private List<Matrix4f> finalTransforms;
     
     /**
      * Constructs a new skeletal animation using the animation data and keyframes provided.
@@ -33,37 +46,60 @@ class SkeletalAnimation {
      * @param frames      a collection of every {@link KeyFrame KeyFrame} object that will be used by this animation
      */
     SkeletalAnimation(AIAnimation aiAnimation, List<KeyFrame> frames) {
-        currFrame   = 0;
-        duration    = aiAnimation.mDuration();
+        duration    = (float) aiAnimation.mDuration();
         name        = aiAnimation.mName().dataString();
         this.frames = frames;
+        
+        finalTransforms = new ArrayList<>();
+        for(int i = 0; i < App.MAX_BONES; i++) finalTransforms.add(new Matrix4f());
+    }
+    
+    List<Matrix4f> getFinalTransforms() {
+        return finalTransforms;
     }
     
     /**
-     * Finds the current {@link KeyFrame} of this animation.
-     * 
-     * @return the frame currently being displayed
-     */
-    KeyFrame getCurrFrame() {
-        return frames.get(currFrame);
-    }
-    
-    /**
-     * Finds the next {@link KeyFrame} in sequence.
-     * 
-     * @return the keyframe following the one currently being displayed
-     */
-    KeyFrame getNextFrame() {
-        step();
-        return frames.get(currFrame);
-    }
-    
-    /**
-     * Increments the sequence of the animation forward one {@link KeyFrame}.
+     * Increments the animations sequence forward.
      */
     void step() {
-        int nextFrame = currFrame + 1;
-        currFrame     = (nextFrame > frames.size() - 1) ? 0 : nextFrame;
+        if(speed > 0) {
+            frameTime += (speed + Game.getDelta());
+            animTime  += (speed + Game.getDelta());
+        } else {
+            frameTime = 0;
+            animTime  = 0;
+        }
+        
+        if(frameTime > 1)       frameTime %= 1;
+        if(animTime > duration) animTime %= duration;
+        
+        calcFinalTransforms();
+    }
+    
+    /**
+     * Calculates a new "intermediate frame" between the previous and next {@linkplain KeyFrame keyframes} in sequence.
+     * <br><br>
+     * More specifically, by linearly interpolating between the values of the two keyframes bone transformations, a new set of transformations will be produced 
+     * dynamically, enabling animation playback speed to be altered freely with smooth results.
+     */
+    private void calcFinalTransforms() {
+        prevFrame = frames.get(0);
+        nextFrame = frames.get(0);
+        
+        for(int f = 0; f < frames.size(); f++) {
+            nextFrame = frames.get(f);
+            
+            if(f > animTime) {
+                if(f == frames.size() - 1) nextFrame = frames.get(0);
+                else break;
+            }
+            
+            prevFrame = frames.get(f);
+        }
+        
+        for(int i = 0; i < App.MAX_BONES; i++) {
+            prevFrame.boneTransforms[i].lerp(nextFrame.boneTransforms[i], frameTime, finalTransforms.get(i));
+        }
     }
     
 }

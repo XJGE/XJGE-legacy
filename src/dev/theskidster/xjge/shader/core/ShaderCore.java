@@ -1,5 +1,6 @@
 package dev.theskidster.xjge.shader.core;
 
+import dev.theskidster.xjge.graphics.Model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import static org.lwjgl.opengl.GL20.*;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
 import java.nio.FloatBuffer;
+import java.util.List;
 import org.lwjgl.system.MemoryStack;
 
 /**
@@ -170,13 +172,13 @@ public final class ShaderCore {
      * 
      * @param name      the name of the uniform variable exactly as it appears in the .glsl file in which it's defined
      * @param transpose indicates whether or not to transpose the matrix as the values are loaded into the uniform variable
-     * @param values    the array of values we want to pass to the graphics pipeline
+     * @param values    the collection of values we want to pass to the graphics pipeline
      */
-    public static void setMat4(String name, boolean transpose, Matrix4f[] values) {
+    public static void setMat4(String name, boolean transpose, List<Matrix4f> values) {
         try(MemoryStack stack = MemoryStack.stackPush()) {
-            FloatBuffer matBuf = stack.mallocFloat(16 * values.length);
+            FloatBuffer matBuf = stack.mallocFloat(16 * values.size() - 1);
             
-            for(int i = 0; i < values.length; i++) values[i].get(16 * i, matBuf);
+            for(int i = 0; i < values.size() - 1; i++) values.get(i).get(16 * i, matBuf);
             
             glUniformMatrix4fv(
                     shaderProgram.getUniform(name).location,
