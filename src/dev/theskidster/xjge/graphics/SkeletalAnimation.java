@@ -27,14 +27,9 @@ class SkeletalAnimation {
     
     private float animTime  = 0;
     private float frameTime = 0;
-    private float speed     = 0.5f;
-    
     final float duration;
     
     final String name;
-    
-    private KeyFrame prevFrame;
-    private KeyFrame nextFrame;
     
     private List<KeyFrame> frames;
     private List<Matrix4f> finalTransforms;
@@ -60,20 +55,30 @@ class SkeletalAnimation {
     
     /**
      * Increments the animations sequence forward.
+     *
+     * @param prevFrame the previous {@link KeyFrame} in this animations sequence, used to calculate interpolated bone positions
+     * @param nextFrame the next {@link KeyFrame} in this animations sequence, used to calculate interpolated bone positions
+     * @param speed     a non-negative number between 1 and 0. A value of zero will pause the animation at its current {@link KeyFrame}.
+     * @param loop      if true, animations will loop indefinitely. Supplying false will cease animation playback after their durations are reached.
      */
-    void step() {
+    void step(KeyFrame prevFrame, KeyFrame nextFrame, float speed, boolean loop) {
         if(speed > 0) {
             frameTime += (speed + Game.getDelta());
             animTime  += (speed + Game.getDelta());
-        } else {
-            frameTime = 0;
-            animTime  = 0;
         }
         
-        if(frameTime > 1)       frameTime %= 1;
-        if(animTime > duration) animTime %= duration;
+        if(frameTime > 1) frameTime %= 1;
         
-        calcFinalTransforms();
+        if(animTime > duration) {
+            if(loop) {
+                animTime %= duration;
+            } else {
+                frameTime = 0;
+                animTime  = duration;
+            }
+        }
+        
+        calcFinalTransforms(prevFrame, nextFrame);
     }
     
     /**
@@ -81,8 +86,11 @@ class SkeletalAnimation {
      * <br><br>
      * More specifically, by linearly interpolating between the values of the two keyframes bone transformations, a new set of transformations will be produced 
      * dynamically, enabling animation playback speed to be altered freely with smooth results.
+     *
+     * @param prevFrame the previous {@link KeyFrame} in this animations sequence, used to calculate interpolated bone positions
+     * @param nextFrame the next {@link KeyFrame} in this animations sequence, used to calculate interpolated bone positions
      */
-    private void calcFinalTransforms() {
+    private void calcFinalTransforms(KeyFrame prevFrame, KeyFrame nextFrame) {
         prevFrame = frames.get(0);
         nextFrame = frames.get(0);
         

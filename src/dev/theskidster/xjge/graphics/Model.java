@@ -38,6 +38,10 @@ public class Model {
     
     private int prevNumKeyFrames;
     
+    private float speed = 0.5f;
+    
+    private boolean loop = true;
+    
     private AIScene aiScene;
     private Matrix3f normal  = new Matrix3f();
     private Vector3f noValue = new Vector3f();
@@ -45,6 +49,8 @@ public class Model {
     
     private Node rootNode;
     private String currAnimation;
+    private KeyFrame prevFrame;
+    private KeyFrame nextFrame;
     
     private Mesh[] meshes;
     private Texture[] textures;
@@ -355,79 +361,6 @@ public class Model {
     }
     
     /**
-     * Sets the current animation that will be played by this model. Might contain a "Armature|" before the name of the animation itself.
-     * 
-     * @param name the name of the animation as it appears in the file.
-     */
-    public void setAnimation(String name) {
-        if(animations.containsKey(name)) {
-            currAnimation = name;
-        } else {
-            Logger.log(LogLevel.WARNING, "Model does not contain an animation by the name of " + name + ".");
-        }
-    }
-    
-    /**
-     * Updates the current skeletal animation.
-     */
-    public void updateAnimation() {
-        animations.get(currAnimation).step();
-    }
-    
-    /**
-     * Couples the local space of the models mesh normals to that of the current scenes world space. Use this to fix the direction of the light source relative 
-     * to the model whenever it's being illuminated incorrectly.
-     */
-    public void delocalizeNormal() {
-        for(Mesh mesh : meshes) normal.set(mesh.modelMatrix.invert());
-    }
-    
-    /**
-     * Rotates the entire 3D model in relation to the worlds x-axis.
-     * 
-     * @param angle the angle with which the model will be rotated
-     */
-    public void rotateX(float angle) {
-        for(Mesh mesh : meshes) mesh.modelMatrix.rotateX((float) Math.toRadians(angle));
-    }
-    
-    /**
-     * Rotates the entire 3D model in relation to the worlds y-axis.
-     * 
-     * @param angle the angle with which the model will be rotated
-     */
-    public void rotateY(float angle) {
-        for(Mesh mesh : meshes) mesh.modelMatrix.rotateY((float) Math.toRadians(angle));
-    }
-    
-    /**
-     * Rotates the entire 3D model in relation to the worlds z-axis.
-     * 
-     * @param angle the angle with which the model will be rotated
-     */
-    public void rotateZ(float angle) {
-        for(Mesh mesh : meshes) mesh.modelMatrix.rotateZ((float) Math.toRadians(angle));
-    }
-    
-    /**
-     * Scales the entire 3D model by the factor specified.
-     * 
-     * @param factor the factor with which the models size will be multiplied by
-     */
-    public void scale(float factor) {
-        for(Mesh mesh : meshes) mesh.modelMatrix.scale(factor);
-    }
-    
-    /**
-     * translates the entire 3D model to the location specified.
-     * 
-     * @param position the position to set the model to
-     */
-    public void translation(Vector3f position) {
-        for(Mesh mesh : meshes) mesh.modelMatrix.translation(position);
-    }
-    
-    /**
      * Renders the 3D model. Should be called from within the implementing entities 
      * {@link dev.theskidster.xjge.entities.Entity#render(Camera, LightSource[], int) render()} method.
      * 
@@ -488,6 +421,101 @@ public class Model {
     public void destroy() {
         for(Mesh mesh : meshes) mesh.freeBuffers();
         for(Texture texture : textures) texture.freeTexture();
+    }
+    
+    /**
+     * Sets the current animation that will be played by this model. Might contain a "Armature|" before the name of the animation itself.
+     * 
+     * @param name the name of the animation as it appears in the file.
+     */
+    public void setAnimation(String name) {
+        if(animations.containsKey(name)) {
+            currAnimation = name;
+        } else {
+            Logger.log(LogLevel.WARNING, "Model does not contain an animation by the name of " + name + ".");
+        }
+    }
+    
+    /**
+     * Sets the playback speed of this models current animation. Subsequent animations will inherit the value specified.
+     * 
+     * @param speed a non-negative number between 1 and 0. A value of zero will pause the animation at its current {@link KeyFrame}.
+     */
+    public void setAnimationSpeed(float speed) {
+        if(speed > 1)      speed = 1;
+        else if(speed < 0) speed = 0;
+        
+        this.speed = speed;
+    }
+    
+    /**
+     * Determines whether or not to loop this models current animation once its duration has been reached. Subsequent animations will inherit the value 
+     * specified.
+     * 
+     * @param loop if true, animations will loop indefinitely. Supplying false will cease animation playback after their durations are reached.
+     */
+    public void setAnimationLooping(boolean loop) {
+        this.loop = loop;
+    }
+    
+    /**
+     * Updates the current skeletal animation.
+     */
+    public void updateAnimation() {
+        animations.get(currAnimation).step(prevFrame, nextFrame, speed, loop);
+    }
+    
+    /**
+     * Couples the local space of the models mesh normals to that of the current scenes world space. Use this to fix the direction of the light source relative 
+     * to the model whenever it's being illuminated incorrectly.
+     */
+    public void delocalizeNormal() {
+        for(Mesh mesh : meshes) normal.set(mesh.modelMatrix.invert());
+    }
+    
+    /**
+     * Rotates the entire 3D model in relation to the worlds x-axis.
+     * 
+     * @param angle the angle with which the model will be rotated
+     */
+    public void rotateX(float angle) {
+        for(Mesh mesh : meshes) mesh.modelMatrix.rotateX((float) Math.toRadians(angle));
+    }
+    
+    /**
+     * Rotates the entire 3D model in relation to the worlds y-axis.
+     * 
+     * @param angle the angle with which the model will be rotated
+     */
+    public void rotateY(float angle) {
+        for(Mesh mesh : meshes) mesh.modelMatrix.rotateY((float) Math.toRadians(angle));
+    }
+    
+    /**
+     * Rotates the entire 3D model in relation to the worlds z-axis.
+     * 
+     * @param angle the angle with which the model will be rotated
+     */
+    public void rotateZ(float angle) {
+        for(Mesh mesh : meshes) mesh.modelMatrix.rotateZ((float) Math.toRadians(angle));
+    }
+    
+    /**
+     * Scales the entire 3D model by the factor specified.
+     * 
+     * @param factor the factor with which the models size will be multiplied by
+     */
+    public void scale(float factor) {
+        for(Mesh mesh : meshes) mesh.modelMatrix.scale(factor);
+    }
+    
+    /**
+     * translates the entire 3D model to the location specified.
+     * 
+     * @param position the position to set the model to
+     */
+    public void translation(Vector3f position) {
+        for(Mesh mesh : meshes) mesh.modelMatrix.translation(position);
     }
     
 }

@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
+* Basic 3D animation playback utilities including looping and speed manipulation.
+
 ### Changed
 
 - Merged the "img_light.png" and "spr_icons_input.png" files into a single sprite sheet image. Changed the classes which used these files accordingly.
@@ -18,6 +20,7 @@ All notable changes to this project will be documented in this file. The format 
 - Fixed the bug that would incorrectly assign vertex weights to the wrong bones.
 - Fixed bug that would crash the engine if null was passed as the sound source position in the playSound() method.
 - Changes made to permit interpolation between keyframes of skeletal animations.
+- Moved animation playback information into the model class, animation state such as speed will now be retained between animations.
 
 ### Removed
 

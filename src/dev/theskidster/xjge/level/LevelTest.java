@@ -31,6 +31,8 @@ public class LevelTest extends Level {
         setSkybox(Skybox.NOON);
         setWorldLight(Light.NOON);
         
+        test.model.setAnimationSpeed(0.25f);
+        
         entityList.add(test);
         entityList.add(mario);
     }
@@ -54,11 +56,6 @@ public class LevelTest extends Level {
     public void exit() {
         freeEntities();
         freeLightSources();
-    }
-    
-    public static void setAnimation(String name) {
-        //test.model.setAnimation(name);
-        mario.model.setAnimation(name);
     }
     
 }

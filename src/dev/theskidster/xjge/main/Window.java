@@ -8,7 +8,6 @@ import org.lwjgl.system.MemoryStack;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
-import dev.theskidster.xjge.level.LevelTest;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
 import dev.theskidster.xjge.util.LogLevel;
@@ -100,6 +99,8 @@ final class Window {
         }
     }
     
+    boolean value;
+    
     /**
      * Makes the window visible and establishes callback events.
      */
@@ -130,17 +131,6 @@ final class Window {
                 if(key == GLFW_KEY_D) Puppets.FREECAM.pressed[3] = (action != GLFW_RELEASE);
                 
                 Puppets.FREECAM.setSpeedBoostEnabled(mods == GLFW_MOD_SHIFT);
-            }
-            
-            //@todo temp
-            if(key == GLFW_KEY_1 && action == GLFW_PRESS) {
-                System.out.println("TPose");
-                LevelTest.setAnimation("Armature|TPose");
-            }
-            
-            if(key == GLFW_KEY_2 && action == GLFW_PRESS) {
-                System.out.println("Idle");
-                LevelTest.setAnimation("Armature|Idle");
             }
         });
         
