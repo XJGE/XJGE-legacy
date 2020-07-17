@@ -18,7 +18,7 @@ public class Entity3DAnimTest extends Entity {
         super(position);
         
         model = new Model("mod_test.fbx");
-        model.setAnimation("Armature|Wiggle");
+        model.setAnimation("Wiggle", 0);
     }
 
     @Override

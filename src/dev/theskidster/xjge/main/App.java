@@ -79,6 +79,7 @@ public final class App {
     public static final int MAX_TEXTURES      = 4;
     public static final int MAX_LIGHTS        = 32;
     public static final int MAX_BONES         = 128;
+    public static final int MAX_ANIM_SPEED    = 5;
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";

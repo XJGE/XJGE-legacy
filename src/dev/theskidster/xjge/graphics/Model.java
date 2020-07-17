@@ -1,6 +1,7 @@
 package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
+import dev.theskidster.xjge.main.Game;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.ErrorUtil;
@@ -38,7 +39,7 @@ public class Model {
     
     private int prevNumKeyFrames;
     
-    private float speed = 0.5f;
+    private float speed = 1.5f;
     
     private boolean loop = true;
     
@@ -48,12 +49,11 @@ public class Model {
     private Matrix4f rootTransform;
     
     private Node rootNode;
-    private String currAnimation;
-    private KeyFrame prevFrame;
-    private KeyFrame nextFrame;
+    private SkeletalAnimation currAnimation;
     
     private Mesh[] meshes;
     private Texture[] textures;
+    private Matrix4f[] tempTransforms = new Matrix4f[2];
     
     private List<Bone> bones = new ArrayList<>();
     
@@ -285,7 +285,7 @@ public class Model {
             }
             
             List<KeyFrame> keyFrames = genKeyFrames();
-            prevNumKeyFrames         = keyFrames.size();
+            prevNumKeyFrames         += keyFrames.size();
             
             SkeletalAnimation animation = new SkeletalAnimation(aiAnimation, keyFrames);
             animations.put(animation.name, animation);
@@ -353,7 +353,7 @@ public class Model {
                 boneTransform.mul(bone.offset);
                 boneTransform = new Matrix4f(rootTransform).mul(boneTransform);
 
-                frame.boneTransforms[b] = boneTransform;
+                frame.setTransform(b, boneTransform);
             }
         }
         
@@ -403,7 +403,7 @@ public class Model {
             }
             
             if(currAnimation != null) {
-                ShaderCore.setMat4("uBoneTransforms", false, animations.get(currAnimation).getFinalTransforms());
+                ShaderCore.setMat4("uBoneTransforms", false, currAnimation.getCurrFrame().getTransformData());
             }
             
             glDrawElements(GL_TRIANGLES, mesh.indices.limit(), GL_UNSIGNED_INT, 0);
@@ -424,28 +424,50 @@ public class Model {
     }
     
     /**
-     * Sets the current animation that will be played by this model. Might contain a "Armature|" before the name of the animation itself.
+     * Sets the current that will be played by this model. A small transition animation will be generated if the value passed to the numFrames parameter
+     * is greater than zero.
      * 
-     * @param name the name of the animation as it appears in the file.
+     * @param name      the name of the animation as it appears in the model file
+     * @param numFrames the number of frames to transition between the current animation and the new one
      */
-    public void setAnimation(String name) {
-        if(animations.containsKey(name)) {
-            currAnimation = name;
-        } else {
-            Logger.log(LogLevel.WARNING, "Model does not contain an animation by the name of " + name + ".");
+    public void setAnimation(String name, int numFrames) {
+        if(!animations.containsKey(name)) {
+            Logger.log(LogLevel.WARNING, 
+                    "Failed to set animation: \"" + name + "\". Model contains " + 
+                    "no such animation.");
+            return;
         }
-    }
-    
-    /**
-     * Sets the playback speed of this models current animation. Subsequent animations will inherit the value specified.
-     * 
-     * @param speed a non-negative number between 1 and 0. A value of zero will pause the animation at its current {@link KeyFrame}.
-     */
-    public void setAnimationSpeed(float speed) {
-        if(speed > 1)      speed = 1;
-        else if(speed < 0) speed = 0;
         
-        this.speed = speed;
+        if(currAnimation != null && numFrames > 1) {
+            if(currAnimation.name.equals(name)) {
+                Logger.log(LogLevel.INFO, 
+                        "Animation: \"" + name +"\" is already playing.");
+                return;
+            }
+            
+            var frames = new ArrayList<KeyFrame>();
+            
+            for(int f = 1; f <= numFrames; f++) {
+                KeyFrame frame = new KeyFrame();
+                
+                for(int b = 0; b < App.MAX_BONES; b++) {
+                    animations.get(name).setFrameTime(currAnimation.getFrameTime());
+                    animations.get(name).setSeekTime(currAnimation.getSeekTime());
+                    
+                    Matrix4f transforms = new Matrix4f();
+                    
+                    currAnimation.calcTransition(b).lerp(animations.get(name).calcTransition(b), f / ((float) numFrames), transforms);
+                    
+                    frame.setTransform(b, transforms);
+                }
+                
+                frames.add(frame);
+            }
+            
+            currAnimation = new SkeletalAnimation(currAnimation.name, name, frames);
+        } else {
+            currAnimation = animations.get(name);
+        }
     }
     
     /**
@@ -459,10 +481,26 @@ public class Model {
     }
     
     /**
+     * Sets the playback speed of this models current animation. Subsequent animations will inherit the value specified.
+     * 
+     * @param speed a non-negative number between 1 and 0. A value of zero will pause the animation at its current {@link KeyFrame}.
+     */
+    public void setAnimationSpeed(float speed) {
+        if(speed > 1)      speed = 1;
+        else if(speed < 0) speed = 0;
+        
+        this.speed = speed * App.MAX_ANIM_SPEED;
+    }
+    
+    /**
      * Updates the current skeletal animation.
      */
     public void updateAnimation() {
-        animations.get(currAnimation).step(prevFrame, nextFrame, speed, loop);
+        if(currAnimation.transition && currAnimation.getFinished()) {
+            currAnimation = animations.get(currAnimation.nextAnim);
+        }
+        
+        currAnimation.genCurrFrame(speed, loop);
     }
     
     /**

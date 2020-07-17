@@ -8,6 +8,7 @@ import org.lwjgl.system.MemoryStack;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
+import dev.theskidster.xjge.level.LevelTest;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
 import dev.theskidster.xjge.util.LogLevel;
@@ -132,6 +133,12 @@ final class Window {
                 
                 Puppets.FREECAM.setSpeedBoostEnabled(mods == GLFW_MOD_SHIFT);
             }
+            
+            if(key == GLFW_KEY_1 && action == GLFW_PRESS) LevelTest.mario.model.setAnimation("TPose", 5);
+            if(key == GLFW_KEY_2 && action == GLFW_PRESS) LevelTest.mario.model.setAnimation("Walk", 7);
+            if(key == GLFW_KEY_3 && action == GLFW_PRESS) LevelTest.mario.model.setAnimation("Run", 7);
+            if(key == GLFW_KEY_4 && action == GLFW_PRESS) LevelTest.mario.model.setAnimationSpeed(0.05f);
+            if(key == GLFW_KEY_5 && action == GLFW_PRESS) LevelTest.mario.model.setAnimationSpeed(0.3f);
         });
         
         glfwSetCursorPosCallback(handle, (window, xpos, ypos) -> {

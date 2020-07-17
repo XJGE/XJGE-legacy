@@ -21,7 +21,7 @@ public class EntityBody extends Entity {
         super(position);
         
         model = new Model("mod_mario.fbx");
-        model.setAnimation("Armature|TPose");
+        model.setAnimation("TPose", 0);
     }
 
     @Override

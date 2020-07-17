@@ -20,7 +20,7 @@ import org.joml.Vector3f;
  */
 public class LevelTest extends Level {
     
-    public static EntityBody mario      = new EntityBody(new Vector3f(0, -10, -40));
+    public static EntityBody mario = new EntityBody(new Vector3f(0, -10, -40));
     public static Entity3DAnimTest test = new Entity3DAnimTest(new Vector3f(50, 0, -40));
     
     @Override
@@ -31,7 +31,7 @@ public class LevelTest extends Level {
         setSkybox(Skybox.NOON);
         setWorldLight(Light.NOON);
         
-        test.model.setAnimationSpeed(0.25f);
+        //test.model.setAnimationSpeed(0.25f);
         
         entityList.add(test);
         entityList.add(mario);

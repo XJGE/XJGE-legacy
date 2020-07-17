@@ -1,12 +1,14 @@
 package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import org.joml.Matrix4f;
 
 /**
  * @author J Hoffman
  * Created: Apr 29, 2020
+ * Rewrite: Jul 16, 2020
  */
 
 /**
@@ -16,15 +18,27 @@ import org.joml.Matrix4f;
  */
 class KeyFrame {
     
-    final Matrix4f[] boneTransforms; 
-    final Matrix4f IDENTITY = new Matrix4f();
+    private List<Matrix4f> transforms;
     
     /**
      * Constructs an array of {@link Bone} transformations that will be used to define the pose of a models armature at a certain point in time.
      */
-    KeyFrame() {
-        boneTransforms = new Matrix4f[App.MAX_BONES];
-        Arrays.fill(boneTransforms, IDENTITY);
+    public KeyFrame() {
+        transforms = new ArrayList<>();
+        for(int b = 0; b < App.MAX_BONES; b++) transforms.add(new Matrix4f());
+    }
+    
+    Matrix4f getTransform(int index)  { return transforms.get(index); }
+    List<Matrix4f> getTransformData() { return transforms; }
+    
+    /**
+     * Sets the transformation matrix of a bone within the collection at the index specified.
+     * 
+     * @param index     the location in the collection to store this transformation at
+     * @param transform the value of the bone transformation
+     */
+    void setTransform(int index, Matrix4f transform) {
+        transforms.get(index).set(transform);
     }
     
 }

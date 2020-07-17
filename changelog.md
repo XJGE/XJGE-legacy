@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 * Basic 3D animation playback utilities including looping and speed manipulation.
+* Automatic smooth transitioning between skeletal animations.
 
 ### Changed
 
@@ -21,6 +22,7 @@ All notable changes to this project will be documented in this file. The format 
 - Fixed bug that would crash the engine if null was passed as the sound source position in the playSound() method.
 - Changes made to permit interpolation between keyframes of skeletal animations.
 - Moved animation playback information into the model class, animation state such as speed will now be retained between animations.
+- Had to rewrite the KeyFrame and SkeletalAnimation classes since they got too messy.
 
 ### Removed
 
