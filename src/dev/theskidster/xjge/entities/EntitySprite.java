@@ -25,7 +25,7 @@ import org.lwjgl.system.MemoryStack;
  * Created: Apr 29, 2020
  */
 
-public class Entity2DAnimTest extends Entity {
+public class EntitySprite extends Entity {
 
     private Graphics g;
     private Texture texture;
@@ -33,7 +33,7 @@ public class Entity2DAnimTest extends Entity {
     
     private Map<String, SpriteAnimation> animations = new HashMap<>();
     
-    public Entity2DAnimTest(Vector3f position) {
+    public EntitySprite(Vector3f position) {
         super(position);
         
         Cell cell = new Cell(20, 20);

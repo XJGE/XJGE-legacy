@@ -7,25 +7,25 @@ import org.joml.Vector3f;
 
 /**
  * @author J Hoffman
- * Created: Apr 29, 2020
+ * Created: Jul 26, 2020
  */
 
-public class Entity3DAnimTest extends Entity {
+public class EntityBuster extends Entity {
 
-    public Model model;
+    public final Model model;
     
-    public Entity3DAnimTest(Vector3f position) {
+    public EntityBuster(Vector3f position) {
         super(position);
         
-        model = new Model("mod_test.fbx");
-        model.setAnimation("Wiggle", 0);
+        model = new Model("mod_buster.fbx");
+        model.setAnimation("TPose", 0);
     }
 
     @Override
     public void update() {
         model.delocalizeNormal();
         model.translation(position);
-        model.scale(0.15f);
+        model.scale(0.04f);
         
         model.updateAnimation();
     }

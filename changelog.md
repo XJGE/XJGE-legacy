@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. The format 
 
 * Basic 3D animation playback utilities including looping and speed manipulation.
 * Automatic smooth transitioning between skeletal animations.
+* New bipedal "Buster" model to test animation features.
 
 ### Changed
 
@@ -23,10 +24,12 @@ All notable changes to this project will be documented in this file. The format 
 - Changes made to permit interpolation between keyframes of skeletal animations.
 - Moved animation playback information into the model class, animation state such as speed will now be retained between animations.
 - Had to rewrite the KeyFrame and SkeletalAnimation classes since they got too messy.
+- The name of the Entity2DAnimTest to "EntitySprite".
 
 ### Removed
 
 - The "spr_icons_load.png" sprite sheet image.
+- The 3D animation obelisk and all of its accompanying dependencies.
 
 
 

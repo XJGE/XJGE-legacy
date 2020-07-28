@@ -11,4 +11,3 @@ INFO: --------------------------------------------------------------------------
 
 INFO: Level changed to: "LevelTest"
 
-INFO: Freecam access denied, command terminal is currently in use. Close the command terminal and try again.

@@ -1,7 +1,6 @@
 package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
-import dev.theskidster.xjge.main.Game;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.ErrorUtil;
