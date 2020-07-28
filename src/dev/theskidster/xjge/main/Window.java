@@ -133,13 +133,6 @@ final class Window {
                 
                 Puppets.FREECAM.setSpeedBoostEnabled(mods == GLFW_MOD_SHIFT);
             }
-            
-            //@todo remove once testing is done
-            if(key == GLFW_KEY_1 && action == GLFW_PRESS) LevelTest.buster.model.setAnimation("TPose", 5);
-            if(key == GLFW_KEY_2 && action == GLFW_PRESS) LevelTest.buster.model.setAnimation("Walk", 3);
-            if(key == GLFW_KEY_3 && action == GLFW_PRESS) LevelTest.buster.model.setAnimation("Run", 3);
-            if(key == GLFW_KEY_4 && action == GLFW_PRESS) LevelTest.buster.model.setAnimationSpeed(0.05f);
-            if(key == GLFW_KEY_5 && action == GLFW_PRESS) LevelTest.buster.model.setAnimationSpeed(0.15f);
         });
         
         glfwSetCursorPosCallback(handle, (window, xpos, ypos) -> {
