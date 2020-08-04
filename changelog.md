@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.4.1] - UNRELEASED
+
+### Removed
+
+* Unused import and variable in Window.java
+
+
+
 ## [1.4.0] - 2020-07-28
 
 ### Added

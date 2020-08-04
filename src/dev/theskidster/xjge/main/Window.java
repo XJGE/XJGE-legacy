@@ -8,7 +8,6 @@ import org.lwjgl.system.MemoryStack;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
-import dev.theskidster.xjge.level.LevelTest;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
 import dev.theskidster.xjge.util.LogLevel;
@@ -99,8 +98,6 @@ final class Window {
                     Math.round((App.getVideoMode().height() - height) / 2) + yStartBuf.get());
         }
     }
-    
-    boolean value;
     
     /**
      * Makes the window visible and establishes callback events.
