@@ -83,7 +83,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String ENGINE_VERSION = "1.4.2";
+    public static final String ENGINE_VERSION = "1.4.1";
     public static final String GAME_VERSION   = "0";
     
     private static Viewport[] viewports = new Viewport[4];

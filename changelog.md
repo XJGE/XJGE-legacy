@@ -3,7 +3,11 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [1.4.1] - UNRELEASED
+## [1.4.1] - 2020-11-01
+
+### Added
+
+* Separate fields used internally to indicate engine and game implementation versions.
 
 ### Removed
 
