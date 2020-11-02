@@ -83,7 +83,8 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String VERSION        = "1.4.0";
+    public static final String ENGINE_VERSION = "1.4.0";
+    public static final String GAME_VERSION   = "0";
     
     private static Viewport[] viewports = new Viewport[4];
     private static Color clearColor     = Color.BLACK;
@@ -116,7 +117,7 @@ public final class App {
         
         audioDevice   = audioDevices.get(0);
         displayDevice = displayDevices.get(0);
-        window        = new Window("Extensible Java Game Engine (" + VERSION + ")"); //TODO change window title.
+        window        = new Window("Extensible Java Game Engine (" + ENGINE_VERSION + ")"); //TODO change window title.
         
         findInputDevices();
         

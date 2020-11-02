@@ -7,7 +7,6 @@ import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.Color;
 import dev.theskidster.xjge.util.ScreenSplitType;
-import dev.theskidster.xjge.util.Timer;
 import org.joml.Vector3f;
 
 /**
@@ -29,7 +28,7 @@ public class LevelTest extends Level {
 
         setSkybox(Skybox.NOON);
         setWorldLight(Light.NOON);
-        
+                
         entityList.add(buster);
     }
 
