@@ -94,7 +94,7 @@ void main() {
             ioResult = texture(uTexture, ioTexCoords) * vec4(ioColor, 0);
             break;
 
-        case 2: case 3: //Used for rectangles and testing.
+        case 2: case 3: case 9: //Used for rectangles, polygons, and testing.
             ioResult = vec4(ioColor, 0);
             break;
 
@@ -120,7 +120,7 @@ void main() {
             ioResult = texture(uTexture, ioTexCoords) * vec4(ioColor, 1);
             break;
 
-        case 8: //used for skyboxes.
+        case 8: //Used for skyboxes.
             makeTransparent(texture(uSkyTexture, ioSkyTexCoords).a);
             ioResult = texture(uSkyTexture, ioSkyTexCoords);
             break;

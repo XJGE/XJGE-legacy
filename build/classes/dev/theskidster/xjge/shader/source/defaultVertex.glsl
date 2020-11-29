@@ -100,14 +100,19 @@ void main() {
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
             break;
 
-        case 7: //used for animated 2D sprites.
+        case 7: //Used for animated 2D sprites.
             ioTexCoords = aTexCoords + uTexCoords;
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
             break;
 
-        case 8: //used for skyboxes.
+        case 8: //Used for skyboxes.
             ioSkyTexCoords = aPosition;
             gl_Position    = (uProjection * uView * vec4(aPosition, 1));
+            break;
+
+        case 9: //Used for polygons.
+            ioColor     = uColor;
+            gl_Position = uProjection * uModel * vec4(aPosition, 1);
             break;
     }
 }

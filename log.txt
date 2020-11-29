@@ -6,7 +6,7 @@ INFO: OPENGL VER:	4.5.0 - Build 23.20.16.4973
 INFO: OPENAL VER:	1.1 ALSOFT 1.19.1
 INFO: MONITORS:		2 (1920x1080 16:9 60hz)
 INFO: SPEAKERS:		1 (Speakers (Realtek High Definition Audio))
-INFO: CONTROLLERS:	2
+INFO: CONTROLLERS:	0
 INFO: --------------------------------------------------------------------------------
 
 INFO: Level changed to: "LevelTest"

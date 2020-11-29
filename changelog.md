@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.4.6] - 2020-11-29
+
+### Added
+
+* New Polygon class that can be used to draw 2D shapes as part of a UI.
+* 9th uniform type in the default shaders for the previously mentioned polygon object.
+
+### Changed
+
+* Minor changes made to the shader documentation.
+
+
+
 ## [1.4.1] - 2020-11-01
 
 ### Added

@@ -25,7 +25,7 @@ public class LevelTest extends Level {
     public void init() {
         App.setSplitType(ScreenSplitType.NO_SPLIT);
         App.setClearColor(Color.SOFT_BLUE);
-
+        
         setSkybox(Skybox.NOON);
         setWorldLight(Light.NOON);
                 
