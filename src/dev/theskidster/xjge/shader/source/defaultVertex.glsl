@@ -89,6 +89,7 @@ void main() {
             vec4 mvPos = modelViewMatrix * initPos;
             gl_Position = uProjection * mvPos;
 
+            ioColor     = uColor;
             ioTexCoords = aTexCoords;
             ioNormal    = uNormal * initNormal.xyz;
             ioFragPos   = vec3(uModel * vec4(aPosition, 1));

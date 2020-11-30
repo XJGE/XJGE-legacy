@@ -3,6 +3,7 @@ package dev.theskidster.xjge.graphics;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
+import dev.theskidster.xjge.util.Color;
 import dev.theskidster.xjge.util.ErrorUtil;
 import dev.theskidster.xjge.util.LogLevel;
 import dev.theskidster.xjge.util.Logger;
@@ -43,8 +44,9 @@ public class Model {
     private boolean loop = true;
     
     private AIScene aiScene;
-    private Matrix3f normal  = new Matrix3f();
+    private Vector3f color   = new Vector3f(1);
     private Vector3f noValue = new Vector3f();
+    private Matrix3f normal  = new Matrix3f();
     private Matrix4f rootTransform;
     
     private Node rootNode;
@@ -382,6 +384,7 @@ public class Model {
             ShaderCore.setMat4("uModel", false, mesh.modelMatrix);
             ShaderCore.setMat3("uNormal", true, normal);
             ShaderCore.setInt("uNumLights", numLights);
+            ShaderCore.setVec3("uColor", color);
             
             for(int i = 0; i < App.MAX_LIGHTS; i++) {
                 if(lights[i] != null) {
@@ -420,6 +423,13 @@ public class Model {
     public void destroy() {
         for(Mesh mesh : meshes) mesh.freeBuffers();
         for(Texture texture : textures) texture.freeTexture();
+    }
+    
+    /**
+     * Outputs a list of every animation this model has at its disposal to the console.
+     */
+    public void listAnimations() {
+        animations.forEach((name, anim) -> Logger.log(LogLevel.INFO, name));
     }
     
     /**
@@ -489,6 +499,19 @@ public class Model {
         else if(speed < 0) speed = 0;
         
         this.speed = speed * App.MAX_ANIM_SPEED;
+    }
+    
+    /**
+     * Sets the color of this model.
+     * <br><br>
+     * More specifically, values passed here will attenuate the final output of the fragment shader. As such, lighter colors will not "brighten" the surface
+     * of the model like one might expect, but instead exhibit less influence entirely- passing {@link dev.theskidster.xjge.util.Color#WHITE Color.WHITE} for
+     * example, will have no noticeable effect on the color of the model.
+     * 
+     * @param color the color this model will use
+     */
+    public void setColor(Color color) {
+        this.color.set(color.r, color.g, color.b);
     }
     
     /**

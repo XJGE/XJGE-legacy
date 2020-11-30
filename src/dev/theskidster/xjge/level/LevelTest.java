@@ -4,6 +4,7 @@ import dev.theskidster.xjge.entities.EntityBuster;
 import dev.theskidster.xjge.graphics.Light;
 import dev.theskidster.xjge.graphics.Skybox;
 import dev.theskidster.xjge.main.App;
+import dev.theskidster.xjge.main.Game;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.Color;
 import dev.theskidster.xjge.util.ScreenSplitType;
@@ -28,7 +29,7 @@ public class LevelTest extends Level {
         
         setSkybox(Skybox.NOON);
         setWorldLight(Light.NOON);
-                
+        
         entityList.add(buster);
     }
 
