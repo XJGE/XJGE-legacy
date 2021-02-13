@@ -1,4 +1,4 @@
-﻿Copyright (c) 2019-2020 theskidster.
+﻿Copyright (c) 2019-2021 theskidster.
 
 Under Section 117 of the United States Copyright Act the individual to which the software and associated documentation files belong reserves exclusivity over the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so.
 
