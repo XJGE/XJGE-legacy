@@ -7,10 +7,8 @@ Instead of boxing you in with its own gameplay elements XJGE provides a structur
 
 XJGE is (currently) closed source and protected under an exclusive license.
 
-[TOC]
-
 ## Getting Started
-XJGE requires java 12.0.1 or later and currently supports the following platforms:
+XJGE requires java 15.0.2 or later and currently supports the following platforms:
 - Linux x64
 - Windows x64
 - Windows x86
@@ -22,21 +20,3 @@ The most common issues encountered can be resolved by:
 
 ## Branching & Cloning
 This repository is reserved exclusively to track the development of the engine only. Any game projects using this engine should first clone this repo, change the origin of the clone, then push any subsequent commits to their own seperate repository.
-
-## 1.0.0 Features
-- Simple 3D camera made controllable through the keyboard.
-- Extensible command line that can be used to interact with the engine at runtime.
-- Support for bitmap font rendering.
-- Monotonic timing mechanism made available as a component.
-- Customizable audio engine implemented using OpenAL.
-- Support for up to four controllers simultaneously.
-- Input system that decouples input events from devices used enabling game objects to exhibit predictable behavior regardless of controller model.
-- Observable component that enables implementing objects to broadcast state changes to the rest of the engine.
-- Verified to work on PC and Linux systems.
-- Component based UI system.
-- Internal priority-oriented event system that allows both game and application events to be added with ease.
-- Split screen functionality.
-- Error state checking for dependencies.
-- Graphics layer that allows complete control over the OpenGL graphics pipeline.
-- Game state traversal.
-- Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
