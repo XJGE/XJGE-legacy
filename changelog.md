@@ -218,6 +218,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+[1.4.3]: https://github.com/theskidster/XJGE/commit/a5869d63668e6de672e3e9f84c8b3857fe307403
 [1.4.1]: https://github.com/theskidster/XJGE/commit/e7812142d7b9f1dcbf1f8c1a1a98a6ef0bae29e0
 [1.4.0]: https://github.com/theskidster/XJGE/commit/df8cd342589f6578b64dc08d8200e85f312fe45e
 [1.3.0]: https://github.com/theskidster/XJGE/commit/753cda066ed1c58c21a31786c020d0cfdb99ead0
