@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [1.5.1] - 2021-04-06
+## [1.5.2] - 2021-04-06
 
 ### Changed
 
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file. The format 
 * Filenames of text files produced by the logger will include the date in which the error occurred, duplicate files are permitted but will be numbered incrementally.
 * Increased logger accuracy- stack traces will now point closer to the origin of the exception.
 * Upped required Java version from 12.0.1 to 15.0.2, replaced all legacy switch statements with new "rule switch" and "switch expression" variants where applicable.
+* Broad minor changes made to all parts of the codebase to improve readability/maintainability.
 
 ### Removed
 
@@ -217,6 +218,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+[1.4.1]: https://github.com/theskidster/XJGE/commit/e7812142d7b9f1dcbf1f8c1a1a98a6ef0bae29e0
 [1.4.0]: https://github.com/theskidster/XJGE/commit/df8cd342589f6578b64dc08d8200e85f312fe45e
 [1.3.0]: https://github.com/theskidster/XJGE/commit/753cda066ed1c58c21a31786c020d0cfdb99ead0
 [1.2.3]: https://github.com/theskidster/XJGE/commit/805bc8c1ec004f7bd08d22b429cdcdfb5bf7f69c
