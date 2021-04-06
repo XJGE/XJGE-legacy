@@ -1,5 +1,6 @@
 package dev.theskidster.xjge.util;
 
+import dev.theskidster.xjge.main.Logger;
 import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.opengl.GL30.*;
 
@@ -34,7 +35,7 @@ public final class ErrorUtil {
                 case GL_FRAMEBUFFER_UNDEFINED:                     desc = "undefined";              break;
             }
             
-            Logger.log(LogLevel.SEVERE, "Framebuffer Error: (" + status + ") " + desc);
+            Logger.logSevere("Framebuffer Error: (" + status + ") " + desc, null);
         }
     }
     
@@ -56,7 +57,7 @@ public final class ErrorUtil {
                 case GL_OUT_OF_MEMORY:     desc = "out of memory"; break;
             }
             
-            Logger.log(LogLevel.SEVERE, "OpenGL Error: (" + glError + ") " + desc);
+            Logger.logSevere("OpenGL Error: (" + glError + ") " + desc, null);
         }
     }
 
@@ -77,7 +78,7 @@ public final class ErrorUtil {
                 case AL_OUT_OF_MEMORY:     desc = "out of memory"; break;
             }
 
-            Logger.log(LogLevel.SEVERE, "OpenAL Error: (" + alError + ") " + desc);
+            Logger.logSevere("OpenAL Error: (" + alError + ") " + desc, null);
         }
     }
     

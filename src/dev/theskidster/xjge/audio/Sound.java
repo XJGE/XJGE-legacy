@@ -11,8 +11,7 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -40,8 +39,7 @@ public final class Sound {
         try(InputStream file = Sound.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/" + filename)) {
             loadSound(file);
         } catch(Exception e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to load sound: \"" + filename + "\"");
+            Logger.logWarning("Failed to load sound: \"" + filename + "\"", e);
             
             loadSound(Sound.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/sfx_beep.ogg"));
         }
@@ -76,8 +74,7 @@ public final class Sound {
             MemoryUtil.memFree(soundBuf);
             
         } catch(IOException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.SEVERE, "Failed to load fallback sound.");
+            Logger.logSevere("Failed to load fallback sound.", e);
         }
     }
     

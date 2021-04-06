@@ -5,8 +5,7 @@ import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.Color;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -167,8 +166,7 @@ public class Model {
                 parseAnimationData(aiScene.mAnimations());
             }
         } catch(Exception e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to load model: \"" + filename + "\"");
+            Logger.logWarning("Failed to load model: \"" + filename + "\"", e);
         }
     }
     
@@ -232,9 +230,10 @@ public class Model {
     private void parseTextureData(PointerBuffer materialBuf) throws Exception {
         if(aiScene.mNumMaterials() > App.MAX_TEXTURES) {
             textures = new Texture[App.MAX_TEXTURES];
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Invalid number of textures. Limit of " + App.MAX_TEXTURES + 
-                    " permitted, found " + aiScene.mNumMaterials());
+                    " permitted, found " + aiScene.mNumMaterials(), 
+                    null);
         } else {
             textures = new Texture[aiScene.mNumMaterials()];
         }
@@ -429,7 +428,7 @@ public class Model {
      * Outputs a list of every animation this model has at its disposal to the console.
      */
     public void listAnimations() {
-        animations.forEach((name, anim) -> Logger.log(LogLevel.INFO, name));
+        animations.forEach((name, anim) -> Logger.logInfo(name));
     }
     
     /**
@@ -441,16 +440,16 @@ public class Model {
      */
     public void setAnimation(String name, int numFrames) {
         if(!animations.containsKey(name)) {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set animation: \"" + name + "\". Model contains " + 
-                    "no such animation.");
+                    "no such animation.",
+                    null);
             return;
         }
         
         if(currAnimation != null && numFrames > 1) {
             if(currAnimation.name.equals(name)) {
-                Logger.log(LogLevel.INFO, 
-                        "Animation: \"" + name +"\" is already playing.");
+                Logger.logInfo("Animation: \"" + name +"\" is already playing.");
                 return;
             }
             

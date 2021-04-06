@@ -5,8 +5,7 @@ import java.util.TreeMap;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoModes;
 import org.lwjgl.glfw.GLFWVidMode;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -100,9 +99,10 @@ public final class DisplayDevice {
                 videoModes.put(info, glfwGetVideoMode(handle));
             }
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Unable to find additional video modes for " +
-                    "display device " + id + " (" + info + ")");
+                    "display device " + id + " (" + info + ")",
+                    null);
         }
     }
     

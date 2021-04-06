@@ -10,8 +10,7 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -41,8 +40,7 @@ public final class Texture {
         try(InputStream file = Texture.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/" + filename)) {
             loadTexture(file);
         } catch(Exception e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to load texture image: \"" + filename + "\"");
+            Logger.logWarning("Failed to load texture image: \"" + filename + "\"", e);
             
             loadTexture(Texture.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/img_null.png"));
         }
@@ -80,8 +78,7 @@ public final class Texture {
             MemoryUtil.memFree(imageBuf);
             
         } catch(IOException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.SEVERE, "Failed to load fallback texture image.");
+            Logger.logSevere("Failed to load fallback texture image.", e);
         }
     }
     

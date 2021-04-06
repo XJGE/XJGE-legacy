@@ -10,8 +10,6 @@ import static dev.theskidster.xjge.audio.Audio.ALL_SOURCES;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
 import dev.theskidster.xjge.puppet.discon.DisCon;
 import dev.theskidster.xjge.puppets.Puppets;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ServiceLocator;
 
 /**
@@ -150,16 +148,16 @@ final class Window {
             switch(event) {
                 case GLFW_CONNECTED:
                     App.setDisplayDevice(App.getDisplayID() + "", false);
-                    Logger.log(LogLevel.INFO, 
+                    Logger.logInfo(
                             "Display: " + App.getDisplayID() + " (" + 
                             App.getDisplayInfo() + ") connected.");
                     break;
                     
                 case GLFW_DISCONNECTED:
                     App.findDisplayDevices();
-                    Logger.log(LogLevel.WARNING, 
+                    Logger.logWarning(
                             "Display: " + App.getDisplayID() + " (" + 
-                            App.getDisplayInfo() + ") disconnected.");
+                            App.getDisplayInfo() + ") disconnected.", null);
                     break;
             }
         });
@@ -169,16 +167,17 @@ final class Window {
                 case GLFW_CONNECTED:
                     App.findInputDevices();
                     if(jid < GLFW_JOYSTICK_5) connected[jid] = true;
-                    Logger.log(LogLevel.INFO, 
+                    Logger.logInfo(
                             "Controller: \"" + App.getInputDeviceName(jid) + 
                             "\" connected at position " + jid + ".");
                     break;
                     
                 case GLFW_DISCONNECTED:
                     App.findInputDevices();
-                    Logger.log(LogLevel.WARNING, 
+                    Logger.logWarning(
                             "Controller: \"" + App.getInputDeviceName(jid) +
-                            "\" disconnected at position " + jid + ".");
+                            "\" disconnected at position " + jid + ".", 
+                            null);
                     
                     if(jid < GLFW_JOYSTICK_5) {
                         DisCon discon  = new DisCon(jid);

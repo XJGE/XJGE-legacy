@@ -46,8 +46,6 @@ import dev.theskidster.xjge.ui.RectangleBatch;
 import dev.theskidster.xjge.ui.RuntimeInfo;
 import dev.theskidster.xjge.ui.SystemInfo;
 import dev.theskidster.xjge.util.Color;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ErrorUtil;
 import dev.theskidster.xjge.util.ScreenSplitType;
 import static dev.theskidster.xjge.util.ScreenSplitType.*;
@@ -83,7 +81,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String ENGINE_VERSION = "1.4.3";
+    public static final String ENGINE_VERSION = "1.5.0";
     public static final String GAME_VERSION   = "0";
     
     private static Viewport[] viewports = new Viewport[4];
@@ -102,15 +100,14 @@ public final class App {
      * Initializes utilities required by the application then enters the {@link Game#loop()}.
      */
     void start() {
-        Logger.init();
-        
         if((System.getProperty("java.version")).compareTo("12.0.1") < 0) {
-            Logger.log(LogLevel.SEVERE, 
+            Logger.logSevere( 
                     "Unsupported java version. required 12.0.1, " +
-                    "found " + System.getProperty("java.version"));
+                    "found " + System.getProperty("java.version"),
+                    null);
         }
         
-        if(!glfwInit()) Logger.log(LogLevel.SEVERE, "Failed to initialize GLFW.");
+        if(!glfwInit()) Logger.logSevere("Failed to initialize GLFW.", null);
         
         findAudioDevices();
         findDisplayDevices();
@@ -125,7 +122,7 @@ public final class App {
         glInit();
         
         inputDevices.put(KEYBOARD, new Keyboard(KEYBOARD));
-        Logger.printSysInfo();
+        Logger.logSystemInfo();
         window.show();
         
         new Game().loop();
@@ -133,7 +130,6 @@ public final class App {
         audioDevices.forEach((id, device) -> alcCloseDevice(device.handle));
         ShaderCore.deleteAll();
         GL.destroy();
-        Logger.close();
         glfwTerminate();
     }
     
@@ -243,7 +239,7 @@ public final class App {
                 audioDevices.put(i, new AudioDevice(i, deviceList.get(i)));
             }
         } else {
-            Logger.log(LogLevel.SEVERE, "No available audio devices found.");
+            Logger.logSevere("No available audio devices found.", null);
         }
     }
     
@@ -259,7 +255,7 @@ public final class App {
                 displayDevices.put(i, new DisplayDevice(i, displayBuf.get(i)));
             }
         } else {
-            Logger.log(LogLevel.SEVERE, "No available display devices found.");
+            Logger.logSevere("No available display devices found.", null);
         }
     }
     
@@ -412,7 +408,7 @@ public final class App {
         fullscreen = value;
         window.update();
         resetViewports();
-        Logger.log(LogLevel.INFO, "Fullscreen changed: (" + fullscreen + ")");
+        Logger.logInfo("Fullscreen changed: (" + fullscreen + ")");
     }
     
     /**
@@ -426,7 +422,7 @@ public final class App {
         if(vsync) glfwSwapInterval(1);
         else      glfwSwapInterval(0);
         
-        Logger.log(LogLevel.INFO, "VSync changed: (" + vsync + ")");
+        Logger.logInfo("VSync changed: (" + vsync + ")");
     }
     
     /**
@@ -494,8 +490,8 @@ public final class App {
     public static void setShowLightSources(boolean value) {
         showLightSources = value;
         
-        if(showLightSources) Logger.log(LogLevel.INFO, "Light source locations visible.");
-        else                 Logger.log(LogLevel.INFO, "Light source locations hidden.");
+        if(showLightSources) Logger.logInfo("Light source locations visible.");
+        else                 Logger.logInfo("Light source locations hidden.");
     }
     
     /**
@@ -553,7 +549,7 @@ public final class App {
                 }
             }
         } else {
-            Logger.log(LogLevel.INFO, 
+            Logger.logInfo(
                     "Freecam access denied, command terminal is currently " + 
                     "in use. Close the command terminal and try again.");
         }
@@ -577,8 +573,7 @@ public final class App {
                 //Added to fix the display change bug on Linux.
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                Logger.setStackTrace(e);
-                Logger.log(LogLevel.SEVERE, e.getMessage());
+                Logger.logSevere(e.getMessage(), e);
             }
         }
         
@@ -594,7 +589,7 @@ public final class App {
                     }
                     window.update();
                     resetViewports();
-                    Logger.log(LogLevel.INFO, "Set current display device to " + displayDevice.id);
+                    Logger.logInfo("Set current display device to " + displayDevice.id);
                     break;
 
                 case "prev":
@@ -605,7 +600,7 @@ public final class App {
                     }
                     window.update();
                     resetViewports();
-                    Logger.log(LogLevel.INFO, "Set current display device to " + displayDevice.id);
+                    Logger.logInfo("Set current display device to " + displayDevice.id);
                     break;
 
                 default:
@@ -616,18 +611,19 @@ public final class App {
                             displayDevice = displayDevices.get(index);
                             window.update();
                             resetViewports();
-                            Logger.log(LogLevel.INFO, "Set current display device to " + displayDevice.id);
+                            Logger.logInfo("Set current display device to " + displayDevice.id);
                         } else {
-                            Logger.log(LogLevel.WARNING, 
-                                    "Failed to set display device. Could not find device at index " + index + ".");
+                            Logger.logWarning( 
+                                    "Failed to set display device. Could not find device at index " + index + ".",
+                                    null);
                         }
                     } catch(NumberFormatException e) {
-                        Logger.log(LogLevel.WARNING, "Failed to set video mode. Invalid index value passed.");
+                        Logger.logWarning("Failed to set video mode. Invalid index value passed.", null);
                     }
                     break;
             }
         } else {
-            Logger.log(LogLevel.WARNING, "No display devices currently connected.");
+            Logger.logWarning("No display devices currently connected.", null);
         }
         
         if(safely && wasFullscreen) setFullscreen(true);
@@ -649,7 +645,7 @@ public final class App {
                     displayDevice.videoMode = displayDevice.videoModes.firstEntry().getValue();
                     displayDevice.info      = displayDevice.videoModes.firstEntry().getKey();
                 }
-                Logger.log(LogLevel.INFO, 
+                Logger.logInfo( 
                         "Set current video mode to " + displayDevice.info + 
                         " for display device " + displayDevice.id);
                 break;
@@ -662,7 +658,7 @@ public final class App {
                     displayDevice.videoMode = displayDevice.videoModes.lastEntry().getValue();
                     displayDevice.info      = displayDevice.videoModes.lastEntry().getKey();
                 }
-                Logger.log(LogLevel.INFO, 
+                Logger.logInfo( 
                         "Set current video mode to " + displayDevice.info + 
                         " for display device " + displayDevice.id);
                 break;
@@ -682,14 +678,17 @@ public final class App {
                     if(tempInfo.get(index) != null && tempModes.get(index) != null) {
                         displayDevice.videoMode = tempModes.get(index);
                         displayDevice.info      = tempInfo.get(index);
-                        Logger.log(LogLevel.INFO, 
+                        Logger.logInfo( 
                                 "Set current video mode to " + displayDevice.info + 
                                 " for display device " + index);
                     } else {
-                        Logger.log(LogLevel.WARNING, "Failed to set video mode. Could not find video mode at index " + index + ".");
+                        Logger.logWarning(
+                                "Failed to set video mode. Could not find video " + 
+                                "mode at index " + index + ".",
+                                null);
                     }
                 } catch(NumberFormatException | IndexOutOfBoundsException e) {
-                    Logger.log(LogLevel.WARNING, "Failed to set video mode. Invalid index value passed.");
+                    Logger.logWarning("Failed to set video mode. Invalid index value passed.", null);
                 }
                 break;
         }
@@ -729,8 +728,7 @@ public final class App {
             stbi_image_free(icon);
             
         } catch(IOException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to set window icon: \"" + filename + "\"");
+            Logger.logWarning("Failed to set window icon: \"" + filename + "\"", null);
         }
     }
     
@@ -976,9 +974,10 @@ public final class App {
         if(inputDevices.containsKey(id)) {
             inputDevices.get(id).sensitivity = sensitivity;
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set sensitivity of input device " + id + 
-                    ". No such device exists.");
+                    ". No such device exists.",
+                    null);
         }
     }
     
@@ -1050,9 +1049,10 @@ public final class App {
         if(inputDevices.containsKey(id)) {
             inputDevices.get(id).setPuppet(puppet);
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning( 
                     "Failed to set new puppet: \"" + puppet.getClass().getSimpleName() + 
-                    "\" of input device " + id + ". No such device exists.");
+                    "\" of input device " + id + ". No such device exists.",
+                    null);
         }
     }
     
@@ -1067,9 +1067,10 @@ public final class App {
         if(inputDevices.containsKey(id)) {
             inputDevices.get(id).setPrevPuppet();
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set previous puppet of input device " + id + 
-                    ". No such device exists.");
+                    ". No such device exists.",
+                    null);
         }
     }
     
@@ -1093,7 +1094,7 @@ public final class App {
                         audioDevice = audioDevices.firstEntry().getValue();
                     }
                     audioDevice.setContextCurrent();
-                    Logger.log(LogLevel.INFO, 
+                    Logger.logInfo( 
                             "Set current audio device to " + audioDevice.id + " \"" + 
                             audioDevice.name.substring(15) + "\".");
                     break;
@@ -1105,7 +1106,7 @@ public final class App {
                         audioDevice = audioDevices.lastEntry().getValue();
                     }
                     audioDevice.setContextCurrent();
-                    Logger.log(LogLevel.INFO, 
+                    Logger.logInfo( 
                             "Set current audio device to " + audioDevice.id + " \"" + 
                             audioDevice.name.substring(15) + "\".");
                     break;
@@ -1117,20 +1118,20 @@ public final class App {
                         if(audioDevices.containsKey(index)) {
                             audioDevice = audioDevices.get(index);
                             audioDevice.setContextCurrent();
-                            Logger.log(LogLevel.INFO, 
+                            Logger.logInfo(
                                     "Set current audio device to " + audioDevice.id + " \"" + 
                                     audioDevice.name.substring(15) + "\".");
                         } else {
-                            Logger.log(LogLevel.WARNING, 
-                                    "Failed to set audio device. Could not find device at index " + index + ".");
+                            Logger.logWarning(
+                                    "Failed to set audio device. Could not find device at index " + index + ".", null);
                         }
                     } catch(NumberFormatException e) {
-                        Logger.log(LogLevel.WARNING, "Failed to set audio device. Invalid index value passed.");
+                        Logger.logWarning("Failed to set audio device. Invalid index value passed.", null);
                     }
                     break;
             }
         } else {
-            Logger.log(LogLevel.WARNING, "No audio devices currently connected.");
+            Logger.logWarning("No audio devices currently connected.", null);
         }
     }
     

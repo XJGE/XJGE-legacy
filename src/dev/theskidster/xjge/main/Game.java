@@ -13,8 +13,6 @@ import dev.theskidster.xjge.graphics.Light;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
 import dev.theskidster.xjge.level.Level;
 import dev.theskidster.xjge.level.LevelTest;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ServiceLocator;
 
 /**
@@ -95,8 +93,7 @@ public final class Game {
                 try {
                     Thread.sleep(1);
                 } catch(InterruptedException e) {
-                    Logger.setStackTrace(e);
-                    Logger.log(LogLevel.SEVERE, e.getMessage());
+                    Logger.logSevere(e.getMessage(), e);
                 }
             } else {
                 cycles++;
@@ -158,7 +155,7 @@ public final class Game {
      * @param value the level we want to change to
      */
     public static void setLevel(Level value) {
-        Logger.log(LogLevel.INFO, "Level changed to: \"" + value.getClass().getSimpleName() + "\"" + System.lineSeparator());
+        Logger.logInfo("Level changed to: \"" + value.getClass().getSimpleName() + "\"" + System.lineSeparator());
         
         if(level != null) value.exit();
         level = value;

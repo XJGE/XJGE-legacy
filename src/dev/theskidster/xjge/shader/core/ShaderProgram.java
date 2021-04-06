@@ -6,8 +6,7 @@ import java.util.Map;
 import static org.lwjgl.opengl.GL20.*;
 import org.lwjgl.system.MemoryStack;
 import static dev.theskidster.xjge.shader.core.BufferType.*;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -54,9 +53,12 @@ public class ShaderProgram {
      */
     public void addUniform(BufferType type, String name) {
         if(glGetUniformLocation(handle, name) == -1) {
-            Logger.log(LogLevel.SEVERE, "Uniform variable \"" + name + "\" returned -1, check variable name or shader in which it is declared.");
+            Logger.logSevere(
+                    "Uniform variable \"" + name + "\" returned -1, check " + 
+                    "variable name or shader in which it is declared.",
+                    null);
         } else if(uniforms.containsKey(name)) {
-            Logger.log(LogLevel.WARNING, "Uniform variable \"" + name + "\" already exists.");
+            Logger.logWarning("Uniform variable \"" + name + "\" already exists.", null);
         } else {
             try(MemoryStack stack = MemoryStack.stackPush()) {
                 switch(type) {

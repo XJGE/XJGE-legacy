@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static org.lwjgl.openal.AL11.*;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.util.TreeMap;
 import org.joml.Vector3f;
 
@@ -169,7 +168,7 @@ public class Audio implements AudioService {
         if(sounds.containsKey(sound)) {
             source.setSound(sounds.get(sound));
         } else {
-            Logger.log(LogLevel.WARNING, "Could not find sound: \"" + sound + "\"");
+            Logger.logWarning("Could not find sound: \"" + sound + "\"", null);
             source.setSound(sounds.get("beep"));
             loop = false;
         }
@@ -201,7 +200,7 @@ public class Audio implements AudioService {
                 musicSource.queueSound(currSongBody);
             }
         } else {
-            Logger.log(LogLevel.WARNING, "Could not find song: \"" + song + "\"");
+            Logger.logWarning("Could not find song: \"" + song + "\"", null);
             currSongBody = sounds.get("beep");
             musicSource.queueSound(currSongBody);
             introFinished = false;
@@ -303,7 +302,7 @@ public class Audio implements AudioService {
                     case AL_STOPPED: alSourceStop(handle);  break;
                 }
             } else {
-                Logger.log(LogLevel.WARNING, "Could not find source by the handle of " + handle + ".");
+                Logger.logWarning("Could not find source by the handle of " + handle + ".", null);
             }
         }
         

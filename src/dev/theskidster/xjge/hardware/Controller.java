@@ -5,8 +5,7 @@ import java.util.Map;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWGamepadState;
 import org.lwjgl.system.MemoryStack;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -88,7 +87,7 @@ public class Controller extends InputDevice {
             }
         } else {
             name = glfwGetJoystickName(id);
-            Logger.log(LogLevel.WARNING, "Unsupported controller: \"" + name + "\" connected.");
+            Logger.logWarning("Unsupported controller: \"" + name + "\" connected.", null);
         }
     }
 

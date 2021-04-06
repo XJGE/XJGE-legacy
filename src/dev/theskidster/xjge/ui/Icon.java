@@ -6,8 +6,7 @@ import dev.theskidster.xjge.graphics.SpriteSheet;
 import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.util.HashMap;
 import java.util.Map;
 import org.joml.Vector2f;
@@ -132,9 +131,10 @@ public class Icon {
         if(texOffsets.containsKey(cell)) {
             currCell = texOffsets.get(new Vector2i(cellX, cellY));
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set icon sprite. The cell: (" + cellX + ", " + cellY + 
-                    ") is out of bounds.");
+                    ") is out of bounds.",
+                    null);
         }
     }
     

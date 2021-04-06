@@ -2,8 +2,7 @@ package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -45,8 +44,7 @@ class Cubemap {
             try(InputStream file = Cubemap.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/" + filename)) {
                 loadCubemap(target, file);
             } catch(Exception e) {
-                Logger.setStackTrace(e);
-                Logger.log(LogLevel.WARNING, "Failed to load cubemap image: \"" + filename + "\"");
+                Logger.logWarning("Failed to load cubemap image: \"" + filename + "\"", e);
                 
                 loadCubemap(target, Cubemap.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/assets/img_null.png"));
             }
@@ -88,8 +86,7 @@ class Cubemap {
             MemoryUtil.memFree(imageBuf);
             
         } catch(IOException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.SEVERE, "Failed to load fallback texture.");
+            Logger.logSevere("Failed to load fallback texture.", e);
         }
     }
     

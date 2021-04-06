@@ -19,8 +19,7 @@ import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -107,8 +106,7 @@ class BitmapFont {
                 }
             }
         } catch(XMLStreamException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to parse font file: \"" + filename + "\" using default font.");
+            Logger.logWarning("Failed to parse font file: \"" + filename + "\" using default font.", e);
             
             monospaced = true;
             texture    = new Texture("spr_dosmono.png");

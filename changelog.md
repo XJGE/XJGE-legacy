@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.5.0] - 2021-04-06
+
+### Changed
+
+* Moved the Logger class to the main package.
+* Text files will only be produced by the logger when a severe error has been encountered by the application.
+* Filenames of text files produced by the logger will include the date in which the error occurred, duplicate files are permitted but will be numbered incrementally.
+* Increased logger accuracy- stack traces will now point closer to the origin of the exception.
+
+### Removed
+
+* LogLevel class- integrated log level directly into methods of corresponding name in Logger class.
+
+
+
 ## [1.4.3] - 2020-11-29
 
 ### Added
