@@ -13,8 +13,6 @@ import dev.theskidster.xjge.graphics.Light;
 import static dev.theskidster.xjge.hardware.InputDevice.*;
 import dev.theskidster.xjge.level.Level;
 import dev.theskidster.xjge.level.LevelTest;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ServiceLocator;
 
 /**
@@ -38,7 +36,7 @@ public final class Game {
     private static Level level;
     private static Event event;
     
-    private static Queue<Event> events = new PriorityQueue<>(Comparator.comparing(Event::getPriority));
+    private static final Queue<Event> events = new PriorityQueue<>(Comparator.comparing(Event::getPriority));
     
     /**
      * Creates a new game instance and sets the initial level state. Called once immediately following the applications startup sequence. 
@@ -95,8 +93,7 @@ public final class Game {
                 try {
                     Thread.sleep(1);
                 } catch(InterruptedException e) {
-                    Logger.setStackTrace(e);
-                    Logger.log(LogLevel.SEVERE, e.getMessage());
+                    Logger.logSevere(e.getMessage(), e);
                 }
             } else {
                 cycles++;
@@ -116,20 +113,18 @@ public final class Game {
             
             if(!event.resolved) {
                 switch(event.getPriority()) {
-                    case Event.JOYSTICK_1_DIS: case Event.JOYSTICK_2_DIS:
-                    case Event.JOYSTICK_3_DIS: case Event.JOYSTICK_4_DIS:
+                    case Event.JOYSTICK_1_DIS, Event.JOYSTICK_2_DIS, Event.JOYSTICK_3_DIS, Event.JOYSTICK_4_DIS -> {
                         event.resolved = glfwJoystickPresent(event.getPriority());
-                        //TODO customize this to better suit the implementation.
-                        break;
+                    }
                     
-                    case Event.PAUSE:
-                        //TODO This is left open to the implementation to define.
-                        break;
+                    case Event.PAUSE -> {
+                        //TODO customize this to better suit the implementation.
+                    }
                 }
+                //TODO This is left open to the implementation to define.
             } else {
                 switch(event.getPriority()) {
-                    case Event.JOYSTICK_1_DIS: case Event.JOYSTICK_2_DIS:
-                    case Event.JOYSTICK_3_DIS: case Event.JOYSTICK_4_DIS:
+                    case Event.JOYSTICK_1_DIS, Event.JOYSTICK_2_DIS, Event.JOYSTICK_3_DIS, Event.JOYSTICK_4_DIS -> {
                         if((Boolean) event.getData()) {
                             App.removeUIComponent(event.getPriority(), "discon " + event.getPriority());
                         } else {
@@ -137,7 +132,7 @@ public final class Game {
                         }
                         ServiceLocator.getAudio().resumeMusic();
                         ServiceLocator.getAudio().setSourceState(ALL_SOURCES, AL_PLAYING);
-                        break;
+                    }
                 }
                 
                 events.poll();
@@ -158,7 +153,7 @@ public final class Game {
      * @param value the level we want to change to
      */
     public static void setLevel(Level value) {
-        Logger.log(LogLevel.INFO, "Level changed to: \"" + value.getClass().getSimpleName() + "\"" + System.lineSeparator());
+        Logger.logInfo("Level changed to: \"" + value.getClass().getSimpleName() + "\"" + System.lineSeparator());
         
         if(level != null) value.exit();
         level = value;

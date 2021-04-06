@@ -6,8 +6,7 @@ import dev.theskidster.xjge.graphics.SpriteSheet;
 import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.util.HashMap;
 import java.util.Map;
 import org.joml.Vector2f;
@@ -26,14 +25,14 @@ import org.lwjgl.system.MemoryStack;
  * Represents a quickly comprehensible symbol included to help users better understand an interface. Icons make use of a {@link SpriteSheet} and as such, provide 
  * utilities for quickly switching between individual images as needed.
  */
-public class Icon {
+public final class Icon {
     
-    private Graphics g = new Graphics();
-    private Texture texture;
-    private SpriteSheet sprite;
+    private final Graphics g = new Graphics();
+    private final Texture texture;
+    private final SpriteSheet sprite;
     private Vector2f currCell = new Vector2f();
     
-    private Map<Vector2i, Vector2f> texOffsets = new HashMap<>();
+    private final Map<Vector2i, Vector2f> texOffsets = new HashMap<>();
     
     /**
      * Creates a new icon object which can be used to comprise part of a larger user interface.
@@ -132,9 +131,10 @@ public class Icon {
         if(texOffsets.containsKey(cell)) {
             currCell = texOffsets.get(new Vector2i(cellX, cellY));
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set icon sprite. The cell: (" + cellX + ", " + cellY + 
-                    ") is out of bounds.");
+                    ") is out of bounds.",
+                    null);
         }
     }
     

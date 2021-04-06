@@ -57,18 +57,15 @@ public abstract class Command {
      */
     protected boolean pressed(InputDevice device, String type, float value) {
         switch(type) {
-            case "button":
-                return value == GLFW_PRESS;
+            case "button" -> { return value == GLFW_PRESS; }
+            case "axis"   -> { return Math.abs(value) > GLFW_RELEASE; }
                 
-            case "axis":
-                return Math.abs(value) > GLFW_RELEASE;
-                
-            case "trigger":
+            case "trigger" -> {
                 if(device.id == KEYBOARD) return value > 0;
                 else                      return value > -1;
+            }
                 
-            default:
-                return false;
+            default -> { return false; }
         }
     }
     

@@ -6,8 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import static org.lwjgl.opengl.GL20.*;
 import dev.theskidster.xjge.main.App;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -30,15 +29,17 @@ public class ShaderSource {
      *                 {@link org.lwjgl.opengl.GL30#GL_FRAGMENT_SHADER GL_FRAGMENT_SHADER}, {@link org.lwjgl.opengl.GL32#GL_GEOMETRY_SHADER GL_GEOMETRY_SHADER}, etc.
      */
     public ShaderSource(String filename, int type) {
+        String filepath       = "/dev/theskidster/" + App.DOMAIN + "/shader/source/" + filename;
         StringBuilder builder = new StringBuilder();
-        InputStream file      = ShaderSource.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/shader/source/" + filename);
+        InputStream file      = ShaderSource.class.getResourceAsStream(filepath);
         
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(file, "UTF-8"));) {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(file, "UTF-8"))) {
             String line;
-            while(((line) = reader.readLine()) != null) builder.append(line).append("\n");
-        } catch(IOException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.SEVERE, "Failed to parse GLSL file: \"" + filename +"\" " + e);
+            while((line = reader.readLine()) != null) {
+                builder.append(line).append("\n");
+            }
+        } catch(Exception e) {
+            Logger.logSevere("Failed to pase GLSL file: \"" + filename + "\"", e);
         }
         
         CharSequence src = builder.toString();
@@ -48,7 +49,7 @@ public class ShaderSource {
         glCompileShader(handle);
         
         if(glGetShaderi(handle, GL_COMPILE_STATUS) != GL_TRUE) {
-            Logger.log(LogLevel.SEVERE, "Failed to compile GLSL file: \"" + filename + "\" " + glGetShaderInfoLog(handle));
+            Logger.logSevere("Failed to compile GLSL file: \"" + filename + "\" " + glGetShaderInfoLog(handle), null);
         }
     }
     

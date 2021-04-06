@@ -46,8 +46,6 @@ import dev.theskidster.xjge.ui.RectangleBatch;
 import dev.theskidster.xjge.ui.RuntimeInfo;
 import dev.theskidster.xjge.ui.SystemInfo;
 import dev.theskidster.xjge.util.Color;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
 import dev.theskidster.xjge.util.ErrorUtil;
 import dev.theskidster.xjge.util.ScreenSplitType;
 import static dev.theskidster.xjge.util.ScreenSplitType.*;
@@ -83,34 +81,33 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String ENGINE_VERSION = "1.4.3";
+    public static final String ENGINE_VERSION = "1.5.2";
     public static final String GAME_VERSION   = "0";
     
-    private static Viewport[] viewports = new Viewport[4];
-    private static Color clearColor     = Color.BLACK;
+    private static final Viewport[] viewports = new Viewport[4];
+    private static Color clearColor           = Color.BLACK;
     private static ScreenSplitType split;
     
     private static AudioDevice audioDevice;
     private static DisplayDevice displayDevice;
     private static Window window;
     
-    private static NavigableMap<Integer, AudioDevice> audioDevices     = new TreeMap<>();
-    private static NavigableMap<Integer, DisplayDevice> displayDevices = new TreeMap<>();
-    private static Map<Integer, InputDevice> inputDevices              = new HashMap<>();
+    private static final NavigableMap<Integer, AudioDevice> audioDevices     = new TreeMap<>();
+    private static final NavigableMap<Integer, DisplayDevice> displayDevices = new TreeMap<>();
+    private static final Map<Integer, InputDevice> inputDevices              = new HashMap<>();
     
     /**
      * Initializes utilities required by the application then enters the {@link Game#loop()}.
      */
     void start() {
-        Logger.init();
-        
-        if((System.getProperty("java.version")).compareTo("12.0.1") < 0) {
-            Logger.log(LogLevel.SEVERE, 
-                    "Unsupported java version. required 12.0.1, " +
-                    "found " + System.getProperty("java.version"));
+        if((System.getProperty("java.version")).compareTo("15.0.2") < 0) {
+            Logger.logSevere( 
+                    "Unsupported java version. required 15.0.2, " +
+                    "found " + System.getProperty("java.version"),
+                    null);
         }
         
-        if(!glfwInit()) Logger.log(LogLevel.SEVERE, "Failed to initialize GLFW.");
+        if(!glfwInit()) Logger.logSevere("Failed to initialize GLFW.", null);
         
         findAudioDevices();
         findDisplayDevices();
@@ -125,7 +122,7 @@ public final class App {
         glInit();
         
         inputDevices.put(KEYBOARD, new Keyboard(KEYBOARD));
-        Logger.printSysInfo();
+        Logger.logSystemInfo();
         window.show();
         
         new Game().loop();
@@ -133,7 +130,6 @@ public final class App {
         audioDevices.forEach((id, device) -> alcCloseDevice(device.handle));
         ShaderCore.deleteAll();
         GL.destroy();
-        Logger.close();
         glfwTerminate();
     }
     
@@ -243,7 +239,7 @@ public final class App {
                 audioDevices.put(i, new AudioDevice(i, deviceList.get(i)));
             }
         } else {
-            Logger.log(LogLevel.SEVERE, "No available audio devices found.");
+            Logger.logSevere("No available audio devices found.", null);
         }
     }
     
@@ -259,7 +255,7 @@ public final class App {
                 displayDevices.put(i, new DisplayDevice(i, displayBuf.get(i)));
             }
         } else {
-            Logger.log(LogLevel.SEVERE, "No available display devices found.");
+            Logger.logSevere("No available display devices found.", null);
         }
     }
     
@@ -341,10 +337,10 @@ public final class App {
                     glViewport(0, 0, viewport.width, viewport.height);
                     glClearColor(clearColor.r, clearColor.g, clearColor.b, 0);
                     switch(viewport.id) {
-                        case 0: glDrawBuffer(GL_COLOR_ATTACHMENT0); break;
-                        case 1: glDrawBuffer(GL_COLOR_ATTACHMENT1); break;
-                        case 2: glDrawBuffer(GL_COLOR_ATTACHMENT2); break;
-                        case 3: glDrawBuffer(GL_COLOR_ATTACHMENT3); break;
+                        case 0 -> glDrawBuffer(GL_COLOR_ATTACHMENT0);
+                        case 1 -> glDrawBuffer(GL_COLOR_ATTACHMENT1);
+                        case 2 -> glDrawBuffer(GL_COLOR_ATTACHMENT2);
+                        case 3 -> glDrawBuffer(GL_COLOR_ATTACHMENT3);
                     }
                     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                     
@@ -412,7 +408,7 @@ public final class App {
         fullscreen = value;
         window.update();
         resetViewports();
-        Logger.log(LogLevel.INFO, "Fullscreen changed: (" + fullscreen + ")");
+        Logger.logInfo("Fullscreen changed: (" + fullscreen + ")");
     }
     
     /**
@@ -426,7 +422,7 @@ public final class App {
         if(vsync) glfwSwapInterval(1);
         else      glfwSwapInterval(0);
         
-        Logger.log(LogLevel.INFO, "VSync changed: (" + vsync + ")");
+        Logger.logInfo("VSync changed: (" + vsync + ")");
     }
     
     /**
@@ -494,8 +490,8 @@ public final class App {
     public static void setShowLightSources(boolean value) {
         showLightSources = value;
         
-        if(showLightSources) Logger.log(LogLevel.INFO, "Light source locations visible.");
-        else                 Logger.log(LogLevel.INFO, "Light source locations hidden.");
+        if(showLightSources) Logger.logInfo("Light source locations visible.");
+        else                 Logger.logInfo("Light source locations hidden.");
     }
     
     /**
@@ -553,7 +549,7 @@ public final class App {
                 }
             }
         } else {
-            Logger.log(LogLevel.INFO, 
+            Logger.logInfo(
                     "Freecam access denied, command terminal is currently " + 
                     "in use. Close the command terminal and try again.");
         }
@@ -577,8 +573,7 @@ public final class App {
                 //Added to fix the display change bug on Linux.
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                Logger.setStackTrace(e);
-                Logger.log(LogLevel.SEVERE, e.getMessage());
+                Logger.logSevere(e.getMessage(), e);
             }
         }
         
@@ -586,7 +581,7 @@ public final class App {
         
         if(displayDevices.size() > 0) {
             switch(operation) {
-                case "next":
+                case "next" -> {
                     if(!displayDevices.ceilingKey(displayDevices.lastKey()).equals(displayDevice.id)) {
                         displayDevice = displayDevices.higherEntry(displayDevice.id).getValue();
                     } else {
@@ -594,10 +589,10 @@ public final class App {
                     }
                     window.update();
                     resetViewports();
-                    Logger.log(LogLevel.INFO, "Set current display device to " + displayDevice.id);
-                    break;
+                    Logger.logInfo("Set current display device to " + displayDevice.id);
+                }
 
-                case "prev":
+                case "prev" -> {
                     if(!displayDevices.floorKey(displayDevices.firstKey()).equals(displayDevice.id)) {
                         displayDevice = displayDevices.lowerEntry(displayDevice.id).getValue();
                     } else {
@@ -605,10 +600,10 @@ public final class App {
                     }
                     window.update();
                     resetViewports();
-                    Logger.log(LogLevel.INFO, "Set current display device to " + displayDevice.id);
-                    break;
+                    Logger.logInfo("Set current display device to " + displayDevice.id);
+                }
 
-                default:
+                default -> {
                     try {
                         int index = Integer.parseInt(operation);
                         
@@ -616,18 +611,19 @@ public final class App {
                             displayDevice = displayDevices.get(index);
                             window.update();
                             resetViewports();
-                            Logger.log(LogLevel.INFO, "Set current display device to " + displayDevice.id);
+                            Logger.logInfo("Set current display device to " + displayDevice.id);
                         } else {
-                            Logger.log(LogLevel.WARNING, 
-                                    "Failed to set display device. Could not find device at index " + index + ".");
+                            Logger.logWarning( 
+                                    "Failed to set display device. Could not find device at index " + index + ".",
+                                    null);
                         }
                     } catch(NumberFormatException e) {
-                        Logger.log(LogLevel.WARNING, "Failed to set video mode. Invalid index value passed.");
+                        Logger.logWarning("Failed to set video mode. Invalid index value passed.", null);
                     }
-                    break;
+                }
             }
         } else {
-            Logger.log(LogLevel.WARNING, "No display devices currently connected.");
+            Logger.logWarning("No display devices currently connected.", null);
         }
         
         if(safely && wasFullscreen) setFullscreen(true);
@@ -641,7 +637,7 @@ public final class App {
      */
     public static void setVideoMode(String operation) {
         switch(operation) {
-            case "next":
+            case "next" -> {
                 if(!displayDevice.videoModes.ceilingKey(displayDevice.videoModes.lastKey()).equals(displayDevice.info)) {
                     displayDevice.videoMode = displayDevice.videoModes.higherEntry(displayDevice.info).getValue();
                     displayDevice.info      = displayDevice.videoModes.higherEntry(displayDevice.info).getKey();
@@ -649,12 +645,12 @@ public final class App {
                     displayDevice.videoMode = displayDevice.videoModes.firstEntry().getValue();
                     displayDevice.info      = displayDevice.videoModes.firstEntry().getKey();
                 }
-                Logger.log(LogLevel.INFO, 
-                        "Set current video mode to " + displayDevice.info + 
+                Logger.logInfo(
+                        "Set current video mode to " + displayDevice.info +
                         " for display device " + displayDevice.id);
-                break;
+            }
 
-            case "prev":
+            case "prev" -> {
                 if(!displayDevice.videoModes.floorKey(displayDevice.videoModes.firstKey()).equals(displayDevice.info)) {
                     displayDevice.videoMode = displayDevice.videoModes.lowerEntry(displayDevice.info).getValue();
                     displayDevice.info      = displayDevice.videoModes.lowerEntry(displayDevice.info).getKey();
@@ -662,12 +658,12 @@ public final class App {
                     displayDevice.videoMode = displayDevice.videoModes.lastEntry().getValue();
                     displayDevice.info      = displayDevice.videoModes.lastEntry().getKey();
                 }
-                Logger.log(LogLevel.INFO, 
-                        "Set current video mode to " + displayDevice.info + 
+                Logger.logInfo(
+                        "Set current video mode to " + displayDevice.info +
                         " for display device " + displayDevice.id);
-                break;
+            }
 
-            default:
+            default -> {
                 try {
                     int index = Integer.parseInt(operation);
                     
@@ -682,16 +678,19 @@ public final class App {
                     if(tempInfo.get(index) != null && tempModes.get(index) != null) {
                         displayDevice.videoMode = tempModes.get(index);
                         displayDevice.info      = tempInfo.get(index);
-                        Logger.log(LogLevel.INFO, 
-                                "Set current video mode to " + displayDevice.info + 
-                                " for display device " + index);
+                        Logger.logInfo(
+                                "Set current video mode to " + displayDevice.info +
+                                        " for display device " + index);
                     } else {
-                        Logger.log(LogLevel.WARNING, "Failed to set video mode. Could not find video mode at index " + index + ".");
+                        Logger.logWarning(
+                                "Failed to set video mode. Could not find video " +
+                                        "mode at index " + index + ".",
+                                null);
                     }
                 } catch(NumberFormatException | IndexOutOfBoundsException e) {
-                    Logger.log(LogLevel.WARNING, "Failed to set video mode. Invalid index value passed.");
+                    Logger.logWarning("Failed to set video mode. Invalid index value passed.", null);
                 }
-                break;
+            }
         }
         
         displayDevice.aspect = displayDevice.findAspect(displayDevice.videoMode);
@@ -729,8 +728,7 @@ public final class App {
             stbi_image_free(icon);
             
         } catch(IOException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.WARNING, "Failed to set window icon: \"" + filename + "\"");
+            Logger.logWarning("Failed to set window icon: \"" + filename + "\"", null);
         }
     }
     
@@ -745,110 +743,88 @@ public final class App {
         
         for(Viewport viewport : viewports) {
             switch(split) {
-                case NO_SPLIT:
+                case NO_SPLIT -> {
                     viewport.active = (viewport.id == 0);
                     viewport.setBounds(
                             window.resolution.x, window.resolution.y,
                             0, 0,
                             window.width, window.height);
-                    break;
+                }
                    
-                case VERTICAL:
+                case VERTICAL -> {
                     viewport.active = (viewport.id == 0 || viewport.id == 1);
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y,
                                     0, 0, 
                                     window.width / 2, window.height);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
+                        case 1 -> viewport.setBounds(
                                     window.resolution.x / 2, window.resolution.y,
                                     window.width / 2, 0, 
                                     window.width / 2, window.height);
-                            break;
                     }
-                    break;
+                }
                     
-                case HORIZONTAL:
+                case HORIZONTAL -> {
                     viewport.active = (viewport.id == 0 || viewport.id == 1);
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x, window.resolution.y / 2, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x, window.resolution.y / 2,
                                     0, window.height / 2, 
                                     window.width, window.height / 2);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
-                                    window.resolution.x, window.resolution.y / 2, 
+                        case 1 -> viewport.setBounds(
+                                    window.resolution.x, window.resolution.y / 2,
                                     0, 0, 
                                     window.width, window.height / 2);
-                            break;
                     }
-                    break;
+                }
                     
-                case TRIPLE:
+                case TRIPLE -> {
                     viewport.active = (viewport.id != 3);
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     0, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 1 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 2, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 2:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 2 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 4, 0, 
                                     window.width / 2, window.height / 2);
-                            break;
                     }
-                    break;
+                }
                     
-                case QUADRUPLE:
+                case QUADRUPLE -> {
                     viewport.active = true;
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     0, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 1 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 2, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 2:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 2 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     0, 0, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 3:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 3 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 2, 0, 
                                     window.width / 2, window.height / 2);
-                            break;
                     }
-                    break;
+                }
             }
         }
     }
@@ -864,17 +840,17 @@ public final class App {
         if(camera == null) camera = new Freecam();
         
         switch(id) {
-            case 0: case 1: case 2: case 3:
+            case 0, 1, 2, 3 -> {
                 viewports[id].prevCamera = viewports[id].currCamera;
                 viewports[id].currCamera = camera;
-                break;
-                
-            case ALL_VIEWPORTS:
+            }
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.prevCamera = viewport.currCamera;
                     viewport.currCamera = camera;
                 }
-                break;
+            }
         }
     }
     
@@ -886,15 +862,13 @@ public final class App {
      */
     public static void setViewportCameraPrev(int id) {
         switch(id) {
-            case 0: case 1: case 2: case 3:
-                viewports[id].currCamera = viewports[id].prevCamera;
-                break;
-                
-            case ALL_VIEWPORTS:
+            case 0, 1, 2, 3 -> viewports[id].currCamera = viewports[id].prevCamera;
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.currCamera = viewport.prevCamera;
                 }
-                break;
+            }
         }
     }
     
@@ -924,15 +898,13 @@ public final class App {
      */
     public static void addUIComponent(int id, String name, Component component) {
         switch(id) {
-            case 0: case 1: case 2: case 3:
-                viewports[id].addUIComponent(name, component);
-                break;
-                
-            case ALL_VIEWPORTS:
+            case 0, 1, 2, 3 -> viewports[id].addUIComponent(name, component);
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.addUIComponent(name, component);
                 }
-                break;
+            }
         }
     }
     
@@ -944,15 +916,13 @@ public final class App {
      */
     public static void removeUIComponent(int id, String name) {
         switch(id) {
-            case 0: case 1: case 2: case 3:
-                viewports[id].removeUIComponent(name);
-                break;
-                
-            case ALL_VIEWPORTS:
+            case 0, 1, 2, 3 -> viewports[id].removeUIComponent(name);
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.removeUIComponent(name);
                 }
-                break;
+            }
         }
     }
     
@@ -976,9 +946,10 @@ public final class App {
         if(inputDevices.containsKey(id)) {
             inputDevices.get(id).sensitivity = sensitivity;
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set sensitivity of input device " + id + 
-                    ". No such device exists.");
+                    ". No such device exists.",
+                    null);
         }
     }
     
@@ -1050,9 +1021,10 @@ public final class App {
         if(inputDevices.containsKey(id)) {
             inputDevices.get(id).setPuppet(puppet);
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning( 
                     "Failed to set new puppet: \"" + puppet.getClass().getSimpleName() + 
-                    "\" of input device " + id + ". No such device exists.");
+                    "\" of input device " + id + ". No such device exists.",
+                    null);
         }
     }
     
@@ -1067,9 +1039,10 @@ public final class App {
         if(inputDevices.containsKey(id)) {
             inputDevices.get(id).setPrevPuppet();
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Failed to set previous puppet of input device " + id + 
-                    ". No such device exists.");
+                    ". No such device exists.",
+                    null);
         }
     }
     
@@ -1086,51 +1059,51 @@ public final class App {
         
         if(audioDevices.size() > 0) {
             switch(operation) {
-                case "next":
+                case "next" -> {
                     if(!audioDevices.ceilingKey(audioDevices.lastKey()).equals(audioDevice.id)) {
                         audioDevice = audioDevices.higherEntry(audioDevice.id).getValue();
                     } else {
                         audioDevice = audioDevices.firstEntry().getValue();
                     }
                     audioDevice.setContextCurrent();
-                    Logger.log(LogLevel.INFO, 
-                            "Set current audio device to " + audioDevice.id + " \"" + 
+                    Logger.logInfo(
+                            "Set current audio device to " + audioDevice.id + " \"" +
                             audioDevice.name.substring(15) + "\".");
-                    break;
+                }
 
-                case "prev":
+                case "prev" -> {
                     if(!audioDevices.floorKey(audioDevices.firstKey()).equals(audioDevice.id)) {
                         audioDevice = audioDevices.lowerEntry(audioDevice.id).getValue();
                     } else {
                         audioDevice = audioDevices.lastEntry().getValue();
                     }
                     audioDevice.setContextCurrent();
-                    Logger.log(LogLevel.INFO, 
-                            "Set current audio device to " + audioDevice.id + " \"" + 
+                    Logger.logInfo(
+                            "Set current audio device to " + audioDevice.id + " \"" +
                             audioDevice.name.substring(15) + "\".");
-                    break;
+                }
 
-                default:
+                default -> {
                     try {
                         int index = Integer.parseInt(operation);
                         
                         if(audioDevices.containsKey(index)) {
                             audioDevice = audioDevices.get(index);
                             audioDevice.setContextCurrent();
-                            Logger.log(LogLevel.INFO, 
-                                    "Set current audio device to " + audioDevice.id + " \"" + 
-                                    audioDevice.name.substring(15) + "\".");
+                            Logger.logInfo(
+                                    "Set current audio device to " + audioDevice.id + " \"" +
+                                            audioDevice.name.substring(15) + "\".");
                         } else {
-                            Logger.log(LogLevel.WARNING, 
-                                    "Failed to set audio device. Could not find device at index " + index + ".");
+                            Logger.logWarning(
+                                    "Failed to set audio device. Could not find device at index " + index + ".", null);
                         }
                     } catch(NumberFormatException e) {
-                        Logger.log(LogLevel.WARNING, "Failed to set audio device. Invalid index value passed.");
+                        Logger.logWarning("Failed to set audio device. Invalid index value passed.", null);
                     }
-                    break;
+                }
             }
         } else {
-            Logger.log(LogLevel.WARNING, "No audio devices currently connected.");
+            Logger.logWarning("No audio devices currently connected.", null);
         }
     }
     

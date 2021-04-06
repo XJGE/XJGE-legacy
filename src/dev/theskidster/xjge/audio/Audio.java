@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static org.lwjgl.openal.AL11.*;
 import dev.theskidster.xjge.util.ErrorUtil;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.util.TreeMap;
 import org.joml.Vector3f;
 
@@ -35,18 +34,18 @@ public class Audio implements AudioService {
     private String prevMusicSourceSong;
     private Source musicSource;
     private Sound currSongBody;
-    private Source[] sources = new Source[MAX_SOURCES];
+    private final Source[] sources = new Source[MAX_SOURCES];
     
-    private Map<Integer, Integer> sourceSamples = new HashMap<>();
-    private Map<Integer, Integer> sourceStates  = new HashMap<>();
-    private Map<Integer, String> sourceSounds   = new HashMap<>();
+    private final Map<Integer, Integer> sourceSamples = new HashMap<>();
+    private final Map<Integer, Integer> sourceStates  = new HashMap<>();
+    private final Map<Integer, String> sourceSounds   = new HashMap<>();
     
-    private Map<Integer, Vector3f> camPos  = new HashMap<>();
-    private Map<Integer, Vector3f> camDir  = new HashMap<>();
-    private Map<Integer, Double> distances = new TreeMap<>();
+    private final Map<Integer, Vector3f> camPos  = new HashMap<>();
+    private final Map<Integer, Vector3f> camDir  = new HashMap<>();
+    private final Map<Integer, Double> distances = new TreeMap<>();
     
-    private Map<String, Sound> sounds = new HashMap<>();
-    private Map<String, Song> songs   = new HashMap<>();
+    private final Map<String, Sound> sounds = new HashMap<>();
+    private final Map<String, Song> songs   = new HashMap<>();
     
     @Override
     public void init() {
@@ -169,7 +168,7 @@ public class Audio implements AudioService {
         if(sounds.containsKey(sound)) {
             source.setSound(sounds.get(sound));
         } else {
-            Logger.log(LogLevel.WARNING, "Could not find sound: \"" + sound + "\"");
+            Logger.logWarning("Could not find sound: \"" + sound + "\"", null);
             source.setSound(sounds.get("beep"));
             loop = false;
         }
@@ -201,7 +200,7 @@ public class Audio implements AudioService {
                 musicSource.queueSound(currSongBody);
             }
         } else {
-            Logger.log(LogLevel.WARNING, "Could not find song: \"" + song + "\"");
+            Logger.logWarning("Could not find song: \"" + song + "\"", null);
             currSongBody = sounds.get("beep");
             musicSource.queueSound(currSongBody);
             introFinished = false;
@@ -265,45 +264,43 @@ public class Audio implements AudioService {
     
     @Override
     public void setSourceState(int handle, int state) {
-        var temp = Arrays.asList(sources);
-        
         if(handle == ALL_SOURCES) {
             for(Source source : sources) {
                 switch(state) {
-                    case AL_PLAYING:
+                    case AL_PLAYING -> {
                         if(sourceStates.get(source.handle) == AL_PAUSED || source.getState(AL_PAUSED)) {
                             alSourcePlay(source.handle);
                         }
-                        break;
+                    }
                     
-                    case AL_PAUSED:
+                    case AL_PAUSED -> {
                         if(sourceStates.get(source.handle) == AL_PLAYING || source.getState(AL_PLAYING)) {
                             alSourcePause(source.handle);
                         }
-                        break;
+                    }
                         
-                    case AL_STOPPED: alSourceStop(source.handle);  break;
+                    case AL_STOPPED -> alSourceStop(source.handle);
                 }
             }
         } else {
             if(handle > 0 && handle <= MAX_SOURCES) {
                 switch(state) {
-                    case AL_PLAYING:
+                    case AL_PLAYING -> {
                         if(sourceStates.get(handle) == AL_PAUSED || alGetSourcei(handle, AL_SOURCE_STATE) == AL_PAUSED) {
                             alSourcePlay(handle);
                         }
-                        break;
+                    }
                         
-                    case AL_PAUSED:
+                    case AL_PAUSED -> {
                         if(sourceStates.get(handle) == AL_PLAYING || alGetSourcei(handle, AL_SOURCE_STATE) == AL_PLAYING) {
                             alSourcePause(handle);
                         }
-                        break;
+                    }
                         
-                    case AL_STOPPED: alSourceStop(handle);  break;
+                    case AL_STOPPED -> alSourceStop(handle);
                 }
             } else {
-                Logger.log(LogLevel.WARNING, "Could not find source by the handle of " + handle + ".");
+                Logger.logWarning("Could not find source by the handle of " + handle + ".", null);
             }
         }
         

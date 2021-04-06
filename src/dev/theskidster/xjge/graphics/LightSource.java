@@ -19,10 +19,10 @@ public class LightSource {
     
     public boolean enabled = true;
     
-    private Light light;
-    private Graphics g;
-    private Texture texture;
-    private SpriteSheet sprite;
+    private final Light light;
+    private final Graphics g;
+    private final Texture texture;
+    private final SpriteSheet sprite;
     
     /**
      * Creates a new object that represents a source of light, such as a light bulb.

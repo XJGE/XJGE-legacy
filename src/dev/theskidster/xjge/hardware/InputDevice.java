@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 import dev.theskidster.xjge.puppets.Puppet;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -112,9 +111,10 @@ public abstract class InputDevice {
             puppets.pop();
             pupSetEvents.add(puppets.peek());
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning( 
                     "Failed to set previous puppet of input device: \"" + name + "\" (" + 
-                    id + "). This device has no prior puppet objects.");
+                    id + "). This device has no prior puppet objects.",
+                    null);
         }
     }
     

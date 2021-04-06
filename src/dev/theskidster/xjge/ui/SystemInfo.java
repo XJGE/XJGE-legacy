@@ -15,10 +15,10 @@ import dev.theskidster.xjge.util.Color;
 /**
  * Provides information about the architecture on which the engine is currently running.
  */
-public class SystemInfo extends Component {
+public final class SystemInfo extends Component {
 
-    private Vector3i textPos = new Vector3i();
-    private Text[] text      = new Text[5];
+    private final Vector3i textPos = new Vector3i();
+    private final Text[] text      = new Text[5];
     
     public SystemInfo() {
         super(new Vector3i(), 0, 0);
@@ -56,13 +56,8 @@ public class SystemInfo extends Component {
         position.x = 4;
         
         switch(App.getSplitType()) {
-            case NO_SPLIT: case VERTICAL:
-                position.y = App.getResolution().y - 18;
-                break;
-                
-            case HORIZONTAL: case TRIPLE: case QUADRUPLE:
-                position.y = (App.getResolution().y / 2) - 18;
-                break;
+            case NO_SPLIT, VERTICAL            -> position.y = App.getResolution().y - 18;
+            case HORIZONTAL, TRIPLE, QUADRUPLE -> position.y = (App.getResolution().y / 2) - 18;
         }
     }
     

@@ -8,8 +8,7 @@ import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.graphics.Skybox;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.util.Camera;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -32,7 +31,7 @@ public abstract class Level {
     public List<Entity> entityList = new ArrayList<>();
     
     private Skybox skybox;
-    private LightSource[] lights = new LightSource[App.MAX_LIGHTS];
+    private final LightSource[] lights = new LightSource[App.MAX_LIGHTS];
     
     Level() {
         lights[0] = new LightSource(Light.NOON);
@@ -154,7 +153,7 @@ public abstract class Level {
         if(light != null) {
             lights[0] = new LightSource(light, lights[0]);
         } else {
-            Logger.log(LogLevel.WARNING, "World light source may not be null.");
+            Logger.logWarning("World light source may not be null.", null);
         }
     }
     
@@ -168,7 +167,7 @@ public abstract class Level {
         if(skybox != null) {
             this.skybox = skybox;
         } else {
-            Logger.log(LogLevel.WARNING, "Level skybox may not be null.");
+            Logger.logWarning("Level skybox may not be null.", null);
         }
     }
     

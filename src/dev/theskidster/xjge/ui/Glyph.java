@@ -12,7 +12,7 @@ import dev.theskidster.xjge.util.Color;
  * Data structure which represents a single symbol used to comprise words of a language. These structures are used by a {@link BitmapFont} to permit uniqueness 
  * among its individual instances.
  */
-class Glyph {
+final class Glyph {
     
     char c;
     

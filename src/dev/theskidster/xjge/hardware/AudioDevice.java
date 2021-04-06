@@ -5,8 +5,7 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
 import static org.lwjgl.openal.ALC10.*;
 import org.lwjgl.openal.ALCCapabilities;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import dev.theskidster.xjge.util.ServiceLocator;
 
 /**
@@ -22,10 +21,10 @@ public class AudioDevice {
     public final int id;
     
     public long handle;
-    private long context;
+    private final long context;
     
     public final String name;
-    private ALCCapabilities capabilities;
+    private final ALCCapabilities capabilities;
     
     /**
      * Creates a new audio device.
@@ -52,8 +51,7 @@ public class AudioDevice {
             AL.createCapabilities(capabilities);
             ServiceLocator.getAudio().init();
         } catch(IllegalStateException e) {
-            Logger.setStackTrace(e);
-            Logger.log(LogLevel.SEVERE, "Failed to set AL context.");
+            Logger.logSevere("Failed to set AL context.", e);
         }
     }
     

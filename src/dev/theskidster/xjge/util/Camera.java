@@ -67,15 +67,15 @@ public abstract class Camera {
      */
     public void setType(String type, int width, int height) {        
         switch(type) {
-            case "ortho":
+            case "ortho" -> {
                 projMatrix.setOrtho(0, width, 0, height, 0, Integer.MAX_VALUE);
                 ShaderCore.setMat4("uProjection", false, projMatrix);
-                break;
+            }
                 
-            case "persp":
+            case "persp" -> {
                 projMatrix.setPerspective((float) Math.toRadians(45), (float) width / height, 0.1f, Float.POSITIVE_INFINITY);
                 ShaderCore.setMat4("uProjection", false, projMatrix);
-                break;
+            }
         }
     }
     

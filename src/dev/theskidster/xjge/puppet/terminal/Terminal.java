@@ -197,23 +197,17 @@ public class Terminal extends Component implements PropertyChangeListener {
 
     @Override
     public void setSplitPosition() {
-        switch(App.getSplitType()) {
-            case NO_SPLIT: case HORIZONTAL:
-                width = App.getResolution().x;
-                break;
-                
-            default:
-                width = App.getResolution().x / 2;
-                break;
-        }
+        width = switch(App.getSplitType()) {
+            case NO_SPLIT, HORIZONTAL -> App.getResolution().x;
+            default -> App.getResolution().x / 2;
+        };
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
-            case "finished": //Used for cursor timer
-                cursorIdle = (Boolean) evt.getNewValue();
-                break;
+            //Used for cursor timer
+            case "finished" -> cursorIdle = (Boolean) evt.getNewValue();
         }
     }
     
@@ -235,16 +229,16 @@ public class Terminal extends Component implements PropertyChangeListener {
             });
             
             switch(key) {
-                case GLFW_KEY_BACKSPACE:
+                case GLFW_KEY_BACKSPACE -> {
                     if(xIndex > 0) {
                         xIndex--;
                         typed.deleteCharAt(xIndex);
                         cursorPos.x = charPos.get(xIndex);
                         scrollX();
                     }
-                    break;
+                }
                     
-                case GLFW_KEY_RIGHT:
+                case GLFW_KEY_RIGHT -> {
                     xIndex++;
                     
                     if(xIndex < typed.length()) {
@@ -259,9 +253,9 @@ public class Terminal extends Component implements PropertyChangeListener {
                             cursorPos.x = 8;
                         }
                     }
-                    break;
+                }
                     
-                case GLFW_KEY_LEFT:
+                case GLFW_KEY_LEFT -> {
                     xIndex--;
                     
                     if(xIndex > 0) {
@@ -271,25 +265,25 @@ public class Terminal extends Component implements PropertyChangeListener {
                         xIndex      = 0;
                         cursorPos.x = 8;
                     }
-                    break;
+                }
                     
-                case GLFW_KEY_DOWN:
+                case GLFW_KEY_DOWN -> {
                     if(cmdHistory.size() > 0) {
                         yIndex = (yIndex >= cmdHistory.size() - 1) ? cmdHistory.size() - 1 : yIndex + 1;
                         charPos.clear();
                         if(cmdHistory.get(yIndex) != null) autoComplete(cmdHistory.get(yIndex));
                     }
-                    break;
+                }
                     
-                case GLFW_KEY_UP:
+                case GLFW_KEY_UP -> {
                     if(cmdHistory.size() > 0) {
                         yIndex = (yIndex == 0) ? 0 : yIndex - 1;
                         charPos.clear();
                         if(cmdHistory.get(yIndex) != null) autoComplete(cmdHistory.get(yIndex));
                     }
-                    break;
+                }
                     
-                case GLFW_KEY_ENTER:
+                case GLFW_KEY_ENTER -> {
                     execute(typed.toString());
                     typed.delete(0, typed.length());
                     xIndex      = 0;
@@ -297,20 +291,20 @@ public class Terminal extends Component implements PropertyChangeListener {
                     carrotPos.x = 0;
                     cursorPos.x = 8;
                     charPos.clear();
-                    break;
+                }
                     
-                case GLFW_KEY_TAB:
+                case GLFW_KEY_TAB -> {
                     if(suggest) autoComplete(suggestion);
-                    break;
+                }
             }
         } else {
             timer.start();
         }
         
         switch(key) {
-            case GLFW_KEY_LEFT_SHIFT: case GLFW_KEY_RIGHT_SHIFT:
+            case GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT -> {
                 shiftHeld = action == GLFW_PRESS;
-                break;
+            }
         }
     }
     

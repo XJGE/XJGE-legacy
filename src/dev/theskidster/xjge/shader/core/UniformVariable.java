@@ -15,7 +15,7 @@ import java.nio.IntBuffer;
 public class UniformVariable {
     
     final int location;
-    private Buffer buffer;
+    private final Buffer buffer;
     
     /**
      * Creates a new data structure to store a uniform variables data.

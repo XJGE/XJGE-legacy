@@ -5,8 +5,7 @@ import java.util.TreeMap;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoModes;
 import org.lwjgl.glfw.GLFWVidMode;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 
 /**
  * @author J Hoffman
@@ -85,11 +84,11 @@ public final class DisplayDevice {
         if(modeBuf != null) {
             modeBuf.forEach(mode -> {
                 switch(findAspect(mode)) {
-                    case "4:3": case "16:9": case "85:48": case "683:384":
+                    case "4:3", "16:9", "85:48", "683:384" -> {
                         if(mode.refreshRate() <= 60 && mode.refreshRate() >= 29) {
                             videoModes.put(findInfo(mode), mode);
                         }
-                        break;
+                    }
                 }
             });
             
@@ -100,9 +99,10 @@ public final class DisplayDevice {
                 videoModes.put(info, glfwGetVideoMode(handle));
             }
         } else {
-            Logger.log(LogLevel.WARNING, 
+            Logger.logWarning(
                     "Unable to find additional video modes for " +
-                    "display device " + id + " (" + info + ")");
+                    "display device " + id + " (" + info + ")",
+                    null);
         }
     }
     

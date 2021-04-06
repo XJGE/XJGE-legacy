@@ -14,13 +14,13 @@ import dev.theskidster.xjge.util.Color;
 /**
  * Provides information regarding connected input devices.
  */
-public class InputInfo extends Component {
+public final class InputInfo extends Component {
     
     private int maxLength;
     
-    private Vector3i textPos = new Vector3i();
-    private Text[] text      = new Text[9];
-    private Icon[] icons     = new Icon[5];
+    private final Vector3i textPos = new Vector3i();
+    private final Text[] text      = new Text[9];
+    private final Icon[] icons     = new Icon[5];
     
     public InputInfo() {
         super(new Vector3i(), 0, 0);
@@ -79,17 +79,17 @@ public class InputInfo extends Component {
         position.x = 4;
         
         switch(App.getSplitType()) {
-            case NO_SPLIT: case VERTICAL:
+            case NO_SPLIT, VERTICAL -> {
                 position.y = App.getResolution().y - 18;
                 maxLength  = 56;
                 updateIconPositions(20);
-                break;
-                
-            case HORIZONTAL: case TRIPLE: case QUADRUPLE:
+            }
+            
+            case HORIZONTAL, TRIPLE, QUADRUPLE -> {
                 position.y = (App.getResolution().y / 2) - 18;
                 maxLength = 26;
                 updateIconPositions(20);
-                break;
+            }
         }
     }
     

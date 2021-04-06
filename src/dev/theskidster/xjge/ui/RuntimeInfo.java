@@ -13,10 +13,10 @@ import dev.theskidster.xjge.util.Color;
 /**
  * Provides information pertaining to the current state of the engine at runtime.
  */
-public class RuntimeInfo extends Component {
+public final class RuntimeInfo extends Component {
     
-    private Vector3i textPos = new Vector3i();
-    private Text[] text      = new Text[6];
+    private final Vector3i textPos = new Vector3i();
+    private final Text[] text      = new Text[6];
     
     public RuntimeInfo() {
         super(new Vector3i(), 0, 0);
@@ -57,13 +57,8 @@ public class RuntimeInfo extends Component {
         position.x = 4;
         
         switch(App.getSplitType()) {
-            case NO_SPLIT: case VERTICAL:
-                position.y = App.getResolution().y - 18;
-                break;
-                
-            case HORIZONTAL: case TRIPLE: case QUADRUPLE:
-                position.y = (App.getResolution().y / 2) - 18;
-                break;
+            case NO_SPLIT, VERTICAL            -> position.y = App.getResolution().y - 18;
+            case HORIZONTAL, TRIPLE, QUADRUPLE -> position.y = (App.getResolution().y / 2) - 18;
         }
     }
     

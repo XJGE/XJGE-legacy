@@ -1,6 +1,7 @@
 package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
+import dev.theskidster.xjge.main.Logger;
 import dev.theskidster.xjge.util.ErrorUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -186,10 +187,14 @@ class Mesh {
                 
                 for(int k = 0; k < App.MAX_WEIGHTS; k++) {
                     if(k < listSize) {
-                        VertexWeight weight = vwList.get(k);
-                        
-                        boneIDBuf.put(weight.boneID);
-                        weightBuf.put(weight.weight);
+                        if(vwList != null) {
+                            VertexWeight weight = vwList.get(k);
+                            
+                            boneIDBuf.put(weight.boneID);
+                            weightBuf.put(weight.weight);
+                        } else {
+                            Logger.logSevere("Unable to find any vertex weight data.", null);
+                        }
                     } else {
                         boneIDBuf.put(0);
                         weightBuf.put(0.0f);

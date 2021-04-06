@@ -10,8 +10,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL20.*;
-import dev.theskidster.xjge.util.LogLevel;
-import dev.theskidster.xjge.util.Logger;
+import dev.theskidster.xjge.main.Logger;
 import java.nio.FloatBuffer;
 import java.util.List;
 import org.lwjgl.system.MemoryStack;
@@ -29,7 +28,7 @@ public final class ShaderCore {
     private static boolean initialized;
     
     private static ShaderProgram shaderProgram;
-    private static Map<String, ShaderProgram> shaderPrograms = new HashMap<>();
+    private static final Map<String, ShaderProgram> shaderPrograms = new HashMap<>();
     
     /**
      * Supplies the shader core with {@link ShaderProgram} objects.
@@ -42,7 +41,7 @@ public final class ShaderCore {
             
             initialized = true;
         } else {
-            Logger.log(LogLevel.WARNING, "Initialization failed, shader core is already initialized.");
+            Logger.logWarning("Initialization failed, shader core is already initialized.", null);
         }
     }
     
@@ -57,7 +56,7 @@ public final class ShaderCore {
             shaderProgram = shaderPrograms.get(name);
             glUseProgram(shaderProgram.handle);
         } else {
-            Logger.log(LogLevel.SEVERE, "Shader program: \"" + name + "\" not found.");
+            Logger.logSevere("Shader program: \"" + name + "\" not found.", null);
         }
     }
     

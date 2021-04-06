@@ -18,7 +18,7 @@ import org.joml.Matrix4f;
  */
 class KeyFrame {
     
-    private List<Matrix4f> transforms;
+    private final List<Matrix4f> transforms;
     
     /**
      * Constructs an array of {@link Bone} transformations that will be used to define the pose of a models armature at a certain point in time.

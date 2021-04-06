@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Observable {
     
-    private PropertyChangeSupport observable;
+    private final PropertyChangeSupport observable;
     public Map<String, Object> properties = new HashMap<>();
     
     /**
