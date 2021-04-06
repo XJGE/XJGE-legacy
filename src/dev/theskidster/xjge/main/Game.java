@@ -36,7 +36,7 @@ public final class Game {
     private static Level level;
     private static Event event;
     
-    private static Queue<Event> events = new PriorityQueue<>(Comparator.comparing(Event::getPriority));
+    private static final Queue<Event> events = new PriorityQueue<>(Comparator.comparing(Event::getPriority));
     
     /**
      * Creates a new game instance and sets the initial level state. Called once immediately following the applications startup sequence. 

@@ -22,12 +22,12 @@ import dev.theskidster.xjge.util.Color;
  */
 public class Text {
     
-    private String prevText  = "";
-    private Vector3i prevPos = new Vector3i();
-    private Color prevCol    = Color.WHITE;
-    private BitmapFont font;
+    private String prevText        = "";
+    private final Vector3i prevPos = new Vector3i();
+    private Color prevCol          = Color.WHITE;
+    private final BitmapFont font;
     
-    private Map<Integer, Glyph> glyphs = new HashMap<>();
+    private final Map<Integer, Glyph> glyphs = new HashMap<>();
     
     /**
      * Creates a new text object that will use the default font provided by the engine.

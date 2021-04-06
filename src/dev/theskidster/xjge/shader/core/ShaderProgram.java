@@ -21,8 +21,15 @@ public class ShaderProgram {
     
     public final int handle;
     
-    private Map<String, UniformVariable> uniforms = new HashMap<>();
-    private Map<BufferType, Integer> bufferSizes  = new HashMap<>();
+    private final Map<String, UniformVariable> uniforms       = new HashMap<>();
+    private static final Map<BufferType, Integer> bufferSizes = new HashMap<>();
+    
+    static {
+        bufferSizes.put(VEC2, 2);
+        bufferSizes.put(VEC3, 3);
+        bufferSizes.put(MAT3, 3);
+        bufferSizes.put(MAT4, 4);
+    }
     
     /**
      * Creates a new shader program with the code supplied from the compiled .glsl source files.
@@ -36,11 +43,6 @@ public class ShaderProgram {
         shaders.forEach(shader -> glAttachShader(handle, shader.handle));
         
         glLinkProgram(handle);
-        
-        bufferSizes.put(VEC2, 2);
-        bufferSizes.put(VEC3, 3);
-        bufferSizes.put(MAT3, 3);
-        bufferSizes.put(MAT4, 4);
     }
     
     public UniformVariable getUniform(String name) { return uniforms.get(name); }

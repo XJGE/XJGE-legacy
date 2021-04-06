@@ -5,13 +5,13 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static org.lwjgl.opengl.GL11.*;
-import dev.theskidster.xjge.main.App;
 import java.io.File;
 import static org.lwjgl.glfw.GLFW.glfwGetVersionString;
 
 /**
  * @author J Hoffman
  * Created: Jan 14, 2020
+ * Rewrote: Apr 6, 2021
  */
 
 /**
@@ -22,6 +22,9 @@ public final class Logger {
     private static PrintWriter writer;
     private final static StringBuilder builder = new StringBuilder();
     
+    /**
+     * Displays information pertaining to the system variables of the current operating system on which the engine is running.
+     */
     static void logSystemInfo() {
         logInfo("--------------------------------------------------------------------------------");
         logInfo("OS NAME:\t\t" + System.getProperty("os.name"));
@@ -35,6 +38,11 @@ public final class Logger {
         builder.append(System.lineSeparator());
     }
     
+    /**
+     * Writes low-priority informative output to the logger and console.
+     * 
+     * @param message the text to display
+     */
     public static void logInfo(String message) {
         System.out.println("INFO: " + message);
                 
@@ -43,6 +51,13 @@ public final class Logger {
                .append(System.lineSeparator());
     }
     
+    /**
+     * Writes a medium-priority message to the logger and console. Warning messages indicate that the engine may have entered an invalid state which could
+     * result in undefined behavior.
+     * 
+     * @param message the text to display
+     * @param e       an optional exception used to output a stack trace, if null is passed, no stack trace will be displayed
+     */
     public static void logWarning(String message, Exception e) {
         String timestamp = new SimpleDateFormat("MM-dd-yyyy h:mma").format(new Date());
                 
@@ -77,6 +92,13 @@ public final class Logger {
         }
     }
     
+    /**
+     * Writes a high-priority message to the logger and console. Indicates that the application has encountered a fatal error that will require it to cease 
+     * execution and generate a text file of the loggers contents.
+     * 
+     * @param message the text to display
+     * @param e       an optional exception used to output a stack trace, if null is passed, the engine will generate a generic RuntimeException
+     */
     public static void logSevere(String message, Exception e) {
         String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
         String time = new SimpleDateFormat("h:mma").format(new Date());

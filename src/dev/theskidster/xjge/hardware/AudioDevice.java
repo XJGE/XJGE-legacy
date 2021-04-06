@@ -21,10 +21,10 @@ public class AudioDevice {
     public final int id;
     
     public long handle;
-    private long context;
+    private final long context;
     
     public final String name;
-    private ALCCapabilities capabilities;
+    private final ALCCapabilities capabilities;
     
     /**
      * Creates a new audio device.

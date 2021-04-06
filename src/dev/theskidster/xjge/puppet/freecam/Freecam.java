@@ -20,17 +20,17 @@ public class Freecam extends Camera {
     private int speed = 1;
     
     private float pitch;
-    private float yaw         = -90f;
-    private float sensitivity = 0.10f;
+    private float yaw               = -90f;
+    private final float sensitivity = 0.10f;
     
     public double prevX;
     public double prevY;
     
     public boolean[] pressed = new boolean[4];
     
-    private Vector3f tempFront = new Vector3f();
-    private Vector3f tempRight = new Vector3f();
-    private Vector3f tempDirec = new Vector3f();
+    private final Vector3f tempFront = new Vector3f();
+    private final Vector3f tempRight = new Vector3f();
+    private final Vector3f tempDirec = new Vector3f();
     
     /**
      * Creates a new freely moving camera.

@@ -20,8 +20,8 @@ import org.lwjgl.system.MemoryUtil;
  */
 public class Skybox {
     
-    private Graphics g;
-    private Cubemap cubemap;
+    private final Graphics g;
+    private final Cubemap cubemap;
     
     private Matrix3f tempView = new Matrix3f();
     private Matrix4f newView  = new Matrix4f();

@@ -18,12 +18,12 @@ import org.lwjgl.system.MemoryStack;
  * Objects of this class can be used as part of a larger {@linkplain Component UI component} to represent a regular 2D shape such as a pentagon, hexagon, or 
  * circle by utilizing the number of sides specified through its {@linkplain Polygon(int, float, Color, Vector2f) constructor}.
  */
-public class Polygon {
+public final class Polygon {
     
-    private int numSides;
+    private final int numSides;
     
-    private Vector3f color;
-    private Graphics g = new Graphics();
+    private final Vector3f color;
+    private final Graphics g = new Graphics();
     
     /**
      * Creates a new n-sided polygon object which can be used to represent regular shapes and circles. 

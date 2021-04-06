@@ -16,12 +16,12 @@ public class Timer {
     
     public int time;
     public int speed;
-    private int initialTime;
+    private final int initialTime;
     
     private boolean finished;
     private boolean start;
     
-    private Observable observable = new Observable(this);
+    private final Observable observable = new Observable(this);
     
     /**
      * Creates a new timer object that will step forward every time the specified number of update cycles have passed.

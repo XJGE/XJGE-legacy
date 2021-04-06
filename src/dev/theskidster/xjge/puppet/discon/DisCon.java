@@ -15,24 +15,20 @@ import dev.theskidster.xjge.util.Color;
 /**
  * Short for Disconnected Controller. This component displays a message whenever a controller disconnection event is unresolved.
  */
-public class DisCon extends Component {
+public final class DisCon extends Component {
 
-    private final int jid;
-    
-    private RectangleBatch rect = new RectangleBatch(2);
-    private Text[] text         = new Text[2];
-    private Vector3i[] textPos  = new Vector3i[2];
-    private String message;
+    private final RectangleBatch rect = new RectangleBatch(2);
+    private final Text[] text         = new Text[2];
+    private final Vector3i[] textPos  = new Vector3i[2];
+    private final String message;
     
     /**
      * Creates a new disconnected controller message component.
      * 
      * @param jid the joystick id. One of {@link org.lwjgl.glfw.GLFW#GLFW_JOYSTICK_1 GLFW_JOYSTICK}.
      */
-    public DisCon(int jid) {
+    public DisCon() {
         super(new Vector3i(), 192, 64);
-        
-        this.jid = jid;
         
         setSplitPosition();
         

@@ -15,10 +15,10 @@ import dev.theskidster.xjge.util.Color;
 /**
  * Provides information about the architecture on which the engine is currently running.
  */
-public class SystemInfo extends Component {
+public final class SystemInfo extends Component {
 
-    private Vector3i textPos = new Vector3i();
-    private Text[] text      = new Text[5];
+    private final Vector3i textPos = new Vector3i();
+    private final Text[] text      = new Text[5];
     
     public SystemInfo() {
         super(new Vector3i(), 0, 0);

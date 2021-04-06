@@ -28,7 +28,7 @@ public final class ShaderCore {
     private static boolean initialized;
     
     private static ShaderProgram shaderProgram;
-    private static Map<String, ShaderProgram> shaderPrograms = new HashMap<>();
+    private static final Map<String, ShaderProgram> shaderPrograms = new HashMap<>();
     
     /**
      * Supplies the shader core with {@link ShaderProgram} objects.

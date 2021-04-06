@@ -29,7 +29,7 @@ public class RectangleBatch {
     private int numVertices;
     private int numIndices;
     
-    private Graphics g = new Graphics();
+    private final Graphics g = new Graphics();
     
     /**
      * Establishes a system through which vertex data may be streamed to draw rectangles. 

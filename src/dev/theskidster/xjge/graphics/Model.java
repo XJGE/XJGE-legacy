@@ -43,9 +43,9 @@ public class Model {
     private boolean loop = true;
     
     private AIScene aiScene;
-    private Vector3f color   = new Vector3f(1);
-    private Vector3f noValue = new Vector3f();
-    private Matrix3f normal  = new Matrix3f();
+    private final Vector3f color   = new Vector3f(1);
+    private final Vector3f noValue = new Vector3f();
+    private final Matrix3f normal  = new Matrix3f();
     private Matrix4f rootTransform;
     
     private Node rootNode;
@@ -53,9 +53,8 @@ public class Model {
     
     private Mesh[] meshes;
     private Texture[] textures;
-    private Matrix4f[] tempTransforms = new Matrix4f[2];
     
-    private List<Bone> bones = new ArrayList<>();
+    private final List<Bone> bones = new ArrayList<>();
     
     private Map<String, SkeletalAnimation> animations;
     

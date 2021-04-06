@@ -34,18 +34,18 @@ public class Audio implements AudioService {
     private String prevMusicSourceSong;
     private Source musicSource;
     private Sound currSongBody;
-    private Source[] sources = new Source[MAX_SOURCES];
+    private final Source[] sources = new Source[MAX_SOURCES];
     
-    private Map<Integer, Integer> sourceSamples = new HashMap<>();
-    private Map<Integer, Integer> sourceStates  = new HashMap<>();
-    private Map<Integer, String> sourceSounds   = new HashMap<>();
+    private final Map<Integer, Integer> sourceSamples = new HashMap<>();
+    private final Map<Integer, Integer> sourceStates  = new HashMap<>();
+    private final Map<Integer, String> sourceSounds   = new HashMap<>();
     
-    private Map<Integer, Vector3f> camPos  = new HashMap<>();
-    private Map<Integer, Vector3f> camDir  = new HashMap<>();
-    private Map<Integer, Double> distances = new TreeMap<>();
+    private final Map<Integer, Vector3f> camPos  = new HashMap<>();
+    private final Map<Integer, Vector3f> camDir  = new HashMap<>();
+    private final Map<Integer, Double> distances = new TreeMap<>();
     
-    private Map<String, Sound> sounds = new HashMap<>();
-    private Map<String, Song> songs   = new HashMap<>();
+    private final Map<String, Sound> sounds = new HashMap<>();
+    private final Map<String, Song> songs   = new HashMap<>();
     
     @Override
     public void init() {
@@ -264,8 +264,6 @@ public class Audio implements AudioService {
     
     @Override
     public void setSourceState(int handle, int state) {
-        var temp = Arrays.asList(sources);
-        
         if(handle == ALL_SOURCES) {
             for(Source source : sources) {
                 switch(state) {

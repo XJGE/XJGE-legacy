@@ -180,7 +180,7 @@ final class Window {
                             null);
                     
                     if(jid < GLFW_JOYSTICK_5) {
-                        DisCon discon  = new DisCon(jid);
+                        DisCon discon  = new DisCon();
                         connected[jid] = false;
                         
                         switch(jid) {

@@ -13,13 +13,12 @@ import org.joml.Vector3f;
  * Represents an OpenAL source object. These objects can be best conceptualized as invisible CD players that are located throughout the game world, with the CD 
  * itself representing the sources current {@link Sound} or {@link Song} object.
  */
-class Source {
+final class Source {
     
     public final int handle;
     
     private boolean loop;
     
-    private Sound sound;
     private Vector3f position;
     private Vector3f tempPos = new Vector3f();
     
@@ -52,7 +51,7 @@ class Source {
             
             switch(sourceState) {
                 case AL_PLAYING -> alSourcePlay(handle);
-                case AL_PAUSED -> alSourcePause(handle);
+                case AL_PAUSED  -> alSourcePause(handle);
                 case AL_STOPPED -> alSourceStop(handle);
             }
         }
@@ -165,7 +164,6 @@ class Source {
      * @param sound the sound to bind to this source
      */
     public void setSound(Sound sound) {
-        this.sound = sound;
         alSourcei(handle, AL_BUFFER, sound.handle);
     }
     

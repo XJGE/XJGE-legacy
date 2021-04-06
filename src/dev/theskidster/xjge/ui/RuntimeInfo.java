@@ -13,10 +13,10 @@ import dev.theskidster.xjge.util.Color;
 /**
  * Provides information pertaining to the current state of the engine at runtime.
  */
-public class RuntimeInfo extends Component {
+public final class RuntimeInfo extends Component {
     
-    private Vector3i textPos = new Vector3i();
-    private Text[] text      = new Text[6];
+    private final Vector3i textPos = new Vector3i();
+    private final Text[] text      = new Text[6];
     
     public RuntimeInfo() {
         super(new Vector3i(), 0, 0);

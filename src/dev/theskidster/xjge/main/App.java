@@ -81,20 +81,20 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String ENGINE_VERSION = "1.5.1";
+    public static final String ENGINE_VERSION = "1.5.2";
     public static final String GAME_VERSION   = "0";
     
-    private static Viewport[] viewports = new Viewport[4];
-    private static Color clearColor     = Color.BLACK;
+    private static final Viewport[] viewports = new Viewport[4];
+    private static Color clearColor           = Color.BLACK;
     private static ScreenSplitType split;
     
     private static AudioDevice audioDevice;
     private static DisplayDevice displayDevice;
     private static Window window;
     
-    private static NavigableMap<Integer, AudioDevice> audioDevices     = new TreeMap<>();
-    private static NavigableMap<Integer, DisplayDevice> displayDevices = new TreeMap<>();
-    private static Map<Integer, InputDevice> inputDevices              = new HashMap<>();
+    private static final NavigableMap<Integer, AudioDevice> audioDevices     = new TreeMap<>();
+    private static final NavigableMap<Integer, DisplayDevice> displayDevices = new TreeMap<>();
+    private static final Map<Integer, InputDevice> inputDevices              = new HashMap<>();
     
     /**
      * Initializes utilities required by the application then enters the {@link Game#loop()}.

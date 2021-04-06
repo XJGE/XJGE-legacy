@@ -29,14 +29,17 @@ public class ShaderSource {
      *                 {@link org.lwjgl.opengl.GL30#GL_FRAGMENT_SHADER GL_FRAGMENT_SHADER}, {@link org.lwjgl.opengl.GL32#GL_GEOMETRY_SHADER GL_GEOMETRY_SHADER}, etc.
      */
     public ShaderSource(String filename, int type) {
+        String filepath       = "/dev/theskidster/" + App.DOMAIN + "/shader/source/" + filename;
         StringBuilder builder = new StringBuilder();
-        InputStream file      = ShaderSource.class.getResourceAsStream("/dev/theskidster/" + App.DOMAIN + "/shader/source/" + filename);
+        InputStream file      = ShaderSource.class.getResourceAsStream(filepath);
         
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(file, "UTF-8"));) {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(file, "UTF-8"))) {
             String line;
-            while(((line) = reader.readLine()) != null) builder.append(line).append("\n");
-        } catch(IOException e) {
-            Logger.logSevere("Failed to parse GLSL file: \"" + filename +"\". ", e);
+            while((line = reader.readLine()) != null) {
+                builder.append(line).append("\n");
+            }
+        } catch(Exception e) {
+            Logger.logSevere("Failed to pase GLSL file: \"" + filename + "\"", e);
         }
         
         CharSequence src = builder.toString();

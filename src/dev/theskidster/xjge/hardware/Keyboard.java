@@ -23,18 +23,18 @@ public class Keyboard extends InputDevice {
     
     private boolean firstMouse = true;
     
-    private Map<String, Integer> keys  = new HashMap<>();
-    private Map<String, Integer> mouse = new HashMap<>();
-    private Map<String, AxisButtons> axes = new HashMap<>();
+    private static final Map<String, Integer> keys     = new HashMap<>();
+    private static final Map<String, Integer> mouse    = new HashMap<>();
+    private static final Map<String, AxisButtons> axes = new HashMap<>();
     
-    private DoubleBuffer x;
-    private DoubleBuffer y;
+    private final DoubleBuffer x;
+    private final DoubleBuffer y;
     
     /**
      * Data structure used to mimic the left analog stick of a {@link Controller}. Permitting two keys to be assigned to a single 
      * {@link dev.theskidster.xjge.puppets.Command Command}.
      */
-    private class AxisButtons {
+    private static class AxisButtons {
         public int btn1;
         public int btn2;
         
@@ -44,26 +44,11 @@ public class Keyboard extends InputDevice {
         }
     }
     
-    /**
-     * Creates a new Keyboard object and sets the default configuration of its keys.
-     * 
-     * @param id the unique number used to identify the device in other parts of the engine
-     */
-    public Keyboard(int id) {
-        super(id);
-        
-        name = "keyboard";
-        
-        try(MemoryStack stack = MemoryStack.stackPush()) {
-            x = stack.mallocDouble(1);
-            y = stack.mallocDouble(1);
-        }
-        
+    static {
         /*
         The default configuration seen below is modeled after a 3D camera. Though the 
         implementation may alter this according to its own needs.
         */
-        
         keys.put("a button",     GLFW_KEY_SPACE);
         keys.put("b button",     GLFW_KEY_Q);
         keys.put("x button",     GLFW_KEY_R);
@@ -86,6 +71,22 @@ public class Keyboard extends InputDevice {
         mouse.put("right y",        0);
         mouse.put("left trigger",   GLFW_MOUSE_BUTTON_LEFT);
         mouse.put("right trigger",  GLFW_MOUSE_BUTTON_RIGHT);
+    }
+    
+    /**
+     * Creates a new Keyboard object and sets the default configuration of its keys.
+     * 
+     * @param id the unique number used to identify the device in other parts of the engine
+     */
+    public Keyboard(int id) {
+        super(id);
+        
+        name = "keyboard";
+        
+        try(MemoryStack stack = MemoryStack.stackPush()) {
+            x = stack.mallocDouble(1);
+            y = stack.mallocDouble(1);
+        }
     }
 
     @Override

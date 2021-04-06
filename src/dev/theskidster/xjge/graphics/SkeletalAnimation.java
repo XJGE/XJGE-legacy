@@ -35,10 +35,10 @@ class SkeletalAnimation {
     final String name;
     final String nextAnim;
     private KeyFrame prevFrame;
-    private KeyFrame currFrame = new KeyFrame();
+    private final KeyFrame currFrame = new KeyFrame();
     private KeyFrame nextFrame;
     
-    private List<KeyFrame> frames;
+    private final List<KeyFrame> frames;
     
     /**
      * Constructs a new skeletal animation using the animation data and keyframes provided.
@@ -124,9 +124,9 @@ class SkeletalAnimation {
         }
     }
     
-    float getFrameTime()          { return frameTime; }
-    float getSeekTime()           { return seekTime; }
-    boolean getFinished()         { return finished; }
+    float getFrameTime()         { return frameTime; }
+    float getSeekTime()          { return seekTime; }
+    boolean getFinished()        { return finished; }
     KeyFrame getCurrFrame()      { return currFrame; }
     KeyFrame getFrame(int index) { return frames.get(index); }
     

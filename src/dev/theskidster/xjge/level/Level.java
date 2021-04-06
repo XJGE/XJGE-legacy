@@ -31,7 +31,7 @@ public abstract class Level {
     public List<Entity> entityList = new ArrayList<>();
     
     private Skybox skybox;
-    private LightSource[] lights = new LightSource[App.MAX_LIGHTS];
+    private final LightSource[] lights = new LightSource[App.MAX_LIGHTS];
     
     Level() {
         lights[0] = new LightSource(Light.NOON);
