@@ -120,9 +120,9 @@ public class Model {
                         @Override
                         public int invoke(long pFile, long offset, int origin) {
                             switch(origin) {
-                                case Assimp.aiOrigin_CUR: modelBuf.position(modelBuf.position() + (int) offset); break;
-                                case Assimp.aiOrigin_SET: modelBuf.position((int) offset);                       break;
-                                case Assimp.aiOrigin_END: modelBuf.position(modelBuf.limit() + (int) offset);    break;
+                                case Assimp.aiOrigin_CUR -> modelBuf.position(modelBuf.position() + (int) offset);
+                                case Assimp.aiOrigin_SET -> modelBuf.position((int) offset);
+                                case Assimp.aiOrigin_END -> modelBuf.position(modelBuf.limit() + (int) offset);
                             }
                             
                             return 0;

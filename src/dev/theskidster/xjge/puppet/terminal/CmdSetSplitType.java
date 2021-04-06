@@ -33,15 +33,13 @@ class CmdSetSplitType extends TerminalCommand {
                 setOutput(errorTooManyArgs(args.size(), 1), Color.RED);
             } else {
                 switch(args.get(0)) {
-                    case "no_split":   App.setSplitType(ScreenSplitType.NO_SPLIT);   break;
-                    case "vertical":   App.setSplitType(ScreenSplitType.VERTICAL);   break;
-                    case "horizontal": App.setSplitType(ScreenSplitType.HORIZONTAL); break;
-                    case "triple":     App.setSplitType(ScreenSplitType.TRIPLE);     break;
-                    case "quadruple":  App.setSplitType(ScreenSplitType.QUADRUPLE);  break;
+                    case "no_split"   -> App.setSplitType(ScreenSplitType.NO_SPLIT);
+                    case "vertical"   -> App.setSplitType(ScreenSplitType.VERTICAL);
+                    case "horizontal" -> App.setSplitType(ScreenSplitType.HORIZONTAL);
+                    case "triple"     -> App.setSplitType(ScreenSplitType.TRIPLE);
+                    case "quadruple"  -> App.setSplitType(ScreenSplitType.QUADRUPLE);
 
-                    default:
-                        setOutput(errorInvalidArg(args.get(0), "(no_split), (vertical), (horizontal), (triple), or (quadruple)"), Color.RED);
-                        break;
+                    default -> setOutput(errorInvalidArg(args.get(0), "(no_split), (vertical), (horizontal), (triple), or (quadruple)"), Color.RED);
                 }
             }
         }

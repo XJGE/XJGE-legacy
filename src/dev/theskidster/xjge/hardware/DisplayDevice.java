@@ -84,11 +84,11 @@ public final class DisplayDevice {
         if(modeBuf != null) {
             modeBuf.forEach(mode -> {
                 switch(findAspect(mode)) {
-                    case "4:3": case "16:9": case "85:48": case "683:384":
+                    case "4:3", "16:9", "85:48", "683:384" -> {
                         if(mode.refreshRate() <= 60 && mode.refreshRate() >= 29) {
                             videoModes.put(findInfo(mode), mode);
                         }
-                        break;
+                    }
                 }
             });
             

@@ -269,37 +269,37 @@ public class Audio implements AudioService {
         if(handle == ALL_SOURCES) {
             for(Source source : sources) {
                 switch(state) {
-                    case AL_PLAYING:
+                    case AL_PLAYING -> {
                         if(sourceStates.get(source.handle) == AL_PAUSED || source.getState(AL_PAUSED)) {
                             alSourcePlay(source.handle);
                         }
-                        break;
+                    }
                     
-                    case AL_PAUSED:
+                    case AL_PAUSED -> {
                         if(sourceStates.get(source.handle) == AL_PLAYING || source.getState(AL_PLAYING)) {
                             alSourcePause(source.handle);
                         }
-                        break;
+                    }
                         
-                    case AL_STOPPED: alSourceStop(source.handle);  break;
+                    case AL_STOPPED -> alSourceStop(source.handle);
                 }
             }
         } else {
             if(handle > 0 && handle <= MAX_SOURCES) {
                 switch(state) {
-                    case AL_PLAYING:
+                    case AL_PLAYING -> {
                         if(sourceStates.get(handle) == AL_PAUSED || alGetSourcei(handle, AL_SOURCE_STATE) == AL_PAUSED) {
                             alSourcePlay(handle);
                         }
-                        break;
+                    }
                         
-                    case AL_PAUSED:
+                    case AL_PAUSED -> {
                         if(sourceStates.get(handle) == AL_PLAYING || alGetSourcei(handle, AL_SOURCE_STATE) == AL_PLAYING) {
                             alSourcePause(handle);
                         }
-                        break;
+                    }
                         
-                    case AL_STOPPED: alSourceStop(handle);  break;
+                    case AL_STOPPED -> alSourceStop(handle);
                 }
             } else {
                 Logger.logWarning("Could not find source by the handle of " + handle + ".", null);

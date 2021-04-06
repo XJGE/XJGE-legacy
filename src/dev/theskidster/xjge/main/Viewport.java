@@ -129,17 +129,15 @@ class Viewport {
         ShaderCore.use("default");
         
         switch(phase) {
-            case "camera":
-                currCamera.render();
-                break;
+            case "camera" -> currCamera.render();
                 
-            case "ui":
+            case "ui" -> {
                 currCamera.setType("ortho", width, height);
                 ui.forEach((name, component) -> component.render());
                 resetCamera();
-                break;
+            }
                 
-            case "texture":
+            case "texture" -> {
                 glBindTexture(GL_TEXTURE_2D, texHandle);
                 glBindVertexArray(g.vao);
                 
@@ -147,7 +145,7 @@ class Viewport {
                 
                 glDrawElements(GL_TRIANGLES, g.indices.limit(), GL_UNSIGNED_INT, 0);
                 ErrorUtil.checkGLError();
-                break;
+            }
         }
     }
     

@@ -81,7 +81,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String ENGINE_VERSION = "1.5.0";
+    public static final String ENGINE_VERSION = "1.5.1";
     public static final String GAME_VERSION   = "0";
     
     private static Viewport[] viewports = new Viewport[4];
@@ -100,9 +100,9 @@ public final class App {
      * Initializes utilities required by the application then enters the {@link Game#loop()}.
      */
     void start() {
-        if((System.getProperty("java.version")).compareTo("12.0.1") < 0) {
+        if((System.getProperty("java.version")).compareTo("15.0.2") < 0) {
             Logger.logSevere( 
-                    "Unsupported java version. required 12.0.1, " +
+                    "Unsupported java version. required 15.0.2, " +
                     "found " + System.getProperty("java.version"),
                     null);
         }
@@ -337,10 +337,10 @@ public final class App {
                     glViewport(0, 0, viewport.width, viewport.height);
                     glClearColor(clearColor.r, clearColor.g, clearColor.b, 0);
                     switch(viewport.id) {
-                        case 0: glDrawBuffer(GL_COLOR_ATTACHMENT0); break;
-                        case 1: glDrawBuffer(GL_COLOR_ATTACHMENT1); break;
-                        case 2: glDrawBuffer(GL_COLOR_ATTACHMENT2); break;
-                        case 3: glDrawBuffer(GL_COLOR_ATTACHMENT3); break;
+                        case 0 -> glDrawBuffer(GL_COLOR_ATTACHMENT0);
+                        case 1 -> glDrawBuffer(GL_COLOR_ATTACHMENT1);
+                        case 2 -> glDrawBuffer(GL_COLOR_ATTACHMENT2);
+                        case 3 -> glDrawBuffer(GL_COLOR_ATTACHMENT3);
                     }
                     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                     
@@ -581,7 +581,7 @@ public final class App {
         
         if(displayDevices.size() > 0) {
             switch(operation) {
-                case "next":
+                case "next" -> {
                     if(!displayDevices.ceilingKey(displayDevices.lastKey()).equals(displayDevice.id)) {
                         displayDevice = displayDevices.higherEntry(displayDevice.id).getValue();
                     } else {
@@ -590,9 +590,9 @@ public final class App {
                     window.update();
                     resetViewports();
                     Logger.logInfo("Set current display device to " + displayDevice.id);
-                    break;
+                }
 
-                case "prev":
+                case "prev" -> {
                     if(!displayDevices.floorKey(displayDevices.firstKey()).equals(displayDevice.id)) {
                         displayDevice = displayDevices.lowerEntry(displayDevice.id).getValue();
                     } else {
@@ -601,9 +601,9 @@ public final class App {
                     window.update();
                     resetViewports();
                     Logger.logInfo("Set current display device to " + displayDevice.id);
-                    break;
+                }
 
-                default:
+                default -> {
                     try {
                         int index = Integer.parseInt(operation);
                         
@@ -620,7 +620,7 @@ public final class App {
                     } catch(NumberFormatException e) {
                         Logger.logWarning("Failed to set video mode. Invalid index value passed.", null);
                     }
-                    break;
+                }
             }
         } else {
             Logger.logWarning("No display devices currently connected.", null);
@@ -637,7 +637,7 @@ public final class App {
      */
     public static void setVideoMode(String operation) {
         switch(operation) {
-            case "next":
+            case "next" -> {
                 if(!displayDevice.videoModes.ceilingKey(displayDevice.videoModes.lastKey()).equals(displayDevice.info)) {
                     displayDevice.videoMode = displayDevice.videoModes.higherEntry(displayDevice.info).getValue();
                     displayDevice.info      = displayDevice.videoModes.higherEntry(displayDevice.info).getKey();
@@ -645,12 +645,12 @@ public final class App {
                     displayDevice.videoMode = displayDevice.videoModes.firstEntry().getValue();
                     displayDevice.info      = displayDevice.videoModes.firstEntry().getKey();
                 }
-                Logger.logInfo( 
-                        "Set current video mode to " + displayDevice.info + 
+                Logger.logInfo(
+                        "Set current video mode to " + displayDevice.info +
                         " for display device " + displayDevice.id);
-                break;
+            }
 
-            case "prev":
+            case "prev" -> {
                 if(!displayDevice.videoModes.floorKey(displayDevice.videoModes.firstKey()).equals(displayDevice.info)) {
                     displayDevice.videoMode = displayDevice.videoModes.lowerEntry(displayDevice.info).getValue();
                     displayDevice.info      = displayDevice.videoModes.lowerEntry(displayDevice.info).getKey();
@@ -658,12 +658,12 @@ public final class App {
                     displayDevice.videoMode = displayDevice.videoModes.lastEntry().getValue();
                     displayDevice.info      = displayDevice.videoModes.lastEntry().getKey();
                 }
-                Logger.logInfo( 
-                        "Set current video mode to " + displayDevice.info + 
+                Logger.logInfo(
+                        "Set current video mode to " + displayDevice.info +
                         " for display device " + displayDevice.id);
-                break;
+            }
 
-            default:
+            default -> {
                 try {
                     int index = Integer.parseInt(operation);
                     
@@ -678,19 +678,19 @@ public final class App {
                     if(tempInfo.get(index) != null && tempModes.get(index) != null) {
                         displayDevice.videoMode = tempModes.get(index);
                         displayDevice.info      = tempInfo.get(index);
-                        Logger.logInfo( 
-                                "Set current video mode to " + displayDevice.info + 
-                                " for display device " + index);
+                        Logger.logInfo(
+                                "Set current video mode to " + displayDevice.info +
+                                        " for display device " + index);
                     } else {
                         Logger.logWarning(
-                                "Failed to set video mode. Could not find video " + 
-                                "mode at index " + index + ".",
+                                "Failed to set video mode. Could not find video " +
+                                        "mode at index " + index + ".",
                                 null);
                     }
                 } catch(NumberFormatException | IndexOutOfBoundsException e) {
                     Logger.logWarning("Failed to set video mode. Invalid index value passed.", null);
                 }
-                break;
+            }
         }
         
         displayDevice.aspect = displayDevice.findAspect(displayDevice.videoMode);
@@ -743,110 +743,88 @@ public final class App {
         
         for(Viewport viewport : viewports) {
             switch(split) {
-                case NO_SPLIT:
+                case NO_SPLIT -> {
                     viewport.active = (viewport.id == 0);
                     viewport.setBounds(
                             window.resolution.x, window.resolution.y,
                             0, 0,
                             window.width, window.height);
-                    break;
+                }
                    
-                case VERTICAL:
+                case VERTICAL -> {
                     viewport.active = (viewport.id == 0 || viewport.id == 1);
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y,
                                     0, 0, 
                                     window.width / 2, window.height);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
+                        case 1 -> viewport.setBounds(
                                     window.resolution.x / 2, window.resolution.y,
                                     window.width / 2, 0, 
                                     window.width / 2, window.height);
-                            break;
                     }
-                    break;
+                }
                     
-                case HORIZONTAL:
+                case HORIZONTAL -> {
                     viewport.active = (viewport.id == 0 || viewport.id == 1);
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x, window.resolution.y / 2, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x, window.resolution.y / 2,
                                     0, window.height / 2, 
                                     window.width, window.height / 2);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
-                                    window.resolution.x, window.resolution.y / 2, 
+                        case 1 -> viewport.setBounds(
+                                    window.resolution.x, window.resolution.y / 2,
                                     0, 0, 
                                     window.width, window.height / 2);
-                            break;
                     }
-                    break;
+                }
                     
-                case TRIPLE:
+                case TRIPLE -> {
                     viewport.active = (viewport.id != 3);
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     0, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 1 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 2, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 2:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 2 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 4, 0, 
                                     window.width / 2, window.height / 2);
-                            break;
                     }
-                    break;
+                }
                     
-                case QUADRUPLE:
+                case QUADRUPLE -> {
                     viewport.active = true;
                     switch(viewport.id) {
-                        case 0:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 0 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     0, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 1:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 1 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 2, window.height / 2, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 2:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 2 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     0, 0, 
                                     window.width / 2, window.height / 2);
-                            break;
                             
-                        case 3:
-                            viewport.setBounds(
-                                    window.resolution.x / 2, window.resolution.y / 2, 
+                        case 3 -> viewport.setBounds(
+                                    window.resolution.x / 2, window.resolution.y / 2,
                                     window.width / 2, 0, 
                                     window.width / 2, window.height / 2);
-                            break;
                     }
-                    break;
+                }
             }
         }
     }
@@ -862,17 +840,17 @@ public final class App {
         if(camera == null) camera = new Freecam();
         
         switch(id) {
-            case 0: case 1: case 2: case 3:
+            case 0, 1, 2, 3 -> {
                 viewports[id].prevCamera = viewports[id].currCamera;
                 viewports[id].currCamera = camera;
-                break;
-                
-            case ALL_VIEWPORTS:
+            }
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.prevCamera = viewport.currCamera;
                     viewport.currCamera = camera;
                 }
-                break;
+            }
         }
     }
     
@@ -884,15 +862,13 @@ public final class App {
      */
     public static void setViewportCameraPrev(int id) {
         switch(id) {
-            case 0: case 1: case 2: case 3:
-                viewports[id].currCamera = viewports[id].prevCamera;
-                break;
-                
-            case ALL_VIEWPORTS:
+            case 0, 1, 2, 3 -> viewports[id].currCamera = viewports[id].prevCamera;
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.currCamera = viewport.prevCamera;
                 }
-                break;
+            }
         }
     }
     
@@ -922,15 +898,13 @@ public final class App {
      */
     public static void addUIComponent(int id, String name, Component component) {
         switch(id) {
-            case 0: case 1: case 2: case 3:
-                viewports[id].addUIComponent(name, component);
-                break;
-                
-            case ALL_VIEWPORTS:
+            case 0, 1, 2, 3 -> viewports[id].addUIComponent(name, component);
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.addUIComponent(name, component);
                 }
-                break;
+            }
         }
     }
     
@@ -942,15 +916,13 @@ public final class App {
      */
     public static void removeUIComponent(int id, String name) {
         switch(id) {
-            case 0: case 1: case 2: case 3:
-                viewports[id].removeUIComponent(name);
-                break;
-                
-            case ALL_VIEWPORTS:
+            case 0, 1, 2, 3 -> viewports[id].removeUIComponent(name);
+            
+            case ALL_VIEWPORTS -> {
                 for(Viewport viewport : viewports) {
                     viewport.removeUIComponent(name);
                 }
-                break;
+            }
         }
     }
     
@@ -1087,31 +1059,31 @@ public final class App {
         
         if(audioDevices.size() > 0) {
             switch(operation) {
-                case "next":
+                case "next" -> {
                     if(!audioDevices.ceilingKey(audioDevices.lastKey()).equals(audioDevice.id)) {
                         audioDevice = audioDevices.higherEntry(audioDevice.id).getValue();
                     } else {
                         audioDevice = audioDevices.firstEntry().getValue();
                     }
                     audioDevice.setContextCurrent();
-                    Logger.logInfo( 
-                            "Set current audio device to " + audioDevice.id + " \"" + 
+                    Logger.logInfo(
+                            "Set current audio device to " + audioDevice.id + " \"" +
                             audioDevice.name.substring(15) + "\".");
-                    break;
+                }
 
-                case "prev":
+                case "prev" -> {
                     if(!audioDevices.floorKey(audioDevices.firstKey()).equals(audioDevice.id)) {
                         audioDevice = audioDevices.lowerEntry(audioDevice.id).getValue();
                     } else {
                         audioDevice = audioDevices.lastEntry().getValue();
                     }
                     audioDevice.setContextCurrent();
-                    Logger.logInfo( 
-                            "Set current audio device to " + audioDevice.id + " \"" + 
+                    Logger.logInfo(
+                            "Set current audio device to " + audioDevice.id + " \"" +
                             audioDevice.name.substring(15) + "\".");
-                    break;
+                }
 
-                default:
+                default -> {
                     try {
                         int index = Integer.parseInt(operation);
                         
@@ -1119,8 +1091,8 @@ public final class App {
                             audioDevice = audioDevices.get(index);
                             audioDevice.setContextCurrent();
                             Logger.logInfo(
-                                    "Set current audio device to " + audioDevice.id + " \"" + 
-                                    audioDevice.name.substring(15) + "\".");
+                                    "Set current audio device to " + audioDevice.id + " \"" +
+                                            audioDevice.name.substring(15) + "\".");
                         } else {
                             Logger.logWarning(
                                     "Failed to set audio device. Could not find device at index " + index + ".", null);
@@ -1128,7 +1100,7 @@ public final class App {
                     } catch(NumberFormatException e) {
                         Logger.logWarning("Failed to set audio device. Invalid index value passed.", null);
                     }
-                    break;
+                }
             }
         } else {
             Logger.logWarning("No audio devices currently connected.", null);

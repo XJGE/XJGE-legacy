@@ -146,33 +146,33 @@ final class Window {
         
         glfwSetMonitorCallback((monHandle, event) -> {
             switch(event) {
-                case GLFW_CONNECTED:
+                case GLFW_CONNECTED -> {
                     App.setDisplayDevice(App.getDisplayID() + "", false);
                     Logger.logInfo(
-                            "Display: " + App.getDisplayID() + " (" + 
+                            "Display: " + App.getDisplayID() + " (" +
                             App.getDisplayInfo() + ") connected.");
-                    break;
+                }
                     
-                case GLFW_DISCONNECTED:
+                case GLFW_DISCONNECTED -> {
                     App.findDisplayDevices();
                     Logger.logWarning(
-                            "Display: " + App.getDisplayID() + " (" + 
+                            "Display: " + App.getDisplayID() + " (" +
                             App.getDisplayInfo() + ") disconnected.", null);
-                    break;
+                }
             }
         });
         
         glfwSetJoystickCallback((jid, event) -> {
             switch(event) {
-                case GLFW_CONNECTED:
+                case GLFW_CONNECTED -> {
                     App.findInputDevices();
                     if(jid < GLFW_JOYSTICK_5) connected[jid] = true;
                     Logger.logInfo(
-                            "Controller: \"" + App.getInputDeviceName(jid) + 
+                            "Controller: \"" + App.getInputDeviceName(jid) +
                             "\" connected at position " + jid + ".");
-                    break;
+                }
                     
-                case GLFW_DISCONNECTED:
+                case GLFW_DISCONNECTED -> {
                     App.findInputDevices();
                     Logger.logWarning(
                             "Controller: \"" + App.getInputDeviceName(jid) +
@@ -184,25 +184,25 @@ final class Window {
                         connected[jid] = false;
                         
                         switch(jid) {
-                            case GLFW_JOYSTICK_1:
+                            case GLFW_JOYSTICK_1 -> {
                                 App.setInputDeviceEnabled(ALL_EXCEPT_1, false);
                                 App.addUIComponent(GLFW_JOYSTICK_1, "discon " + jid, discon);
-                                break;
+                            }
 
-                            case GLFW_JOYSTICK_2:
+                            case GLFW_JOYSTICK_2 -> {
                                 App.setInputDeviceEnabled(ALL_EXCEPT_2, false);
                                 addDisCon(GLFW_JOYSTICK_2, discon);
-                                break;
+                            }
 
-                            case GLFW_JOYSTICK_3:
+                            case GLFW_JOYSTICK_3 -> {
                                 App.setInputDeviceEnabled(ALL_EXCEPT_3, false);
                                 addDisCon(GLFW_JOYSTICK_3, discon);
-                                break;
+                            }
 
-                            case GLFW_JOYSTICK_4:
+                            case GLFW_JOYSTICK_4 -> {
                                 App.setInputDeviceEnabled(ALL_EXCEPT_4, false);
                                 addDisCon(GLFW_JOYSTICK_4, discon);
-                                break;
+                            }
                         }
 
                         ServiceLocator.getAudio().pauseMusic();
@@ -210,7 +210,7 @@ final class Window {
                         
                         Game.addEvent(jid, (Boolean) App.getViewportActive(jid));
                     }
-                    break;
+                }
             }
         });
     }

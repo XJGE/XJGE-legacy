@@ -59,12 +59,12 @@ public class Skybox {
         
         for(int i = 0; i < 6; i++) {
             switch(i) {
-                case 0: images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_X, centerFilename); break;
-                case 1: images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, centerFilename); break;
-                case 2: images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, topFilename);    break;
-                case 3: images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, bottomFilename); break;
-                case 4: images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, centerFilename); break;
-                case 5: images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, centerFilename); break;
+                case 0 -> images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_X, centerFilename);
+                case 1 -> images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, centerFilename);
+                case 2 -> images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, topFilename);
+                case 3 -> images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, bottomFilename);
+                case 4 -> images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, centerFilename);
+                case 5 -> images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, centerFilename);
             }
         }
         
@@ -95,12 +95,12 @@ public class Skybox {
         
         for(int i = 0; i < 6; i++) {
             switch(i) {
-                case 0: images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_X, rightFilename);  break;
-                case 1: images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, leftFilename);   break;
-                case 2: images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, topFilename);    break;
-                case 3: images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, bottomFilename); break;
-                case 4: images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, frontFilename);  break;
-                case 5: images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, backFilename);   break;
+                case 0 -> images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_X, rightFilename);
+                case 1 -> images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, leftFilename);
+                case 2 -> images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, topFilename);
+                case 3 -> images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, bottomFilename);
+                case 4 -> images.put(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, frontFilename);
+                case 5 -> images.put(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, backFilename);
             }
         }
         

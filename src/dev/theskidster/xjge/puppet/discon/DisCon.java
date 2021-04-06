@@ -63,25 +63,25 @@ public class DisCon extends Component {
     @Override
     public void setSplitPosition() {
         switch(App.getSplitType()) {
-            case NO_SPLIT:
+            case NO_SPLIT -> {
                 position.x = 144;
                 position.y = 107;
-                break;
+            }
                 
-            case VERTICAL:
+            case VERTICAL -> {
                 position.x = 24;
                 position.y = 107;
-                break;
+            }
                 
-            case HORIZONTAL:
+            case HORIZONTAL -> {
                 position.x = 144;
                 position.y = 40;
-                break;
+            }
                 
-            case TRIPLE: case QUADRUPLE:
+            case TRIPLE, QUADRUPLE -> {
                 position.x = 24;
                 position.y = 40;
-                break;
+            }
         }
     }
     

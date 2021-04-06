@@ -62,29 +62,29 @@ public class ShaderProgram {
         } else {
             try(MemoryStack stack = MemoryStack.stackPush()) {
                 switch(type) {
-                    case INT:
+                    case INT -> {
                         uniforms.put(name, new UniformVariable(
                                 glGetUniformLocation(handle, name),
                                 stack.mallocInt(1)));
-                        break;
+                    }
                         
-                    case FLOAT:
+                    case FLOAT -> {
                         uniforms.put(name, new UniformVariable(
                                 glGetUniformLocation(handle, name),
                                 stack.mallocFloat(1)));
-                        break;
+                    }
                         
-                    case VEC2: case VEC3:
+                    case VEC2, VEC3 -> {
                         uniforms.put(name, new UniformVariable(
                                 glGetUniformLocation(handle, name),
                                 stack.mallocFloat(bufferSizes.get(type))));
-                        break;
-                        
-                    case MAT3: case MAT4:
+                    }
+                    
+                    case MAT3, MAT4 -> {
                         uniforms.put(name, new UniformVariable(
                                 glGetUniformLocation(handle, name),
                                 stack.mallocFloat(bufferSizes.get(type) * Float.BYTES)));
-                        break;
+                    }
                 }
             }
         }

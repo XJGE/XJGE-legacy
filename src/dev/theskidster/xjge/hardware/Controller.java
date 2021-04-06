@@ -96,20 +96,15 @@ public class Controller extends InputDevice {
         if(glfwGetGamepadState(id, state) && !puppets.empty() && puppets.peek() != null) {
             puppets.peek().commands.forEach((action, command) -> {
                 switch(action) {
-                    case "left x": case "left y":
-                    case "right x": case "right y":
+                    case "left x", "left y", "right x", "right y" -> {
                         if(Math.abs(state.axes(axes.get(action))) >= sensitivity) {
                             command.execute(this, state.axes(axes.get(action)));
                         }
-                        break;
-                        
-                    case "left trigger": case "right trigger":
-                        command.execute(this, state.axes(axes.get(action)));
-                        break;
-                        
-                    default:
-                        command.execute(this, state.buttons(buttons.get(action)));
-                        break;
+                    }
+                    
+                    case "left trigger", "right trigger" -> command.execute(this, state.axes(axes.get(action)));
+                    
+                    default -> command.execute(this, state.buttons(buttons.get(action)));
                 }
             });
         }

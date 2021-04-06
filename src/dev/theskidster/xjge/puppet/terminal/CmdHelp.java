@@ -28,16 +28,16 @@ class CmdHelp extends TerminalCommand {
         String command;
 
         switch(args.size()) {
-            case 0:
-                String info = "Start typing to view command suggestions, press TAB to " + 
-                              "autocomplete, ENTER to execute, and F1 to exit the " + 
-                              "command terminal. A full list of commands can be found " + 
-                              "in the engines documentation.";
-
+            case 0 -> {
+                String info = "Start typing to view command suggestions, press TAB to " +
+                        "autocomplete, ENTER to execute, and F1 to exit the " +
+                        "command terminal. A full list of commands can be found " +
+                        "in the engines documentation.";
+                
                 setOutput(info, Color.CYAN);
-                break;
+            }
 
-            case 1:
+            case 1 -> {
                 command = args.get(0);
 
                 if(Puppets.TERMINAL.commands.keySet().stream().anyMatch(name -> name.equals(command))) {
@@ -45,38 +45,34 @@ class CmdHelp extends TerminalCommand {
                 } else {
                     setOutput(commandNotFound(command), Color.RED);
                 }
-                break;
+            }
 
-            case 2:
+            case 2 -> {
                 wildcard = args.get(0);
                 command  = args.get(1);
 
-                switch (wildcard) {
-                    case "-u":
+                switch(wildcard) {
+                    case "-u" -> {
                         if(Puppets.TERMINAL.commands.keySet().stream().anyMatch(name -> name.equals(command))) {
                             setOutput(Puppets.TERMINAL.commands.get(command).getUsage(), Color.WHITE);
                         } else {
                             setOutput(commandNotFound(command), Color.RED);
                         }
-                        break;
-                    case "-s":
+                    }
+                    
+                    case "-s" -> {
                         if(Puppets.TERMINAL.commands.keySet().stream().anyMatch(name -> name.equals(command))) {
                             setOutput(Puppets.TERMINAL.commands.get(command).getSyntax(), Color.YELLOW);
                         } else {
                             setOutput(commandNotFound(command), Color.RED);
                         }
-                        break;
+                    }
 
-                    default:
-                        setOutput("ERROR: Unknown wildcard: \"" + wildcard + "\", use -u or -s.", Color.RED);
-                        break;
+                    default -> setOutput("ERROR: Unknown wildcard: \"" + wildcard + "\", use -u or -s.", Color.RED);
                 }
-                break;
+            }
 
-
-            default:
-                setOutput(errorTooManyArgs(args.size(), 2), Color.RED);
-                break;
+            default -> setOutput(errorTooManyArgs(args.size(), 2), Color.RED);
         }
     }
     

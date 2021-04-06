@@ -72,7 +72,7 @@ class BitmapFont {
                 final int DESCENT = descent;
                 
                 switch(xmlReader.next()) {
-                    case XMLStreamConstants.START_ELEMENT:
+                    case XMLStreamConstants.START_ELEMENT -> {
                         if(xmlReader.getName().getLocalPart().equals("font")) {
                             texture = new Texture(xmlReader.getAttributeValue(null, "texture"));
                             
@@ -87,15 +87,15 @@ class BitmapFont {
                             leading = Integer.parseInt(xmlReader.getAttributeValue(null, "leading"));
                             descent = Integer.parseInt(xmlReader.getAttributeValue(null, "descent"));
                         }
-                        break;
+                    }
                         
-                    case XMLStreamConstants.END_ELEMENT:
+                    case XMLStreamConstants.END_ELEMENT -> {
                         if(xmlReader.getName().getLocalPart().equals("font")) {
                             xmlReader.close();
                         }
-                        break;
+                    }
                     
-                    case XMLStreamConstants.CHARACTERS:
+                    case XMLStreamConstants.CHARACTERS -> {
                         BufferedReader reader = new BufferedReader(new StringReader(xmlReader.getText().trim()));
                         
                         reader.lines().forEach(line -> {
@@ -103,6 +103,7 @@ class BitmapFont {
                                 posOffsets.put((char) Integer.parseInt(value), new Vector2i(LEADING, DESCENT));
                             }
                         });
+                    }
                 }
             }
         } catch(XMLStreamException e) {

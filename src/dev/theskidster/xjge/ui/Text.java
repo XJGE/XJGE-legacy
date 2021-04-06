@@ -118,9 +118,7 @@ public class Text {
                 Color col = (start != 0 && i > start) ? Color.YELLOW : Color.CYAN;
                 
                 switch(c) {
-                    case '(': case ')': case ',': case '<': case '>':
-                        col = Color.WHITE;
-                        break;
+                    case '(', ')', ',', '<', '>' -> col = Color.WHITE;
                 }
                 
                 glyphs.put(i, new Glyph(c, pos, col));

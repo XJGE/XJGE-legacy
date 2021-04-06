@@ -79,17 +79,17 @@ public class InputInfo extends Component {
         position.x = 4;
         
         switch(App.getSplitType()) {
-            case NO_SPLIT: case VERTICAL:
+            case NO_SPLIT, VERTICAL -> {
                 position.y = App.getResolution().y - 18;
                 maxLength  = 56;
                 updateIconPositions(20);
-                break;
-                
-            case HORIZONTAL: case TRIPLE: case QUADRUPLE:
+            }
+            
+            case HORIZONTAL, TRIPLE, QUADRUPLE -> {
                 position.y = (App.getResolution().y / 2) - 18;
                 maxLength = 26;
                 updateIconPositions(20);
-                break;
+            }
         }
     }
     

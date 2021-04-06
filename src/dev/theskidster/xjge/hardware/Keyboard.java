@@ -93,39 +93,35 @@ public class Keyboard extends InputDevice {
         if(!puppets.empty() && puppets.peek() != null) {
             puppets.peek().commands.forEach((action, command) -> {
                 switch(action) {
-                    case "left x": case "left y":
+                    case "left x", "left y" -> {
                         if(glfwGetKey(App.getWindowHandle(), axes.get(action).btn1) == GLFW_PRESS) {
                             command.execute(this, -1);
                         } else if(glfwGetKey(App.getWindowHandle(), axes.get(action).btn2) == GLFW_PRESS) {
                             command.execute(this, 1);
                         }
-                        break;
-                        
-                    case "right x":
+                    }
+                    
+                    case "right x" ->  {
                         glfwGetCursorPos(App.getWindowHandle(), x, y);
-                        
+
                         if((float) x.get(0) != prevX) {
                             command.execute(this, findAxisValue((float) x.get(0), prevX));
                             prevX = (float) x.get(0);
                         }
-                        break;
+                    }
                         
-                    case "right y":
+                    case "right y" -> {
                         glfwGetCursorPos(App.getWindowHandle(), x, y);
                         
                         if((float) y.get(0) != prevY) {
                             command.execute(this, findAxisValue((float) y.get(0), prevY));
                             prevY = (float) y.get(0);
                         }
-                        break;
+                    }
                         
-                    case "left trigger": case "right trigger":
-                        command.execute(this, glfwGetMouseButton(App.getWindowHandle(), mouse.get(action)));
-                        break;
-                        
-                    default:
-                        command.execute(this, glfwGetKey(App.getWindowHandle(), keys.get(action)));
-                        break;
+                    case "left trigger", "right trigger" -> command.execute(this, glfwGetMouseButton(App.getWindowHandle(), mouse.get(action)));
+                    
+                    default -> command.execute(this, glfwGetKey(App.getWindowHandle(), keys.get(action)));
                 }
             });
         }

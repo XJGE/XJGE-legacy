@@ -51,9 +51,9 @@ class Source {
             alSourcei(handle, AL_SAMPLE_OFFSET, sourceSample);
             
             switch(sourceState) {
-                case AL_PLAYING: alSourcePlay(handle);  break;
-                case AL_PAUSED:  alSourcePause(handle); break;
-                case AL_STOPPED: alSourceStop(handle);  break;
+                case AL_PLAYING -> alSourcePlay(handle);
+                case AL_PAUSED -> alSourcePause(handle);
+                case AL_STOPPED -> alSourceStop(handle);
             }
         }
         
@@ -86,9 +86,9 @@ class Source {
             alSourcei(handle, AL_SAMPLE_OFFSET, sourceSample);
             
             switch(sourceState) {
-                case AL_PLAYING: alSourcePlay(handle);  break;
-                case AL_PAUSED:  alSourcePause(handle); break;
-                case AL_STOPPED: alSourceStop(handle);  break;
+                case AL_PLAYING -> alSourcePlay(handle);
+                case AL_PAUSED -> alSourcePause(handle);
+                case AL_STOPPED -> alSourceStop(handle);
             }
         }
         

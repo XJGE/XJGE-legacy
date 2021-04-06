@@ -56,13 +56,8 @@ public class SystemInfo extends Component {
         position.x = 4;
         
         switch(App.getSplitType()) {
-            case NO_SPLIT: case VERTICAL:
-                position.y = App.getResolution().y - 18;
-                break;
-                
-            case HORIZONTAL: case TRIPLE: case QUADRUPLE:
-                position.y = (App.getResolution().y / 2) - 18;
-                break;
+            case NO_SPLIT, VERTICAL            -> position.y = App.getResolution().y - 18;
+            case HORIZONTAL, TRIPLE, QUADRUPLE -> position.y = (App.getResolution().y / 2) - 18;
         }
     }
     

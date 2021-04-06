@@ -113,20 +113,18 @@ public final class Game {
             
             if(!event.resolved) {
                 switch(event.getPriority()) {
-                    case Event.JOYSTICK_1_DIS: case Event.JOYSTICK_2_DIS:
-                    case Event.JOYSTICK_3_DIS: case Event.JOYSTICK_4_DIS:
+                    case Event.JOYSTICK_1_DIS, Event.JOYSTICK_2_DIS, Event.JOYSTICK_3_DIS, Event.JOYSTICK_4_DIS -> {
                         event.resolved = glfwJoystickPresent(event.getPriority());
-                        //TODO customize this to better suit the implementation.
-                        break;
+                    }
                     
-                    case Event.PAUSE:
-                        //TODO This is left open to the implementation to define.
-                        break;
+                    case Event.PAUSE -> {
+                        //TODO customize this to better suit the implementation.
+                    }
                 }
+                //TODO This is left open to the implementation to define.
             } else {
                 switch(event.getPriority()) {
-                    case Event.JOYSTICK_1_DIS: case Event.JOYSTICK_2_DIS:
-                    case Event.JOYSTICK_3_DIS: case Event.JOYSTICK_4_DIS:
+                    case Event.JOYSTICK_1_DIS, Event.JOYSTICK_2_DIS, Event.JOYSTICK_3_DIS, Event.JOYSTICK_4_DIS -> {
                         if((Boolean) event.getData()) {
                             App.removeUIComponent(event.getPriority(), "discon " + event.getPriority());
                         } else {
@@ -134,7 +132,7 @@ public final class Game {
                         }
                         ServiceLocator.getAudio().resumeMusic();
                         ServiceLocator.getAudio().setSourceState(ALL_SOURCES, AL_PLAYING);
-                        break;
+                    }
                 }
                 
                 events.poll();

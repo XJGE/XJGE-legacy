@@ -26,13 +26,13 @@ public final class ErrorUtil {
         
         if(status != GL_FRAMEBUFFER_COMPLETE) {
             switch(status) {
-                case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:         desc = "incomplete attachment";  break;
-                case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: desc = "missing attachment";     break;
-                case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:        desc = "incomplete draw buffer"; break;
-                case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:        desc = "incomplete read buffer"; break;
-                case GL_FRAMEBUFFER_UNSUPPORTED:                   desc = "unsupported";            break;
-                case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:        desc = "incomplete multisample"; break;
-                case GL_FRAMEBUFFER_UNDEFINED:                     desc = "undefined";              break;
+                case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT         -> desc = "incomplete attachment";
+                case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT -> desc = "missing attachment";
+                case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER        -> desc = "incomplete draw buffer";
+                case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER        -> desc = "incomplete read buffer";
+                case GL_FRAMEBUFFER_UNSUPPORTED                   -> desc = "unsupported";
+                case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE        -> desc = "incomplete multisample";
+                case GL_FRAMEBUFFER_UNDEFINED                     -> desc = "undefined";
             }
             
             Logger.logSevere("Framebuffer Error: (" + status + ") " + desc, null);
@@ -49,12 +49,12 @@ public final class ErrorUtil {
             String desc = "";
             
             switch(glError) {
-                case GL_INVALID_ENUM:      desc = "invalid enum"; break;
-                case GL_INVALID_VALUE:     desc = "invalid value"; break;
-                case GL_INVALID_OPERATION: desc = "invalid operation"; break;
-                case GL_STACK_OVERFLOW:    desc = "stack overflow"; break;
-                case GL_STACK_UNDERFLOW:   desc = "stack underflow"; break;
-                case GL_OUT_OF_MEMORY:     desc = "out of memory"; break;
+                case GL_INVALID_ENUM      -> desc = "invalid enum";
+                case GL_INVALID_VALUE     -> desc = "invalid value";
+                case GL_INVALID_OPERATION -> desc = "invalid operation";
+                case GL_STACK_OVERFLOW    -> desc = "stack overflow";
+                case GL_STACK_UNDERFLOW   -> desc = "stack underflow";
+                case GL_OUT_OF_MEMORY     -> desc = "out of memory";
             }
             
             Logger.logSevere("OpenGL Error: (" + glError + ") " + desc, null);
@@ -71,11 +71,11 @@ public final class ErrorUtil {
             String desc = "";
         
             switch(alError) {
-                case AL_INVALID_NAME:      desc = "invalid name"; break;
-                case AL_INVALID_ENUM:      desc = "invalid enum"; break;
-                case AL_INVALID_VALUE:     desc = "invalid value"; break;
-                case AL_INVALID_OPERATION: desc = "invalid operation"; break;
-                case AL_OUT_OF_MEMORY:     desc = "out of memory"; break;
+                case AL_INVALID_NAME      -> desc = "invalid name";
+                case AL_INVALID_ENUM      -> desc = "invalid enum";
+                case AL_INVALID_VALUE     -> desc = "invalid value";
+                case AL_INVALID_OPERATION -> desc = "invalid operation";
+                case AL_OUT_OF_MEMORY     -> desc = "out of memory";
             }
 
             Logger.logSevere("OpenAL Error: (" + alError + ") " + desc, null);
