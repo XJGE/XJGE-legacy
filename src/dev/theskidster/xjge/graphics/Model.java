@@ -4,7 +4,7 @@ import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
 import dev.theskidster.xjge.util.Color;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import dev.theskidster.xjge.main.Logger;
 import java.io.InputStream;
 import java.nio.ByteBuffer;

@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.5.3] - 2021-04-07
+
+### Changed
+
+* Made Graphics field in Instance class final.
+* Moved ErrorUtil class to main, removed public access to checkFBStatus() method.
+
+
+
 ## [1.5.2] - 2021-04-06
 
 ### Changed

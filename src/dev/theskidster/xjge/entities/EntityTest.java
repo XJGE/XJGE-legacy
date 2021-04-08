@@ -7,7 +7,7 @@ import dev.theskidster.xjge.graphics.Graphics;
 import dev.theskidster.xjge.graphics.LightSource;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import dev.theskidster.xjge.util.ServiceLocator;
 
 /**

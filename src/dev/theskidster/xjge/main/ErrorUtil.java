@@ -1,6 +1,5 @@
-package dev.theskidster.xjge.util;
+package dev.theskidster.xjge.main;
 
-import dev.theskidster.xjge.main.Logger;
 import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.opengl.GL30.*;
 
@@ -20,7 +19,7 @@ public final class ErrorUtil {
      * @param target the target of the Framebuffer completeness check. One of {@link org.lwjgl.opengl.GL30C#GL_FRAMEBUFFER FRAMEBUFFER}, 
      *               {@link org.lwjgl.opengl.GL30C#GL_READ_FRAMEBUFFER READ_FRAMEBUFFER}, or {@link org.lwjgl.opengl.GL30C#GL_DRAW_FRAMEBUFFER DRAW_FRAMEBUFFER}.
      */
-    public static void checkFBStatus(int target) {
+    static void checkFBStatus(int target) {
         int status  = glCheckFramebufferStatus(target);
         String desc = "";
         

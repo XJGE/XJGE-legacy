@@ -10,7 +10,7 @@ import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_memory;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import dev.theskidster.xjge.main.App;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import dev.theskidster.xjge.main.Logger;
 
 /**

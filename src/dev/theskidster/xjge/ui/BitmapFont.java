@@ -18,7 +18,7 @@ import dev.theskidster.xjge.graphics.Cell;
 import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.shader.core.ShaderCore;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import dev.theskidster.xjge.main.Logger;
 
 /**

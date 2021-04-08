@@ -9,7 +9,7 @@ import static org.lwjgl.stb.STBImage.*;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import dev.theskidster.xjge.main.App;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import dev.theskidster.xjge.main.Logger;
 
 /**

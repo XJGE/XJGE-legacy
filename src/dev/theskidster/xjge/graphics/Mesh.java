@@ -2,7 +2,7 @@ package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.main.App;
 import dev.theskidster.xjge.main.Logger;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;

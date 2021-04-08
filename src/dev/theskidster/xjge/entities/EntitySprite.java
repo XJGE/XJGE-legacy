@@ -8,7 +8,7 @@ import dev.theskidster.xjge.graphics.SpriteSheet;
 import dev.theskidster.xjge.graphics.Texture;
 import dev.theskidster.xjge.shader.core.ShaderCore;
 import dev.theskidster.xjge.util.Camera;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

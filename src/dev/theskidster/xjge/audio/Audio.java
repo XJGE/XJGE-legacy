@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import static org.lwjgl.openal.AL11.*;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import dev.theskidster.xjge.main.Logger;
 import java.util.TreeMap;
 import org.joml.Vector3f;

@@ -22,7 +22,7 @@ public class Instance {
     public final Cell cell;
     public final SpriteSheet sprite;
    
-     private Graphics g = new Graphics();
+    private final Graphics g = new Graphics();
     
     /**
      * Constructs a rectangular instance that uses a sprite image as its texture. Useful for text, tiles, etc.

@@ -1,7 +1,7 @@
 package dev.theskidster.xjge.graphics;
 
 import dev.theskidster.xjge.shader.core.ShaderCore;
-import dev.theskidster.xjge.util.ErrorUtil;
+import dev.theskidster.xjge.main.ErrorUtil;
 import java.util.HashMap;
 import java.util.Map;
 import org.joml.Matrix3f;

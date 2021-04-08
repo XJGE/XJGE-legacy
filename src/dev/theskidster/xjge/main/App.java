@@ -46,7 +46,6 @@ import dev.theskidster.xjge.ui.RectangleBatch;
 import dev.theskidster.xjge.ui.RuntimeInfo;
 import dev.theskidster.xjge.ui.SystemInfo;
 import dev.theskidster.xjge.util.Color;
-import dev.theskidster.xjge.util.ErrorUtil;
 import dev.theskidster.xjge.util.ScreenSplitType;
 import static dev.theskidster.xjge.util.ScreenSplitType.*;
 import dev.theskidster.xjge.util.ServiceLocator;
@@ -81,7 +80,7 @@ public final class App {
     public static final int ALL_VIEWPORTS     = -1;
     public static final boolean DEBUG_ALLOWED = true; //TODO change this to false before building distributions.
     public static final String DOMAIN         = "xjge";
-    public static final String ENGINE_VERSION = "1.5.2";
+    public static final String ENGINE_VERSION = "1.5.3";
     public static final String GAME_VERSION   = "0";
     
     private static final Viewport[] viewports = new Viewport[4];
