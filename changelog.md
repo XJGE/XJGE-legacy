@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
+## [1.5.X] - UNRELEASED
+
+### Added
+
+* ode4j (0.4.1) and slf4j (1.8.0) libraries to project.
+
+### Changed
+
+* Included new libraries in manifest file.
+* Switched engine dependencies to use local "lib" folder.
+
+
+
 ## [1.5.3] - 2021-04-07
 
 ### Changed
