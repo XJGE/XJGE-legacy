@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file. The format 
 
 * Included new libraries in manifest file.
 * Switched engine dependencies to use local "lib" folder.
+* Resolved some typos in documentation.
 
 
 

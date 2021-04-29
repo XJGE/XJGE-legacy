@@ -15,7 +15,7 @@ import static org.lwjgl.glfw.GLFW.glfwGetVersionString;
  */
 
 /**
- * Keeps a chronological record of significant events occurring within the engine.
+ * Keeps a chronological record of significant events occurring within the application.
  */
 public final class Logger {
     

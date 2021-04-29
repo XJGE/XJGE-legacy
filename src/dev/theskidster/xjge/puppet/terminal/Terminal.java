@@ -28,7 +28,7 @@ import dev.theskidster.xjge.util.Timer;
  * is particularly useful for performing debugging at runtime, or managing the application during demos. By default the terminal will always be opened in 
  * viewport 0 and will override access to the keyboard input device while it is open. If debugging is permitted, F1 can be used to open the command terminal.
  */
-public class Terminal extends Component implements PropertyChangeListener {
+public final class Terminal extends Component implements PropertyChangeListener {
     
     private int xIndex;
     private int yIndex;
@@ -40,30 +40,30 @@ public class Terminal extends Component implements PropertyChangeListener {
     private boolean suggest;
     private boolean executed = true;
     
-    private Vector3i carrotPos = new Vector3i(0, 0, 0);
-    private Vector3i cursorPos = new Vector3i(8, -1, 0);
-    private Vector3i cmdPos    = new Vector3i(8, 0, -1);
+    private final Vector3i carrotPos = new Vector3i(0, 0, 0);
+    private final Vector3i cursorPos = new Vector3i(8, -1, 0);
+    private final Vector3i cmdPos    = new Vector3i(8, 0, -1);
     
     private String suggestion          = "";
     private String prevTyped           = "";
-    private Text[] text                = new Text[9];
-    private StringBuilder typed        = new StringBuilder();
-    private List<String> cmdHistory    = new ArrayList<>();
-    private TerminalOutput[] cmdOutput = new TerminalOutput[5];
+    private final Text[] text                = new Text[9];
+    private final StringBuilder typed        = new StringBuilder();
+    private final List<String> cmdHistory    = new ArrayList<>();
+    private final TerminalOutput[] cmdOutput = new TerminalOutput[5];
     
     public RectangleBatch rectBatch;
-    private Timer timer = new Timer(1, 20, this);
+    private final Timer timer = new Timer(1, 20, this);
     
-    Map<String, TerminalCommand> commands = new TreeMap<>();
-    private Map<Integer, Key> keyChars    = new HashMap<>();
-    private Map<Integer, Integer> charPos = new HashMap<>();
+    Map<String, TerminalCommand> commands       = new TreeMap<>();
+    private final Map<Integer, Key> keyChars    = new HashMap<>();
+    private final Map<Integer, Integer> charPos = new HashMap<>();
     
     /**
      * Represents a key on a keyboard.
      */
     private class Key {
-        private char c;
-        private char C;
+        private final char c;
+        private final char C;
         
         public Key(char c, char C) {
             this.c = c;

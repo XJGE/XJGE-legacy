@@ -30,6 +30,22 @@ public class LevelTest extends Level {
         setWorldLight(Light.NOON);
         
         entityList.add(buster);
+        
+        /*
+        - Re-write weak parts of the documentation
+        - Add terminal command that toggles bounding volume visibility.
+        
+        TODO: (maybe) 
+        
+        - Rename Level to Scene
+        - Add non-abstract update and render methods to Level superclass- these 
+          will be used to update and render menial items like entities and levels.
+        - Rename init to enter- we'll keep this around since the Scene will likely
+          just load things from a map file.
+        - Better organize shader utilities.
+        - Add blended background to command line output?
+        - Draw command line on top of framebuffer textures regardless of screen split?
+        */
     }
 
     @Override

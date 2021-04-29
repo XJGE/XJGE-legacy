@@ -1,7 +1,6 @@
 package dev.theskidster.xjge.shader.core;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import static org.lwjgl.opengl.GL20.*;
@@ -26,7 +25,11 @@ public class ShaderSource {
      * 
      * @param filename the name of the file to load. Expects the file extension to be included.
      * @param type     the rendering stage this shader code is used for. One of {@link org.lwjgl.opengl.GL30#GL_VERTEX_SHADER GL_VERTEX_SHADER}, 
-     *                 {@link org.lwjgl.opengl.GL30#GL_FRAGMENT_SHADER GL_FRAGMENT_SHADER}, {@link org.lwjgl.opengl.GL32#GL_GEOMETRY_SHADER GL_GEOMETRY_SHADER}, etc.
+     *                 {@link org.lwjgl.opengl.GL30#GL_FRAGMENT_SHADER GL_FRAGMENT_SHADER}, 
+     *                 {@link org.lwjgl.opengl.GL32#GL_GEOMETRY_SHADER GL_GEOMETRY_SHADER},
+     *                 {@link org.lwjgl.opengl.GL40#GL_TESS_CONTROL_SHADER GL_TESS_CONTROL_SHADER}, 
+     *                 {@link org.lwjgl.opengl.GL40#GL_TESS_EVALUATION_SHADER GL_TESS_EVALUATION_SHADER}, or 
+     *                 {@link org.lwjgl.opengl.GL43#GL_COMPUTE_SHADER GL_COMPUTE_SHADER}. 
      */
     public ShaderSource(String filename, int type) {
         String filepath       = "/dev/theskidster/" + App.DOMAIN + "/shader/source/" + filename;
@@ -39,7 +42,7 @@ public class ShaderSource {
                 builder.append(line).append("\n");
             }
         } catch(Exception e) {
-            Logger.logSevere("Failed to pase GLSL file: \"" + filename + "\"", e);
+            Logger.logSevere("Failed to parse GLSL file: \"" + filename + "\"", e);
         }
         
         CharSequence src = builder.toString();
