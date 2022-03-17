@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. The format 
 
 
 
-## [1.5.X] - UNRELEASED
+## [1.5.3] - 2021-04-07
 
 ### Added
 
@@ -11,19 +11,11 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Changed
 
+* Made Graphics field in Instance class final.
+* Moved ErrorUtil class to main, removed public access to checkFBStatus() method.
 * Included new libraries in manifest file.
 * Switched engine dependencies to use local "lib" folder.
 * Resolved some typos in documentation.
-
-
-
-## [1.5.3] - 2021-04-07
-
-### Changed
-
-* Made Graphics field in Instance class final.
-* Moved ErrorUtil class to main, removed public access to checkFBStatus() method.
-
 
 
 ## [1.5.2] - 2021-04-06
@@ -239,15 +231,15 @@ All notable changes to this project will be documented in this file. The format 
 - Game state traversal.
 - Logger that tracks significant events occurring within the engine and writes the output to a .txt file.
 
-
-
+[1.5.3]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.5.3
+[1.5.2]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.5.2
 [1.4.3]: https://github.com/theskidster/XJGE/commit/a5869d63668e6de672e3e9f84c8b3857fe307403
-[1.4.1]: https://github.com/theskidster/XJGE/commit/e7812142d7b9f1dcbf1f8c1a1a98a6ef0bae29e0
-[1.4.0]: https://github.com/theskidster/XJGE/commit/df8cd342589f6578b64dc08d8200e85f312fe45e
-[1.3.0]: https://github.com/theskidster/XJGE/commit/753cda066ed1c58c21a31786c020d0cfdb99ead0
-[1.2.3]: https://github.com/theskidster/XJGE/commit/805bc8c1ec004f7bd08d22b429cdcdfb5bf7f69c
-[1.2.0]: https://github.com/theskidster/XJGE/commit/17331b216f6002e1ab2e348be722d4812cb756bc
+[1.4.1]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.4.1
+[1.4.0]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.4.0
+[1.3.0]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.3.0
+[1.2.3]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.2.3
+[1.2.0]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.2.0
 [1.0.9]: https://github.com/theskidster/XJGE/commit/90211a1e8cdc884334377beaf80c7fbf1671965a
 [1.0.5]: https://github.com/theskidster/XJGE/commit/0f82e35a60f807098d05be3c5e02283ff424e0f3
-[1.0.4]: https://github.com/theskidster/XJGE/commit/4bb6e591d3b40f52da837ec27a66d92f4c6e1dbf
+[1.0.4]: https://github.com/XJGE/XJGE-legacy/releases/tag/1.0.4
 [1.0.0]: https://github.com/theskidster/XJGE/commit/67b3a12dab536e1db056f03fba46988b25752591
